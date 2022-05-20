@@ -1,0 +1,55 @@
+.headerBar {
+  display: flex;
+  align-items: center;
+  position: sticky;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #121212;
+  padding: 0 0.5rem;
+  box-shadow: black 0px 0px 10px 0px;
+  height: var(--header-height);
+  .menu_icon_btn {
+    margin-top: 5px;
+    margin-left: 15px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+
+    .menu_bar {
+      display: block;
+      width: 1.6rem;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.4);
+      transition: all 0.2s linear;
+    }
+    .menu_bar + #bar {
+      margin-top: 5px;
+      width: 1rem;
+      height: 0.5px;
+    }
+    .menu_bar + .menu_bar {
+      margin-top: 5px;
+    }
+    &:hover > .menu_bar {
+      background-color: #f1f1f1;
+    }
+  }
+  .logo {
+    color: #ecf1ff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-left: 2%;
+    i {
+      font-size: 1.5rem;
+      color: var(--custom-client-color);
+    }
+  }
+  .menuIconBtn {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+}

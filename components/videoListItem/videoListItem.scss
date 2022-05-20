@@ -1,0 +1,31 @@
+.espisode {
+  width: 100%;
+  height: fit-content;
+  color: white;
+  display: flex;
+  text-decoration: none;
+  margin-bottom: 0.5%;
+  .thumbnail {
+    width: 12.5%;
+    overflow: hidden;
+    margin-right: 1.5%;
+    .react-player {
+      width: 100%;
+      video {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 2px solid var(--medium-gray);
+      }
+    }
+  }
+  .espisode-info {
+    font-size: 1.2em;
+    span {
+      color: var(--medium-gray);
+    }
+    #dash {
+      color: var(--custom_color_client);
+    }
+  }
+}

@@ -1,0 +1,55 @@
+.GridItem {
+  width: 20%;
+  // margin-bottom: 1.5%;
+  box-shadow: 4px 4px 8px black;
+  cursor: pointer;
+  position: relative;
+  .listItemImg {
+    width: max(100%, 220px);
+    height: max(21vh, 175px);
+    opacity: 0;
+    border-radius: 2px;
+    overflow: hidden;
+    .img {
+      display: block;
+      object-fit: cover;
+    }
+  }
+
+  .descContainer {
+    position: absolute;
+    width: 120%;
+    top: -29%;
+    left: -10%;
+    z-index: 99;
+    color: white;
+    background: black;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in-out;
+    &:hover {
+      box-shadow: 0 0 16px black;
+    }
+    video {
+      width: 100%;
+    }
+    .desc {
+      padding: 10px;
+      .animeName {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 1%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .desc {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+  }
+  .visible {
+    visibility: visible;
+  }
+}

@@ -1,0 +1,27 @@
+.MainLayout {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  .layout_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    main {
+      width: 100%;
+      position: relative;
+      .scroll {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
+}
