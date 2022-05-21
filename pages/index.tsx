@@ -3,8 +3,13 @@ import Head from 'next/head';
 import Featured from '../components/featured/featured';
 import AnimeList from '../components/animeList/animeList';
 import styles from '../styles/home.module.scss';
+import { useEffect } from 'react';
+import { SrSection } from '../animations/onScroll';
 
 export default function Home() {
+  useEffect(() => {
+    SrSection();
+  }, []);
   return (
     <>
       <Head>

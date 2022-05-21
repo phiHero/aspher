@@ -1,3 +1,4 @@
+import zIndex from '@mui/material/styles/zIndex';
 import { BallTriangle } from 'react-loader-spinner';
 
 export default function Loader({ size }: { size?: number }) {
@@ -8,6 +9,8 @@ export default function Loader({ size }: { size?: number }) {
         height: '100%',
         display: 'grid',
         placeItems: 'center',
+        position: 'relative',
+        zIndex: '999',
       }}
     >
       <BallTriangle

@@ -1,5 +1,3 @@
-import dynamic from 'next/dynamic';
-import imagesLoaded from 'imagesloaded';
 import anime from 'animejs';
 
 const GridLoading = () => {
@@ -18,7 +16,7 @@ const GridLoading = () => {
     lineDrawing: true,
     animeLineDrawingOpts: {
       duration: 800,
-      delay: function (t, i) {
+      delay: function (t: never, i: number) {
         return i * 150;
       },
       easing: 'easeInOutSine',
@@ -31,7 +29,7 @@ const GridLoading = () => {
     animeOpts: {
       duration: 800,
       easing: 'cubicBezier(0.2, 1, 0.3, 1)',
-      delay: function (t, i) {
+      delay: function (t: never, i: number) {
         return i * 150 + 800;
       },
       opacity: {
@@ -159,10 +157,11 @@ const GridLoading = () => {
     grids = [].slice.call(document.querySelectorAll('#AnimeList')),
     currentGrid = 0,
     // The GridLoaderFx instances.
-    loaders = [],
-    loadingTimeout;
+    loaders: HTMLElement[] = [],
+    loadingTimeout: NodeJS.Timeout;
 
-  function init() {
+  async function init() {
+    const imagesLoaded = (await import('imagesLoaded')).default;
     // Preload images
     imagesLoaded(body, () => {
       grids.forEach((grid) => {

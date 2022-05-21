@@ -1,6 +1,7 @@
 // Essentials
 import axios from 'axios';
 import useSWR from 'swr';
+import { useEffect } from 'react';
 // Types
 
 // Performance
@@ -12,23 +13,18 @@ import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
 import ThumbUpAltSharpIcon from '@mui/icons-material/ThumbUpAltSharp';
 import ArrowForwardSharpIcon from '@mui/icons-material/ArrowForwardSharp';
 import Loader from '../loader/loader';
+import Error from '../error/error';
+import { SrFeatured } from '../../animations/onScroll';
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 const Featured = () => {
   const { data, error } = useSWR('/api/anime/highrating', fetcher);
-
-  if (error)
-    return (
-      <div
-        className='error'
-        style={{
-          width: '100%',
-          height: 'calc(100vh - var(--header-height))',
-        }}
-      >
-        Có lỗi xảy ra vui lòng tải lại trang!
-      </div>
-    );
+  useEffect(() => {
+    let x = 1;
+    if (data && x == 1) SrFeatured();
+    x++;
+  }, [data]);
+  if (error) return <Error />;
   if (!data)
     return (
       <div
@@ -56,12 +52,12 @@ const Featured = () => {
             />
           )}
         </div>
-        <div className={styles.bannerDetail} unselectable='on'>
+        <div className={styles.bannerDetail} id='sr-bottom-delay-hero'>
           <div className={styles.bannerName}>
-            <h1 id='sr-bottom-delay-hero'>{data[0].title}</h1>
+            <h1>{data[0].title}</h1>
           </div>
           {data[0].isMovie ? null : (
-            <div id='sr-bottom-delay-hero' className={styles.espisode}>
+            <div className={styles.espisode}>
               <span id='info-type'>Tập mới nhất: </span>
               {data[0].episode &&
                 data[0].episode
@@ -82,7 +78,7 @@ const Featured = () => {
             </div>
           )}
           <div className={styles.bannerRating}>
-            <div id='sr-bottom-delay-hero' className={styles.liked}>
+            <div className={styles.liked}>
               {(data[0].like?.length /
                 (data[0].like?.length + data[0].dislike?.length)) *
                 100 >
@@ -92,7 +88,7 @@ const Featured = () => {
                 </span>
               ) : null}
             </div>
-            <div id='sr-bottom-delay-hero' className={styles.recommended}>
+            <div className={styles.recommended}>
               {data[0].isRecommended ? (
                 <span>
                   <FavoriteSharpIcon id={styles.icon} /> Đề xuất bởi admin
@@ -102,20 +98,20 @@ const Featured = () => {
           </div>
 
           <div className={styles.genre}>
-            <p id='sr-bottom-delay-hero' className={styles.genreDisplay}>
+            <p className={styles.genreDisplay}>
               <span id='info-type'>Thể loại:</span>{' '}
               {data[0].genre && data[0].genre.join(', ')}
             </p>
           </div>
           <div className={styles.bannerDescription}>
-            <p id='sr-bottom-delay-hero'>
+            <p>
               <span id='info-type'>Mô tả: </span>
               {data[0].desc}
             </p>
           </div>
           <div className={styles.moreInfoButton}>
             <Link href={`/detail/${data[0]._id}`}>
-              <a id='sr-bottom-delay-hero' className={styles.link}>
+              <a className={styles.link}>
                 <ArrowForwardSharpIcon id={styles.icon} />
                 <span>Xem thêm</span>
               </a>
