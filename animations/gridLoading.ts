@@ -161,11 +161,9 @@ const GridLoading = () => {
     loadingTimeout: NodeJS.Timeout;
 
   async function init() {
-    const imagesLoaded = (await import('imagesLoaded')).default;
     // Preload images
-    imagesLoaded(body, () => {
-      loaders.push(new GridLoaderFx(grids[0]));
-    });
+    loaders.push(new GridLoaderFx(grids[0]));
+
     AnimationFired();
   }
   init();
