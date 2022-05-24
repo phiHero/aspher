@@ -10,12 +10,14 @@ import styles from './sideBar.module.scss';
 import picture from './unknown.png';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
 import ForumIcon from '@mui/icons-material/Forum';
 import { _user } from '../../interface/_custom';
 
 const SideBar = () => {
-  let url = useRouter().pathname;
-  const [user, setUser] = useState<_user>('');
+  let router = useRouter();
+
+  const [user, setUser] = useState<_user | ''>('');
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user') || '{}'));
     document.documentElement.style.setProperty(
@@ -64,7 +66,8 @@ const SideBar = () => {
           {SideBarData.map((item, index) => (
             <li
               className={
-                url === item.path
+                router.pathname === item.path ||
+                router.pathname === item.path + 'detail/[animeId]'
                   ? // url ===
                     //   item.path +
                     //     `detail/${location.pathname.substring(
@@ -95,8 +98,17 @@ const SideBar = () => {
         <ul className={styles.sidebarList}>
           <li className={styles.sidebarListItem}>
             <span className={styles.sidebarLink}>
-              <LogoutIcon className={styles.sidebarIcon} />
-              <div className={styles.hiddenSidebar}>Đăng xuất</div>
+              {user ? (
+                <>
+                  <LogoutIcon className={styles.sidebarIcon} />
+                  <div className={styles.hiddenSidebar}>Đăng xuất</div>
+                </>
+              ) : (
+                <>
+                  <LoginIcon className={styles.sidebarIcon} />
+                  <div className={styles.hiddenSidebar}>Đăng nhập</div>
+                </>
+              )}
             </span>
           </li>
           <li className={styles.sidebarListItem}>

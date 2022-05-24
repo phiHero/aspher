@@ -1,3 +1,5 @@
+import { NextApiRequest } from 'next';
+
 export interface _loginUser {
   email: string;
   password: string;
@@ -51,6 +53,7 @@ export interface _data {
   title: string;
   like: string[];
   dislike: [];
+  episode: string[];
   isRecommended: true;
   genre: string[];
   year: number;
@@ -68,4 +71,43 @@ export interface _animeListItem {
   backgroundImg: string;
   trailer: string;
   updatedAt: string;
+}
+export interface _newEpisode {
+  _id: string;
+  tap: string | number;
+}
+export interface _randomAnime {
+  _id: string;
+  title: string;
+  length: number;
+  like: string[];
+  dislike: string[];
+  episode: _newEpisode[];
+  adminRecommended: boolean;
+  genre: string[];
+  desc: string;
+  backgroundImg: string;
+  isMovie: boolean;
+}
+export type _verifiedApiUser = NextApiRequest & {
+  user: {
+    id: string;
+    isAdmin: boolean;
+    iat: number;
+    exp: number;
+  };
+};
+export interface _videoConfig {
+  playing: boolean;
+  muted: boolean;
+  volume: number;
+  playBackRate: number;
+  played: number;
+  seeking: boolean;
+}
+export interface _episodeData {
+  _id: string;
+  tap: string | number;
+  url: string;
+  desc: string;
 }

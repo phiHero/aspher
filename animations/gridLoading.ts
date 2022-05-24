@@ -4,7 +4,7 @@ const GridLoading = () => {
   /**
    * GridLoaderFx obj.
    */
-  function GridLoaderFx(el) {
+  function GridLoaderFx(el: HTMLElement) {
     this.el = el;
     this.items = this.el.querySelectorAll('#GridItem > #gridItemImg');
   }
@@ -164,10 +164,7 @@ const GridLoading = () => {
     const imagesLoaded = (await import('imagesLoaded')).default;
     // Preload images
     imagesLoaded(body, () => {
-      grids.forEach((grid) => {
-        // Init GridLoaderFx.
-        loaders.push(new GridLoaderFx(grid));
-      });
+      loaders.push(new GridLoaderFx(grids[0]));
     });
     AnimationFired();
   }
@@ -187,7 +184,7 @@ const GridLoading = () => {
     const ScrollReveal = (await import('scrollreveal')).default;
     ScrollReveal({
       reset: false,
-      container: document.querySelector('#scroll'),
+      container: document.querySelector('[data-scroll-container]'),
     }).reveal('#AnimeList', {
       beforeReveal: () => applyFx(),
     });

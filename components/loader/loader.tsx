@@ -1,12 +1,19 @@
-import zIndex from '@mui/material/styles/zIndex';
 import { BallTriangle } from 'react-loader-spinner';
 
-export default function Loader({ size }: { size?: number }) {
+export default function Loader({
+  size,
+  height,
+  color,
+}: {
+  size?: number;
+  height?: string;
+  color?: string;
+}) {
   return (
     <div
       style={{
         width: '100%',
-        height: '100%',
+        height: height || 'calc(100vh - var(--header-height))',
         display: 'grid',
         placeItems: 'center',
         position: 'relative',
@@ -14,7 +21,7 @@ export default function Loader({ size }: { size?: number }) {
       }}
     >
       <BallTriangle
-        color='var(--custom-client-color)'
+        color={color || 'var(--custom-client-color)'}
         height={size || 80}
         width={size || 80}
       />

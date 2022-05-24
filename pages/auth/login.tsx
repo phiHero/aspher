@@ -1,6 +1,8 @@
 // Essentials
+import { useRouter } from 'next/router';
 import AuthLayout from '../../layout/authLayouts/authLayout';
 import { useState } from 'react';
+import { LoginService } from '../../services/user/user';
 // Next
 import Head from 'next/head';
 import Link from 'next/link';
@@ -8,20 +10,20 @@ import Link from 'next/link';
 import styles from '../../styles/login.module.scss';
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(true);
 
   const handleLogin = async (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    // try {
-    //   const admin = await LoginService({ email, password });
-    //   if (admin) {
-    //     await router.push('/');
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const res = await LoginService({ email, password });
+      if (res) {
+        await router.push('/');
+      }
+    } catch (error) {
+      throw error;
+    }
   };
   return (
     <>

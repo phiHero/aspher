@@ -1,10 +1,22 @@
+// Essentials
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Loader from '../../components/loader/loader';
 import { _children } from '../../interface/_react';
 import styles from './authLayout.module.scss';
 
 const AuthPageLayout = ({ children }: _children) => {
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem('user') || '{}').accessToken) {
+      router.push('/');
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
   const color_library = ['#dc1f25', '#55efc4', '#f39c12', '#1ba9c9'];
   let i = 0;
-
   const changeBackground = () => {
     let a = i + 1;
     if (i === color_library.length) {
@@ -17,7 +29,7 @@ const AuthPageLayout = ({ children }: _children) => {
         a_logo.classList.add('slide');
       }, 1);
       document.documentElement.style.setProperty(
-        '--custom_color',
+        '--custom-color-auth',
         color_library[i]
       );
       document.getElementById('bimg' + i).style.display = 'none';
@@ -39,6 +51,8 @@ const AuthPageLayout = ({ children }: _children) => {
       i++;
     }
   };
+  if (loading)
+    return <Loader height={'100vh'} color={'var(--custom-color-auth)'} />;
   return (
     <div className={styles.AuthLayout}>
       <div className={styles.change} onClick={changeBackground}></div>

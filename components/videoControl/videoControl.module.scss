@@ -1,0 +1,95 @@
+.gridHeader,
+.gridBody,
+.gridFooter {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.gridHeader {
+  justify-content: space-between;
+  padding: 25px;
+  h1 {
+    font-size: 1.2em;
+    font-weight: 600;
+  }
+  .bookmarkButton {
+    color: white;
+  }
+}
+.gridBody {
+  justify-content: center;
+  .controlButton {
+    color: #777;
+    font-size: 3.2em;
+    transform: scale(0.9);
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1);
+      color: white;
+    }
+  }
+}
+.gridFooter {
+  padding: 0 16px 10px;
+  align-items: unset;
+  flex-direction: column;
+  .progressBar {
+    :global(.MuiSlider-track) {
+      color: var(--custom-client-color);
+      height: 5px;
+      border: none;
+    }
+    :global(.MuiSlider-rail) {
+      color: var(--custom-client-color);
+    }
+    :global(.MuiSlider-thumb) {
+      height: 20px;
+      width: 20px;
+      background-color: #fff;
+      border: 2px solid var(--custom-client-color);
+    }
+    :global(.Mui-focusVisible) {
+      box-shadow: 0px 0px 0px 8px rgba(136, 136, 136, 0.16);
+    }
+    :global(.Mui-active) {
+      box-shadow: 0px 0px 0px 14px rgba(136, 136, 136, 0.16);
+    }
+  }
+  .footerButtonWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .footerButton {
+      color: #999;
+      font-size: 1.6em;
+      transform: scale(0.9);
+      transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+      &:hover {
+        transform: scale(1);
+        color: white;
+      }
+    }
+    .footerButtonLeft {
+      display: flex;
+      flex-direction: row;
+      // justify-content: space-between;
+      align-items: center;
+
+      .volumeSlider {
+        width: 100px;
+        color: var(--custom-client-color);
+      }
+      .time {
+        color: #fff;
+        margin-left: 16px;
+        font-size: 0.8em;
+      }
+    }
+    .footerButtonRight {
+      .videoSpeed {
+        color: var(--medium-gray);
+      }
+    }
+  }
+}

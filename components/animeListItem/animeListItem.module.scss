@@ -1,6 +1,6 @@
 .GridItem {
-  width: 20%;
-  // margin-bottom: 1.5%;
+  width: 19.25%;
+  margin-bottom: 0.75%;
   box-shadow: 4px 4px 8px black;
   cursor: pointer;
   position: relative;
@@ -10,6 +10,7 @@
     opacity: 0;
     border-radius: 2px;
     overflow: hidden;
+    position: relative;
     .img {
       display: block;
       object-fit: cover;

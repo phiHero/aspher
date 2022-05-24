@@ -1,5 +1,5 @@
 // Essentials
-import AuthLayout from '../../layout/authLayouts/authLayout';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useRef } from 'react';
 import { useState } from 'react';
@@ -8,8 +8,10 @@ import Head from 'next/head';
 import Link from 'next/link';
 // Styles
 import styles from '../../styles/login.module.scss';
+import AuthLayout from '../../layout/authLayouts/authLayout';
 
 export default function Register() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -20,30 +22,28 @@ export default function Register() {
 
   const handleFinish = async (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    //   setEmail(emailRef.current.value);
-    //   setPassword(passwordRef.current.value);
-    //   setUsername(usernameRef.current.value);
-    //   try {
-    //     await axios.post(`${process.env.REACT_APP_URL}/api/auth/register`, {
-    //       email,
-    //       username,
-    //       password,
-    //     });
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
+    setEmail(emailRef.current.value);
+    setPassword(passwordRef.current.value);
+    setUsername(usernameRef.current.value);
+    try {
+      const res = await axios.post(`/api/auth/register`, {
+        email,
+        username,
+        password,
+      });
+      res.status === 201 && router.push('/auth/login');
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <>
-      <Head>
-        <title>Login</title>
-      </Head>
       <div className={styles.Login}>
         <div className={styles.wrapper}>
           <form onSubmit={handleFinish}>
             <div className={styles.logo}>
               <h1 className={styles.a_logo}>
-                <i>A</i>dsphero
+                <i>A</i>sphero
               </h1>
             </div>
 
@@ -59,7 +59,7 @@ export default function Register() {
                 ref={usernameRef}
               />
               <input type='password' placeholder='Mật khẩu' ref={passwordRef} />
-              <button className='loginButton' type='submit'>
+              <button className={styles.loginButton} type='submit'>
                 Sign Up
               </button>
             </div>
@@ -78,3 +78,4 @@ export default function Register() {
 }
 
 Register.PageLayout = AuthLayout;
+Register.Title = 'Đăng ký';

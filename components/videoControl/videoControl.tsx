@@ -1,6 +1,6 @@
 import { useState } from 'react';
-// STyle
-import './videoControl.scss';
+// Style
+import styles from './videoControl.module.scss';
 import IconButton from '@mui/material/IconButton';
 import FastRewindIcon from '@mui/icons-material/FastRewind';
 import FastForwardIcon from '@mui/icons-material/FastForward';
@@ -17,8 +17,8 @@ import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 
 const VideoControl = ({
-  desc,
-  playing_esp,
+  data,
+  episode,
   handlePlayPause,
   playing,
   handleRewind,
@@ -65,24 +65,24 @@ const VideoControl = ({
 
   return (
     <>
-      <div className='grid-header'>
-        <div className='video-title'>
-          <h1>{desc.title + ' tập ' + playing_esp}</h1>
+      <div className={styles.gridHeader}>
+        <div className={styles.videoTitle}>
+          <h1>{data?.title + ' tập ' + episode}</h1>
         </div>
-        <div className='bookmark'>
+        <div className={styles.bookmark}>
           <IconButton
             onClick={addBookmark}
-            className='bookmark-button'
+            className={styles.bookmarkButton}
             aria-label='reqind'
           >
             <BookmarkIcon fontSize='inherit' />
           </IconButton>
         </div>
       </div>
-      <div className='grid-body'>
+      <div className={styles.gridBody}>
         <IconButton
           onClick={handleRewind}
-          className='control-button'
+          className={styles.controlButton}
           aria-label='reqind'
         >
           <FastRewindIcon fontSize='inherit' />
@@ -90,7 +90,7 @@ const VideoControl = ({
 
         <IconButton
           onClick={handlePlayPause}
-          className='control-button'
+          className={styles.controlButton}
           aria-label='reqind'
         >
           {playing ? (
@@ -102,14 +102,14 @@ const VideoControl = ({
 
         <IconButton
           onClick={handleFastForward}
-          className='control-button'
+          className={styles.controlButton}
           aria-label='reqind'
         >
           <FastForwardIcon fontSize='inherit' />
         </IconButton>
       </div>
-      <div className='grid-footer'>
-        <div className='progress-bar'>
+      <div className={styles.gridFooter}>
+        <div className={styles.progressBar}>
           <Slider
             valueLabelDisplay='auto'
             components={{
@@ -123,9 +123,12 @@ const VideoControl = ({
             onChangeCommitted={handleSeekMouseUp}
           />
         </div>
-        <div className='footer-button-wrapper'>
-          <div className='footer-button-left'>
-            <IconButton onClick={handlePlayPause} className='footer-button'>
+        <div className={styles.footerButtonWrapper}>
+          <div className={styles.footerButtonLeft}>
+            <IconButton
+              onClick={handlePlayPause}
+              className={styles.footerButton}
+            >
               {playing ? (
                 <PauseIcon fontSize='large' />
               ) : (
@@ -133,7 +136,7 @@ const VideoControl = ({
               )}
             </IconButton>
 
-            <IconButton onClick={handleMute} className='footer-button'>
+            <IconButton onClick={handleMute} className={styles.footerButton}>
               {muted ? (
                 <VolumeOffIcon fontSize='inherit' />
               ) : (
@@ -141,7 +144,7 @@ const VideoControl = ({
               )}
             </IconButton>
             <Slider
-              className='volume-slider'
+              className={styles.volumeSlider}
               aria-label='Volume'
               size='small'
               min={0}
@@ -153,18 +156,18 @@ const VideoControl = ({
             <Button
               onClick={handleTimeDisplayFormat}
               variant='text'
-              className='time'
+              className={styles.time}
             >
               <Typography fontSize='inherit'>
                 {elapsedTime} / {totalDuration}
               </Typography>
             </Button>
           </div>
-          <div className='footer-button-right'>
+          <div className={styles.footerButtonRight}>
             <Button
               onClick={handlePopover}
               variant='text'
-              className='video-speed'
+              className={styles.videoSpeed}
             >
               <Typography fontSize='inherit'>{playBackRate}x</Typography>
             </Button>
@@ -209,7 +212,7 @@ const VideoControl = ({
 
             <IconButton
               onClick={handleToggleFullScreen}
-              className='footer-button'
+              className={styles.footerButton}
             >
               <FullscreenIcon fontSize='inherit' />
             </IconButton>

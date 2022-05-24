@@ -15,7 +15,7 @@ const SideBarData = [
   {
     title: 'Yêu thích',
     icon: <FavoriteRoundedIcon className={styles.sidebarIcon} />,
-    path: '/liked',
+    path: '/followed',
   },
   {
     title: 'Nhận xét',

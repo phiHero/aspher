@@ -1,0 +1,231 @@
+.Detail {
+  width: 100%;
+  background: linear-gradient(60deg, black 2%, rgba(0, 0, 0, 0));
+  .detailHero {
+    width: 100%;
+    height: 80vh;
+    .detailBackground {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      float: right;
+      background: linear-gradient(190deg, rgba(0, 0, 0, 0) 0%, black 120%);
+      .img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+        position: absolute;
+        z-index: -1;
+        visibility: hidden;
+      }
+    }
+    .detailHeader {
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      top: -40%;
+      left: 4%;
+      text-shadow: 5px 5px 10px black;
+      color: white;
+      visibility: hidden;
+      span {
+        color: var(--medium-gray);
+        font-weight: bold;
+        margin-right: 5px;
+      }
+      .title {
+        color: rgb(236, 236, 236);
+        font-size: 2em;
+        font-weight: 700;
+        margin-bottom: 0.5%;
+      }
+      .rating {
+        display: flex;
+        margin-bottom: 0.5%;
+        .like {
+          display: flex;
+          align-items: center;
+          .icon {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+          }
+        }
+      }
+
+      .episode {
+        margin-bottom: 1%;
+        span {
+          margin-right: 20px;
+        }
+        .link {
+          color: var(--custom-client-color);
+          text-decoration: none;
+          margin-right: 25px;
+        }
+      }
+      .button {
+        display: flex;
+        margin-bottom: 1%;
+        .icon {
+          display: grid;
+          place-items: center;
+        }
+        .playButton {
+          margin-right: 1.5%;
+          button {
+            color: white;
+            height: 38px;
+            overflow: hidden;
+            font-size: 1.15em;
+            text-shadow: 0 0 3px black;
+            background-color: var(--custom-client-color);
+            padding: 8px 20px 8px 15px;
+            border: none;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            #icon {
+              font-size: 1.5em;
+              margin-right: 3px;
+            }
+          }
+        }
+        .infoButton {
+          margin-right: 1.5%;
+          button {
+            white-space: nowrap;
+            height: 38px;
+            overflow: hidden;
+            color: black;
+            font-size: 1em;
+            background-color: white;
+            padding: 2.7px 20px 3px 10px;
+            border: none;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            #icon {
+              font-size: 1.75em;
+              font-weight: bold;
+              margin-right: 2%;
+            }
+          }
+        }
+        .unactive {
+          opacity: 0.25;
+          button {
+            cursor: default;
+          }
+        }
+        .likeButton {
+          margin-right: 0.75%;
+          button {
+            width: 37.33px;
+            height: 37.33px;
+            display: grid;
+            place-items: center;
+            color: var(--medium-gray);
+            background-color: rgba(0, 0, 0, 0);
+            border-radius: 50%;
+            border: 3px solid var(--medium-gray);
+            cursor: pointer;
+            #icon {
+              font-size: 1.75em;
+              font-weight: bold;
+            }
+          }
+          .active {
+            border: 3px solid var(--custom-client-color);
+            color: var(--custom-client-color);
+          }
+        }
+        .dislikeButton {
+          margin-right: 0.75%;
+          button {
+            display: grid;
+            place-items: center;
+            width: 37.33px;
+            height: 37.33px;
+            color: var(--medium-gray);
+            background-color: rgba(0, 0, 0, 0);
+            border-radius: 50%;
+            border: 3px solid var(--medium-gray);
+            cursor: pointer;
+            #icon {
+              font-size: 1.75em;
+              font-weight: bold;
+            }
+          }
+          .active {
+            border: 3px solid var(--custom-client-color);
+            color: var(--custom-client-color);
+          }
+        }
+        .followButton {
+          button {
+            display: grid;
+            place-items: center;
+            width: 37.33px;
+            height: 37.33px;
+            color: var(--medium-gray);
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+            cursor: pointer;
+            .icon {
+              width: 120%;
+              height: 120%;
+              font-weight: bold;
+            }
+            .active {
+              color: var(--custom-client-color);
+            }
+          }
+        }
+      }
+      .genre {
+        margin-bottom: 0.25%;
+      }
+      .desc {
+        width: 50%;
+        font-size: 1.125em;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+  .detailBody {
+    width: 100%;
+    margin-top: 10%;
+    .sectionTitle {
+      margin-left: 2%;
+      margin-bottom: 4%;
+    }
+    // .trailer {
+    //   position: absolute;
+    //   right: 2.5%;
+    // }
+    .espisodeList {
+      width: 100%;
+      // display: flex;
+      // flex-direction: column;
+      margin-left: 4%;
+      margin-top: 3%;
+      color: white;
+      padding-bottom: 5%;
+    }
+  }
+}
+// .react-thumbnail-generator {
+//   img {
+//     width: 200px;
+//     height: 120px;
+//     opacity: 0;
+//     animation: hide 0.1s linear 2s;
+//   }
+// }

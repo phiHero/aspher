@@ -3,7 +3,7 @@
   height: 100%;
   a,
   i {
-    color: var(--custom-client-color);
+    color: var(--custom-color-auth);
     font-weight: bold;
     transition: color 1.25s ease 0s;
     text-decoration: none;
@@ -60,7 +60,7 @@
           .underBar:after {
             content: '';
             width: 75px;
-            background-color: var(--custom-client-color);
+            background-color: var(--custom-color-auth);
             height: 2.5px;
             position: relative;
             display: block;
@@ -91,10 +91,10 @@
         button {
           height: min(15%, 44px);
           border-radius: 5px;
-          color: var(--custom-client-color);
+          color: var(--custom-color-auth);
           background-color: var(--custom_input_color);
           border: 2px solid !important;
-          border-color: var(--custom-client-color) !important;
+          border-color: var(--custom-color-auth) !important;
           font-size: 18px;
           font-weight: 500;
           margin-top: 2.5%;
@@ -103,8 +103,8 @@
         }
         button:hover {
           color: #ffffff !important;
-          background: var(--custom-client-color);
-          border-color: var(--custom-client-color) !important;
+          background: var(--custom-color-auth);
+          border-color: var(--custom-color-auth) !important;
           transition: all 0.4s ease 0s;
         }
       }

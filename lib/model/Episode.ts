@@ -2,12 +2,17 @@ import mongoose from 'mongoose';
 
 const EpisodeSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true, unique: true },
+    tap: { type: String || Number, required: true, unique: true },
     url: { type: String, required: true },
-    thumbnail: { type: String },
+    thumbnail: { type: String, required: true },
     desc: { type: String },
-    anime: { type: mongoose.Schema.Types.ObjectId, ref: 'Anime' },
+    belongTo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Anime',
+      required: true,
+    },
   },
   { timestamps: true }
 );
-module.exports = mongoose.model('Episode', EpisodeSchema);
+export default mongoose.models.Episode ||
+  mongoose.model('Episode', EpisodeSchema);

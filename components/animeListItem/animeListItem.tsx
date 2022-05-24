@@ -1,5 +1,5 @@
 // Essentials
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // Types
 import { _animeListItem } from '../../interface/_custom';
 // Performance
@@ -7,13 +7,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 // Styles
 import styles from './animeListItem.module.scss';
-import GridLoading from '../../animations/gridLoading';
 
 const AnimeListItems = ({ item }: { item: _animeListItem }) => {
   const [isHovered, setisHovered] = useState(false);
-  useEffect(() => {
-    GridLoading();
-  }, []);
 
   return (
     <Link href={`/detail/${item._id}`}>
