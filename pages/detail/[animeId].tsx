@@ -2,7 +2,7 @@
 import dbConnect from '../../lib/dbConnect';
 import Anime from '../../lib/model/Anime';
 // Essentials
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 // Types
@@ -28,6 +28,7 @@ export default function Detail({ anime }: { anime: string }) {
   const router = useRouter();
   const { inView, ref } = useInView();
   const followed = useRef(false);
+  const [data, setData] = useState<_data | ''>('');
   //const [espisode, setEspisode] = useState([]);
   // const [followed, setFollowed] = useState(() =>
   //   JSON.parse(localStorage.getItem('user') || '{}')
@@ -35,11 +36,12 @@ export default function Detail({ anime }: { anime: string }) {
   //let user_id: string = JSON.parse(localStorage.getItem('user') || '{}')._id;
   useEffect(() => {
     if (!anime) AnimationSync();
+    anime && setData(JSON.parse(anime));
     if (anime && inView) {
       SrDetail();
     }
   }, [anime, inView]);
-  const data: _data = JSON.parse(anime);
+
   let user_id;
   const like_dislike = async (action: string) => {
     // try {
