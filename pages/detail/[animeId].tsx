@@ -42,43 +42,43 @@ export default function Detail({ anime }: { anime: string }) {
   const data: _data = JSON.parse(anime);
   let user_id;
   const like_dislike = async (action: string) => {
-    try {
-      const res = await axios.put(
-        `${process.env.REACT_APP_URL}/api/userconfig/like/${data._id}?action=${action}`,
-        {},
-        {
-          headers: {
-            authorization:
-              'Bearer ' +
-              JSON.parse(localStorage.getItem('user') || '{]').accessToken,
-          },
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   const res = await axios.put(
+    //     `${process.env.REACT_APP_URL}/api/userconfig/like/${data._id}?action=${action}`,
+    //     {},
+    //     {
+    //       headers: {
+    //         authorization:
+    //           'Bearer ' +
+    //           JSON.parse(localStorage.getItem('user') || '{]').accessToken,
+    //       },
+    //     }
+    //   );
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
   const following = async () => {
-    try {
-      const res = await axios.put(
-        `${process.env.REACT_APP_URL}/api/userconfig/follow/${router.query.id}`,
-        {},
-        {
-          headers: {
-            authorization:
-              'Bearer ' +
-              JSON.parse(localStorage.getItem('user') || '{}').accessToken,
-          },
-        }
-      );
-      console.log(res.data);
-      let newFollowed = followed;
-      newFollowed.followedAnime = res.data.followedAnime;
-      localStorage.setItem('user', JSON.stringify(newFollowed));
-      setFollowed(JSON.parse(localStorage.getItem('user') || '{}'));
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   const res = await axios.put(
+    //     `${process.env.REACT_APP_URL}/api/userconfig/follow/${router.query.id}`,
+    //     {},
+    //     {
+    //       headers: {
+    //         authorization:
+    //           'Bearer ' +
+    //           JSON.parse(localStorage.getItem('user') || '{}').accessToken,
+    //       },
+    //     }
+    //   );
+    //   console.log(res.data);
+    //   let newFollowed = followed;
+    //   newFollowed.followedAnime = res.data.followedAnime;
+    //   localStorage.setItem('user', JSON.stringify(newFollowed));
+    //   setFollowed(JSON.parse(localStorage.getItem('user') || '{}'));
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
   const play = () => {
     router.push(`/watch/${data._id}?espisode=${data.episode[0].tap}`);
