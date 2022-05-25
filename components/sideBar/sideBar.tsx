@@ -67,7 +67,8 @@ const SideBar = () => {
             <li
               className={
                 router.pathname === item.path ||
-                router.pathname === item.path + 'detail/[animeId]'
+                router.pathname === item.path + 'detail/[animeId]' ||
+                router.pathname === item.path + 'watch/[animeId]'
                   ? // url ===
                     //   item.path +
                     //     `detail/${location.pathname.substring(

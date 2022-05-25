@@ -77,8 +77,6 @@ export default function Watch() {
         const wData = await getURL(episodeData?.[0].url);
         setWatchData(wData);
       };
-      console.log('aa');
-
       get();
     }
   }, [data, episode, router.isReady]);
@@ -200,7 +198,6 @@ export default function Watch() {
   //   });
   //   setBookmarks(bookmarksCopy);
   // };
-
   return (
     <div className={styles.Watch}>
       <div className={styles.videoVideoList}>
@@ -221,6 +218,7 @@ export default function Watch() {
             volume={volume}
             playbackRate={playBackRate}
             onProgress={handleProgress}
+            onError={(err) => console.log(err)}
             config={{
               file: {
                 attributes: {
@@ -232,7 +230,7 @@ export default function Watch() {
           <div ref={controlRef} className={styles.VideoControl}>
             <VideoControl
               data={data}
-              episode={episodeData?.tap}
+              episode={episodeData?.[0].tap}
               playing={playing}
               handlePlayPause={handlePlayPause}
               handleRewind={handleRewind}
@@ -275,10 +273,10 @@ export default function Watch() {
           </div>
         </div>
       </div>
-      {/*<div className={styles.titleBookmark}>
+      <div className={styles.titleBookmark}>
         <h1>
           {data?.title}
-          <span>{' tập ' + episodeData?.tap}</span>
+          <span>{' tập ' + episodeData?.[0].tap}</span>
         </h1>
         <p>Danh sách đánh dấu:</p>
         <div className={styles.bookmark}>
@@ -309,7 +307,7 @@ export default function Watch() {
           ))}
         </div>
         <canvas ref={canvasRef} />
-      </div> */}
+      </div>
     </div>
   );
 }
