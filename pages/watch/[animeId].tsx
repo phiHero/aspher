@@ -218,7 +218,7 @@ export default function Watch() {
             volume={volume}
             playbackRate={playBackRate}
             onProgress={handleProgress}
-            onError={(err) => console.log(err)}
+            onError={(err) => alert(err)}
             config={{
               file: {
                 attributes: {
