@@ -213,7 +213,7 @@ export default function Watch() {
           <ReactPlayer
             className={styles.video}
             ref={playerRef}
-            url={watchData?.video}
+            url={'https://phero.herokuapp.com/' + watchData?.video}
             width={''}
             height={''}
             playing={playing}
