@@ -34,7 +34,7 @@ const format = (seconds: number) => {
 };
 const getURL = async (url: string) => {
   try {
-    const res = await axios.post('/api/anime/watch', { url: url });
+    const res = await axios.post('/api/anime/watch/data', { url: url });
     return res.data;
   } catch (error) {
     throw error;
@@ -174,30 +174,30 @@ export default function Watch() {
     controlRef.current.style.visibility = 'hidden';
     countDown.current = 0;
   };
-  // const addBookmark = () => {
-  //   const canvas = canvasRef.current;
-  //   canvas.width = 160;
-  //   canvas.height = 90;
-  //   const ctx = canvas.getContext('2d');
+  const addBookmark = () => {
+    const canvas = canvasRef.current;
+    canvas.width = 160;
+    canvas.height = 90;
+    const ctx = canvas.getContext('2d');
 
-  //   ctx.drawImage(
-  //     playerRef.current.getInternalPlayer(),
-  //     0,
-  //     0,
-  //     canvas.width,
-  //     canvas.height
-  //   );
-  //   const dataUri = canvas.toDataURL();
-  //   canvas.width = 0;
-  //   canvas.height = 0;
-  //   const bookmarksCopy = [...bookmarks];
-  //   bookmarksCopy.push({
-  //     time: playerRef.current.getCurrentTime(),
-  //     display: format(playerRef.current.getCurrentTime()),
-  //     image: dataUri,
-  //   });
-  //   setBookmarks(bookmarksCopy);
-  // };
+    ctx.drawImage(
+      playerRef.current.getInternalPlayer(),
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+    const dataUri = canvas.toDataURL();
+    canvas.width = 0;
+    canvas.height = 0;
+    const bookmarksCopy = [...bookmarks];
+    bookmarksCopy.push({
+      time: playerRef.current.getCurrentTime(),
+      display: format(playerRef.current.getCurrentTime()),
+      image: dataUri,
+    });
+    setBookmarks(bookmarksCopy);
+  };
   return (
     <div className={styles.Watch}>
       <div className={styles.videoVideoList}>
@@ -250,7 +250,7 @@ export default function Watch() {
               elapsedTime={elapsedTime}
               totalDuration={totalDuration}
               handleTimeDisplayFormat={handleTimeDisplayFormat}
-              //  addBookmark={addBookmark}
+              addBookmark={addBookmark}
             />
           </div>
         </div>
@@ -294,11 +294,15 @@ export default function Watch() {
                 }}
                 elevation={3}
               >
-                <Image
-                  crossOrigin='anonymous'
-                  src={bookmark.image}
-                  alt={`Đánh dấu lúc ${bookmark.display}`}
-                />
+                <div className={styles.bookmarkImg}>
+                  <Image
+                    crossOrigin='anonymous'
+                    src={bookmark.image}
+                    alt={`Đánh dấu lúc ${bookmark.display}`}
+                    layout='fill'
+                    objectFit='cover'
+                  />
+                </div>
                 <Typography color={'#777a80'} variant='body2' align='center'>
                   Đánh dấu lúc {bookmark.display}
                 </Typography>
