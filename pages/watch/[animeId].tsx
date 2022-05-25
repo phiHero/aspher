@@ -34,7 +34,7 @@ const format = (seconds: number) => {
 };
 const getURL = async (url: string) => {
   try {
-    const res = await axios.post('/api/anime/watch/data', { url: url });
+    const res = await axios.post('/api/anime/watch/', { url: url });
     return res.data;
   } catch (error) {
     throw error;
@@ -210,7 +210,7 @@ export default function Watch() {
           <ReactPlayer
             className={styles.video}
             ref={playerRef}
-            url={'https://phero.herokuapp.com/' + watchData?.video}
+            url={'/api/' + encodeURIComponent(watchData?.video)}
             width={''}
             height={''}
             playing={playing}
@@ -218,7 +218,7 @@ export default function Watch() {
             volume={volume}
             playbackRate={playBackRate}
             onProgress={handleProgress}
-            onError={(err) => alert(err)}
+            onError={(err) => console.log(err)}
             config={{
               file: {
                 attributes: {
