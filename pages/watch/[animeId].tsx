@@ -53,6 +53,7 @@ export default function Watch() {
   const [watchData, setWatchData] = useState();
   const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
   const [bookmarks, setBookmarks] = useState([]);
+  const [lightMode, setLightMode] = useState(true);
   const [videoConfig, setVideoConfig] = useState<_videoConfig>({
     playing: true,
     muted: false,
@@ -167,11 +168,11 @@ export default function Watch() {
     );
   };
   const handleOnMouseMove = () => {
-    controlRef.current.style.visibility = 'visible';
+    !lightMode && (controlRef.current.style.visibility = 'visible');
     countDown.current = 0;
   };
   const hanldeMouseLeave = () => {
-    controlRef.current.style.visibility = 'hidden';
+    !lightMode && (controlRef.current.style.visibility = 'hidden');
     countDown.current = 0;
   };
   const addBookmark = () => {
@@ -198,6 +199,7 @@ export default function Watch() {
     });
     setBookmarks(bookmarksCopy);
   };
+
   return (
     <div className={styles.Watch}>
       <div className={styles.videoVideoList}>
@@ -210,10 +212,12 @@ export default function Watch() {
           <ReactPlayer
             className={styles.video}
             ref={playerRef}
-            url={'https://phero.herokuapp.com/' + watchData?.video}
+            url={'/api/' + encodeURIComponent(watchData?.video || '')}
+            light={'/api/' + encodeURIComponent(watchData?.thumbnail || '')}
             width={''}
             height={''}
             playing={playing}
+            onStart={() => setLightMode(false)}
             muted={muted}
             volume={volume}
             playbackRate={playBackRate}
@@ -227,32 +231,34 @@ export default function Watch() {
               },
             }}
           />
-          <div ref={controlRef} className={styles.VideoControl}>
-            <VideoControl
-              data={data}
-              episode={episodeData?.[0].tap}
-              playing={playing}
-              handlePlayPause={handlePlayPause}
-              handleRewind={handleRewind}
-              handleFastForward={handleFastForward}
-              muted={muted}
-              handleMute={handleMute}
-              onVolumeChange={handleVolumeChange}
-              handleVolumeSeekUp={handleVolumeSeekUp}
-              volume={volume}
-              playBackRate={playBackRate}
-              handlePlayBackRateChange={handlePlayBackRateChange}
-              handleToggleFullScreen={handleToggleFullScreen}
-              played={played}
-              onSeek={handleSeekChange}
-              handleSeekMouseDown={handleSeekMouseDown}
-              handleSeekMouseUp={handleSeekMouseUp}
-              elapsedTime={elapsedTime}
-              totalDuration={totalDuration}
-              handleTimeDisplayFormat={handleTimeDisplayFormat}
-              addBookmark={addBookmark}
-            />
-          </div>
+          {!lightMode && (
+            <div ref={controlRef} className={styles.VideoControl}>
+              <VideoControl
+                data={data}
+                episode={episodeData?.[0].tap}
+                playing={playing}
+                handlePlayPause={handlePlayPause}
+                handleRewind={handleRewind}
+                handleFastForward={handleFastForward}
+                muted={muted}
+                handleMute={handleMute}
+                onVolumeChange={handleVolumeChange}
+                handleVolumeSeekUp={handleVolumeSeekUp}
+                volume={volume}
+                playBackRate={playBackRate}
+                handlePlayBackRateChange={handlePlayBackRateChange}
+                handleToggleFullScreen={handleToggleFullScreen}
+                played={played}
+                onSeek={handleSeekChange}
+                handleSeekMouseDown={handleSeekMouseDown}
+                handleSeekMouseUp={handleSeekMouseUp}
+                elapsedTime={elapsedTime}
+                totalDuration={totalDuration}
+                handleTimeDisplayFormat={handleTimeDisplayFormat}
+                addBookmark={addBookmark}
+              />
+            </div>
+          )}
         </div>
 
         <div className={styles.videoListContainer}>
