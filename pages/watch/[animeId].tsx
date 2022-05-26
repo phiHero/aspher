@@ -198,7 +198,6 @@ export default function Watch() {
     });
     setBookmarks(bookmarksCopy);
   };
-  console.log(encodeURIComponent(watchData?.video));
   return (
     <div className={styles.Watch}>
       <div className={styles.videoVideoList}>
@@ -211,7 +210,7 @@ export default function Watch() {
           <ReactPlayer
             className={styles.video}
             ref={playerRef}
-            url={'/api/' + encodeURIComponent(watchData?.video)}
+            url={'https://phero.herokuapp.com/' + watchData?.video}
             width={''}
             height={''}
             playing={playing}
