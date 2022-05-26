@@ -16,9 +16,10 @@ export default async function handler(
   }
   try {
     req.url = '/' + decodeURIComponent(req.url?.replace('/api/', '') || '');
-    proxy.emit('request', req, res);
+    await proxy.emit('request', req, res);
+    await res.status(200);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ messase: error });
+    res.status(500).json({ message: error });
   }
 }
