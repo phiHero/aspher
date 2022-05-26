@@ -198,6 +198,7 @@ export default function Watch() {
     });
     setBookmarks(bookmarksCopy);
   };
+  console.log(encodeURIComponent(watchData?.video));
   return (
     <div className={styles.Watch}>
       <div className={styles.videoVideoList}>
