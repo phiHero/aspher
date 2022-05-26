@@ -19,6 +19,6 @@ export default async function handler(
     proxy.emit('request', req, res);
   } catch (error) {
     console.log(error);
-    res.status(500).end();
+    res.status(500).json({ messase: error });
   }
 }
