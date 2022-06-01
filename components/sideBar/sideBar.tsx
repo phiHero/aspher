@@ -16,17 +16,14 @@ import { _user } from '../../interface/_custom';
 
 const SideBar = () => {
   let router = useRouter();
-
-  const [user, setUser] = useState<_user | ''>('');
+  const [user, setUser] = useState<_user>();
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('user') || '{}'));
+    setUser(JSON.parse(localStorage.getItem('user') || 'null'));
     document.documentElement.style.setProperty(
       '--custom-client-color',
       JSON.parse(localStorage.getItem('user') || '{}')?.customColor || '#008048'
     );
   }, []);
-  //`${styles.projectsPdText} ${styles.projectsPdSubdetail}`
-
   return (
     <aside className={styles.Sidebar}>
       {/* Top sidebar */}
@@ -67,7 +64,7 @@ const SideBar = () => {
             <li
               className={
                 router.pathname === item.path ||
-                router.pathname === item.path + 'detail/[animeId]' ||
+                router.pathname === item.path + 'anime/[animeId]' ||
                 router.pathname === item.path + 'watch/[animeId]'
                   ? // url ===
                     //   item.path +
@@ -98,19 +95,20 @@ const SideBar = () => {
       <div className={styles.bottomSidebar} unselectable='on'>
         <ul className={styles.sidebarList}>
           <li className={styles.sidebarListItem}>
-            <span className={styles.sidebarLink}>
-              {user ? (
-                <>
-                  <LogoutIcon className={styles.sidebarIcon} />
-                  <div className={styles.hiddenSidebar}>Đăng xuất</div>
-                </>
-              ) : (
-                <>
-                  <LoginIcon className={styles.sidebarIcon} />
-                  <div className={styles.hiddenSidebar}>Đăng nhập</div>
-                </>
-              )}
-            </span>
+            {user ? (
+              <span className={styles.sidebarLink}>
+                <LogoutIcon className={styles.sidebarIcon} />
+                <div className={styles.hiddenSidebar}>Đăng xuất</div>
+              </span>
+            ) : (
+              <span
+                onClick={() => router.push('/auth/login')}
+                className={styles.sidebarLink}
+              >
+                <LoginIcon className={styles.sidebarIcon} />
+                <div className={styles.hiddenSidebar}>Đăng nhập</div>
+              </span>
+            )}
           </li>
           <li className={styles.sidebarListItem}>
             <Link href={'/'}>

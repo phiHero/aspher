@@ -12,7 +12,7 @@ const AnimeListItems = ({ item }: { item: _animeListItem }) => {
   const [isHovered, setisHovered] = useState(false);
 
   return (
-    <Link href={`/detail/${item._id}`}>
+    <Link href={`/anime/${item._id}`}>
       <a
         className={styles.GridItem}
         id='GridItem'

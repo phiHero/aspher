@@ -96,7 +96,7 @@ const Featured = ({ data }: { data: _randomAnime }) => {
             </p>
           </div>
           <div className={styles.moreInfoButton}>
-            <Link href={`/detail/${data._id}`}>
+            <Link href={`/anime/${data._id}`}>
               <a className={styles.link}>
                 <ArrowForwardSharpIcon id={styles.icon} />
                 <span>Xem thêm</span>

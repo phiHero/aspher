@@ -96,11 +96,13 @@ a {
     font-size: 2em;
     font-weight: 600;
     margin-left: 2%;
+    visibility: hidden;
   }
   .underBar1,
   .underBar2 {
     position: relative;
     display: block;
+    visibility: hidden;
   }
   .underBar1,
   .underBar2 {

@@ -1,5 +1,5 @@
 // Essenstials
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 // Styles
@@ -10,6 +10,8 @@ import LoginAlert from '../components/loginAlert/loginAlert';
 import Loader from '../components/loader/loader';
 import Error from '../components/error/error';
 import { _user } from '../interface/_custom';
+import { SrSection } from '../animations/onScroll';
+import { useInView } from 'react-intersection-observer';
 
 const fetcher = (url: string) =>
   axios
@@ -24,9 +26,11 @@ const fetcher = (url: string) =>
 
 export default function Followed() {
   const [user, setUser] = useState<_user>();
+  const { inView, ref } = useInView();
   useEffect(() => {
+    inView && SrSection();
     setUser(JSON.parse(localStorage.getItem('user') || '{}'));
-  }, []);
+  }, [inView]);
   const { data, error } = useSWR(user ? `/api/user/followed` : null, fetcher);
   if (!user) return <LoginAlert />;
   if (error) return <Error />;
@@ -35,13 +39,10 @@ export default function Followed() {
 
   return (
     <div className={styles.Followed}>
-      {/* <div className={styles.ad}>
-        <p>Advertisement</p>
-      </div> */}
-      <div className='sectionTitle'>
+      <div ref={ref} className={styles.sectionTitle}>
         <p id='sr-right'>Danh sách yêu thích</p>
-        <div id='sr-right' className='underBar1'></div>
-        <div id='sr-right' className='underBar2'></div>
+        <div id='sr-right' className={styles.underBar1}></div>
+        <div id='sr-right' className={styles.underBar2}></div>
       </div>
       <div id='sr-right' className={styles.likedCount}>
         Tổng: {data.length} bộ!

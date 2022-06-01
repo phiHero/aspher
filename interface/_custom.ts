@@ -89,14 +89,7 @@ export interface _randomAnime {
   backgroundImg: string;
   isMovie: boolean;
 }
-export type _verifiedApiUser = NextApiRequest & {
-  user: {
-    id: string;
-    isAdmin: boolean;
-    iat: number;
-    exp: number;
-  };
-};
+export type _verifiedApiUser = NextApiRequest & _user;
 export interface _videoConfig {
   playing: boolean;
   muted: boolean;

@@ -5,6 +5,7 @@ const AnimeSchema = new mongoose.Schema(
     title: { type: String, required: true, unique: true },
     like: { type: Array, default: [] },
     dislike: { type: Array, default: [] },
+    followed: { type: Number, default: 0 },
     adminRecommended: { type: Boolean, default: false },
     genre: { type: Array },
     episode: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Episode' }],

@@ -9,8 +9,40 @@
     place-items: center;
     margin-bottom: 1%;
   }
-  .section-title {
+  .sectionTitle {
+    margin: 15px 0;
     margin-bottom: 2.5%;
+    p {
+      color: white;
+      font-size: 2em;
+      font-weight: 600;
+      margin-left: 2%;
+      visibility: hidden;
+    }
+    .underBar1,
+    .underBar2 {
+      position: relative;
+      display: block;
+      visibility: hidden;
+    }
+    .underBar1,
+    .underBar2 {
+      content: '';
+      width: 75px;
+      background-color: var(--custom-client-color);
+      height: 3px;
+      position: relative;
+      display: block;
+      border-radius: 5px;
+      top: 15px;
+      transition: background-color 1.25s ease 0s;
+      left: 2%;
+    }
+    .underBar2 {
+      height: 2.5px;
+      top: 25px;
+      left: calc(2% + 45px);
+    }
   }
   .likedCount {
     color: white;
@@ -18,6 +50,7 @@
     margin-left: 2%;
     color: var(--light-gray);
     margin-bottom: 5%;
+    visibility: hidden;
   }
   .AnimeList {
     width: 100%;

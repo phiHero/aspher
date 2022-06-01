@@ -66,6 +66,7 @@ export async function SrFeatured() {
       origin: 'bottom',
       delay: 650,
       beforeReveal: () =>
+        document.querySelector('#sr-bottom-delay-hero') &&
         (document.querySelector('#sr-bottom-delay-hero')!.style.visibility =
           'visible'),
     },
@@ -81,6 +82,7 @@ export async function SrFeatured() {
       duration: 1300,
       reset: false,
       beforeReveal: () =>
+        document.querySelector('[data-sr-img-hero]') &&
         (document.querySelector('[data-sr-img-hero]')!.style.visibility =
           'visible'),
     },
@@ -117,6 +119,7 @@ export async function SrDetail() {
       duration: 1250,
       reset: false,
       beforeReveal: () =>
+        document.querySelector('#sr-right-img') &&
         (document.querySelector('#sr-right-img')!.style.visibility = 'visible'),
     },
     { cleanup: true }
@@ -131,10 +134,14 @@ export async function SrSection() {
     interval: 100,
     container: document.querySelector('[data-scroll-container]'),
   });
-  sr.reveal('#sr-right', {
-    origin: 'right',
-    distance: '80px',
-  });
+  sr.reveal(
+    '#sr-right',
+    {
+      origin: 'right',
+      distance: '80px',
+    },
+    { cleanup: true }
+  );
 }
 export const ListReveal = async (container) => {
   const ScrollReveal = (await import('scrollreveal')).default;

@@ -6,12 +6,12 @@ import { useRef, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 // Types
-import { _data } from '../../interface/_custom';
+import { _data, _user } from '../../interface/_custom';
 // Performance
 import Link from 'next/link';
 import Image from 'next/image';
 // Styles
-import styles from '../../styles/detail.module.scss';
+import styles from '../../styles/anime.module.scss';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -24,64 +24,59 @@ import Loader from '../../components/loader/loader';
 import { useInView } from 'react-intersection-observer';
 import AnimationSync from '../../animations/onScroll';
 
-export default function Detail({ anime }: { anime: string }) {
+export default function AnimeDetail({ anime }: { anime: string }) {
   const router = useRouter();
   const { inView, ref } = useInView();
-  const followed = useRef(false);
-  const [data, setData] = useState<_data | ''>('');
+  const [data, setData] = useState<_data>();
+  const [user, setUser] = useState<_user>();
   //const [espisode, setEspisode] = useState([]);
-  // const [followed, setFollowed] = useState(() =>
-  //   JSON.parse(localStorage.getItem('user') || '{}')
-  // );
-  //let user_id: string = JSON.parse(localStorage.getItem('user') || '{}')._id;
   useEffect(() => {
     if (!anime) AnimationSync();
     anime && setData(JSON.parse(anime));
     if (anime && inView) {
       SrDetail();
     }
+    setUser(JSON.parse(localStorage.getItem('user') || 'null'));
   }, [anime, inView]);
-
-  let user_id;
-  const like_dislike = async (action: string) => {
-    // try {
-    //   const res = await axios.put(
-    //     `${process.env.REACT_APP_URL}/api/userconfig/like/${data._id}?action=${action}`,
-    //     {},
-    //     {
-    //       headers: {
-    //         authorization:
-    //           'Bearer ' +
-    //           JSON.parse(localStorage.getItem('user') || '{]').accessToken,
-    //       },
-    //     }
-    //   );
-    // } catch (err) {
-    //   console.log(err);
-    // }
+  const likeDislike = async (action: string) => {
+    try {
+      const res = await axios.put(
+        `/api/user/action/like?action=${action}`,
+        { animeID: data._id },
+        {
+          headers: {
+            authorization: 'Bearer ' + user.accessToken,
+          },
+        }
+      );
+      setData(res.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const following = async () => {
-    // try {
-    //   const res = await axios.put(
-    //     `${process.env.REACT_APP_URL}/api/userconfig/follow/${router.query.id}`,
-    //     {},
-    //     {
-    //       headers: {
-    //         authorization:
-    //           'Bearer ' +
-    //           JSON.parse(localStorage.getItem('user') || '{}').accessToken,
-    //       },
-    //     }
-    //   );
-    //   console.log(res.data);
-    //   let newFollowed = followed;
-    //   newFollowed.followedAnime = res.data.followedAnime;
-    //   localStorage.setItem('user', JSON.stringify(newFollowed));
-    //   setFollowed(JSON.parse(localStorage.getItem('user') || '{}'));
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const res = await axios.put(
+        `/api/user/action/following`,
+        {
+          animeID: data._id,
+        },
+        {
+          headers: {
+            authorization: 'Bearer ' + user.accessToken,
+          },
+        }
+      );
+      res.data.accessToken = JSON.parse(
+        localStorage.getItem('user') || 'null'
+      ).accessToken;
+      localStorage.setItem('user', JSON.stringify(res.data));
+      setUser(JSON.parse(localStorage.getItem('user') || 'null'));
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   const play = () => {
     router.push(`/watch/${data._id}?espisode=${data.episode[0].tap}`);
   };
@@ -136,36 +131,29 @@ export default function Detail({ anime }: { anime: string }) {
             </div>
             <div className={styles.likeButton}>
               <button
-                className={
-                  data.like && (data.like.includes(user_id) ? 'active' : '')
-                }
-                onClick={() => like_dislike('like')}
+                className={data.like.includes(user._id) ? styles.active : ''}
+                onClick={() => likeDislike('like')}
               >
                 <ThumbUpAltRoundedIcon className={styles.icon} />
               </button>
             </div>
             <div className={styles.dislikeButton}>
               <button
-                className={
-                  data.dislike &&
-                  (data.dislike.includes(user_id) ? 'active' : '')
-                }
-                onClick={() => like_dislike('dislike')}
+                className={data.dislike.includes(user._id) ? styles.active : ''}
+                onClick={() => likeDislike('dislike')}
               >
                 <ThumbDownAltRounded className={styles.icon} />
               </button>
             </div>
             <div className={styles.followButton}>
               <button onClick={following}>
-                {/* {followed.followedAnime &&
-                  (followed.followedAnime.includes(data._id) ? (
-                    <FavoriteRoundedIcon
-                      className={`${styles.icon} ${styles.active}`}
-                    />
-                  ) : (
-
-                  ))} */}
-                <FavoriteBorderRoundedIcon className={styles.icon} />
+                {user?.followedAnime.includes(data._id) ? (
+                  <FavoriteRoundedIcon
+                    className={`${styles.icon} ${styles.active}`}
+                  />
+                ) : (
+                  <FavoriteBorderRoundedIcon className={styles.icon} />
+                )}
               </button>
             </div>
           </div>
@@ -205,7 +193,7 @@ export default function Detail({ anime }: { anime: string }) {
     </div>
   );
 }
-Detail.PageLayout = MainLayout;
+AnimeDetail.PageLayout = MainLayout;
 
 export async function getStaticProps(context: { params: { animeId: string } }) {
   await dbConnect().catch((err) => {
