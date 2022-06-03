@@ -24,20 +24,18 @@ const AnimeListItems = ({ item }: { item: _animeListItem }) => {
             className={styles.img}
             src={item.backgroundImg}
             layout='fill'
+            objectFit='cover'
             alt='Ảnh nền anime'
           />
         </div>
-        {/* {isHovered && (
-          <div className={styles.descContainer}>
-            <div className={styles.video}>
-              <video src={item.trailer} autoPlay={true} loop></video>
-            </div>
-            <div className={styles.desc}>
-              <div className={styles.animeName}>{item.title}</div>
-              <div className={styles.episode}>Số tập: {item.episode}</div>
+        <div className={styles.descContainer} data-hidden>
+          <div className={styles.desc}>
+            <div className={styles.animeName}>{item.title}</div>
+            <div className={styles.episode}>
+              Số tập: {item.episode.length} tập
             </div>
           </div>
-        )} */}
+        </div>
       </a>
     </Link>
   );

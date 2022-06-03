@@ -1,8 +1,8 @@
 import type { NextApiResponse } from 'next';
-import WithProtect from '../middleware/withVerify';
-import Anime from '../../../lib/model/Anime';
-import dbConnect from '../../../lib/dbConnect';
-import { _verifiedApiUser } from '../../../interface/_custom';
+import WithProtect from '../../middleware/withVerify';
+import Anime from '../../../../lib/model/Anime';
+import dbConnect from '../../../../lib/dbConnect';
+import { _verifiedApiUser } from '../../../../interface/_custom';
 
 const handler = async (req: _verifiedApiUser, res: NextApiResponse) => {
   if (req.method !== 'GET') {

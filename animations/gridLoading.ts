@@ -6,7 +6,7 @@ const GridLoading = () => {
    */
   function GridLoaderFx(el: HTMLElement) {
     this.el = el;
-    this.items = this.el.querySelectorAll('#GridItem > #gridItemImg');
+    this.items = this?.el?.querySelectorAll('#GridItem > #gridItemImg');
   }
 
   /**
@@ -38,6 +38,16 @@ const GridLoading = () => {
       },
       scale: [0.5, 1],
     },
+    animeVisible: {
+      duration: 500,
+      delay: function (t: never, i: number) {
+        return i * 150 + 1600;
+      },
+      opacity: {
+        value: [0, 1],
+        easing: 'linear',
+      },
+    },
   };
 
   GridLoaderFx.prototype._render = function () {
@@ -47,8 +57,9 @@ const GridLoading = () => {
     // GridLoaderFx.prototype..call(this);
     const prototype = Object.getPrototypeOf(this);
 
-    var effectSettings = prototype.effects,
-      animeOpts = effectSettings.animeOpts;
+    let effectSettings = prototype.effects,
+      animeOpts = effectSettings.animeOpts,
+      animeVisible = effectSettings.animeVisible;
 
     if (effectSettings.perspective !== undefined) {
       [].slice.call(this.items).forEach(function (item) {
@@ -67,7 +78,7 @@ const GridLoading = () => {
     if (effectSettings.lineDrawing !== undefined) {
       [].slice.call(this.items).forEach(function (item) {
         // Create SVG.
-        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'),
+        let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'),
           path = document.createElementNS('http://www.w3.org/2000/svg', 'path'),
           itemW = item.offsetWidth,
           itemH = item.offsetHeight;
@@ -85,16 +96,16 @@ const GridLoading = () => {
         item.parentNode.appendChild(svg);
       });
 
-      var animeLineDrawingOpts = effectSettings.animeLineDrawingOpts;
+      let animeLineDrawingOpts = effectSettings.animeLineDrawingOpts;
       animeLineDrawingOpts.targets =
-        this.el.querySelectorAll('.grid__deco > path');
+        this?.el?.querySelectorAll('.grid__deco > path');
       anime.remove(animeLineDrawingOpts.targets);
       anime(animeLineDrawingOpts);
     }
 
     if (effectSettings.revealer !== undefined) {
       [].slice.call(this.items).forEach(function (item) {
-        var revealer = document.createElement('div');
+        let revealer = document.createElement('div');
         revealer.className = 'grid__reveal';
         if (effectSettings.revealerOrigin !== undefined) {
           revealer.style.transformOrigin = effectSettings.revealerOrigin;
@@ -105,10 +116,10 @@ const GridLoading = () => {
         item.parentNode.appendChild(revealer);
       });
 
-      var animeRevealerOpts = effectSettings.animeRevealerOpts;
-      animeRevealerOpts.targets = this.el.querySelectorAll('.grid__reveal');
+      let animeRevealerOpts = effectSettings.animeRevealerOpts;
+      animeRevealerOpts.targets = this?.el?.querySelectorAll('.grid__reveal');
       animeRevealerOpts.begin = function (obj) {
-        for (var i = 0, len = obj.animatables.length; i < len; ++i) {
+        for (let i = 0, len = obj.animatables.length; i < len; ++i) {
           obj.animatables[i].target.style.opacity = 1;
         }
       };
@@ -130,20 +141,26 @@ const GridLoading = () => {
 
     anime.remove(animeOpts.targets);
     anime(animeOpts);
+
+    animeVisible.targets = document.querySelectorAll(
+      '#GridItem > [data-hidden]'
+    );
+    anime.remove(animeVisible.targets);
+    anime(animeVisible);
   };
 
   GridLoaderFx.prototype._resetStyles = function () {
     this.el.style.WebkitPerspective = this.el.style.perspective = 'none';
     [].slice.call(this.items).forEach(function (item) {
-      var gItem = item.parentNode;
+      let gItem = item.parentNode;
       item.style.opacity = 0;
       item.style.WebkitTransformOrigin = item.style.transformOrigin = '50% 50%';
       item.style.transform = 'none';
-      var svg = item.parentNode.querySelector('svg.grid__deco');
+      let svg = item.parentNode.querySelector('svg.grid__deco');
       if (svg) {
         gItem.removeChild(svg);
       }
-      var revealer = item.parentNode.querySelector('.grid__reveal');
+      let revealer = item.parentNode.querySelector('.grid__reveal');
       if (revealer) {
         gItem.removeChild(revealer);
       }
@@ -161,9 +178,7 @@ const GridLoading = () => {
     loadingTimeout: NodeJS.Timeout;
 
   async function init() {
-    // Preload images
     loaders.push(new GridLoaderFx(grids[0]));
-
     AnimationFired();
   }
   init();

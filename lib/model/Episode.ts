@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 const EpisodeSchema = new mongoose.Schema(
   {
     tap: { type: String || Number, required: true, unique: true },
-    url: { type: String, required: true },
+    fbID: { type: String, required: false },
+    cdn: { type: String, required: false },
     thumbnail: { type: String, required: true },
     desc: { type: String },
     belongTo: {

@@ -21,6 +21,7 @@ const Featured = ({ data }: { data: _randomAnime }) => {
     )
       SrFeatured();
   }, []);
+
   return (
     <div className={styles.Featured}>
       <div className={styles.banner}>
@@ -28,7 +29,7 @@ const Featured = ({ data }: { data: _randomAnime }) => {
           {data.backgroundImg && (
             <Image
               data-sr-img-hero
-              className={styles.bannerImg}
+              className={styles.img}
               unselectable='on'
               src={data.backgroundImg}
               alt='Highest rating anime'

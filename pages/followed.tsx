@@ -5,7 +5,7 @@ import axios from 'axios';
 // Styles
 import styles from '../styles/followed.module.scss';
 import MainLayout from '../layout/mainLayout/mainLayout';
-import AnimeListItems from '../components/animeListItem/animeListItem';
+import AnimeList from '../components/animeList/animeList';
 import LoginAlert from '../components/loginAlert/loginAlert';
 import Loader from '../components/loader/loader';
 import Error from '../components/error/error';
@@ -19,7 +19,7 @@ const fetcher = (url: string) =>
       headers: {
         authorization:
           'Bearer ' +
-          JSON.parse(localStorage.getItem('user') || '{}').accessToken,
+          JSON.parse(localStorage.getItem('user') || 'null').accessToken,
       },
     })
     .then((res) => res.data);
@@ -29,13 +29,16 @@ export default function Followed() {
   const { inView, ref } = useInView();
   useEffect(() => {
     inView && SrSection();
-    setUser(JSON.parse(localStorage.getItem('user') || '{}'));
+    setUser(JSON.parse(localStorage.getItem('user') || 'null'));
   }, [inView]);
-  const { data, error } = useSWR(user ? `/api/user/followed` : null, fetcher);
+  const { data, error } = useSWR(
+    user ? `/api/user/data/followed` : null,
+    fetcher
+  );
+  // Exception handling
   if (!user) return <LoginAlert />;
   if (error) return <Error />;
   if (!data) return <Loader />;
-  console.log(data);
 
   return (
     <div className={styles.Followed}>
@@ -53,11 +56,7 @@ export default function Followed() {
           Chà! Gu bạn hơi căng đấy, chưa yêu thích bộ nào! Σ(っ °Д °;)っ
         </div>
       ) : (
-        <div className={styles.AnimeList}>
-          {data.map((item, index: number) => {
-            return <AnimeListItems key={index} item={item} />;
-          })}
-        </div>
+        <AnimeList data={data} />
       )}
     </div>
   );

@@ -76,7 +76,6 @@ export async function getStaticProps() {
         title: 1,
         episode: 1,
         backgroundImg: 1,
-        trailer: 1,
         updatedAt: 1,
       },
     },
