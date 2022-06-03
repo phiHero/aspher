@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router';
 import AuthLayout from '../../layout/authLayouts/authLayout';
 import { useState } from 'react';
-import { LoginService } from '../../services/user/user';
+import axios from 'axios';
 // Next
 import Head from 'next/head';
 import Link from 'next/link';
@@ -17,9 +17,12 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
     try {
-      const res = await LoginService({ email, password });
-      if (res) {
+      const res = await axios.post(`/api/auth/login`, { email, password });
+      if (res.data && res.status === 200) {
+        localStorage.setItem('user', JSON.stringify(res.data));
         await router.push('/');
+      } else {
+        throw new Error('Có lỗi xảy ra, vui lòng thử lại sau!');
       }
     } catch (error) {
       throw error;
