@@ -96,7 +96,13 @@ const SideBar = () => {
         <ul className={styles.sidebarList}>
           <li className={styles.sidebarListItem}>
             {user ? (
-              <span className={styles.sidebarLink}>
+              <span
+                className={styles.sidebarLink}
+                onClick={() => {
+                  localStorage.setItem('user', 'null');
+                  router.reload();
+                }}
+              >
                 <LogoutIcon className={styles.sidebarIcon} />
                 <div className={styles.hiddenSidebar}>Đăng xuất</div>
               </span>

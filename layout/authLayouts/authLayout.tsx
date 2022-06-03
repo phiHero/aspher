@@ -9,7 +9,7 @@ const AuthPageLayout = ({ children }: _children) => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem('user') || '{}').accessToken) {
+    if (JSON.parse(localStorage.getItem('user') || 'null')?.accessToken) {
       router.push('/');
     } else {
       setLoading(false);
