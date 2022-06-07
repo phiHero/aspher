@@ -79,7 +79,7 @@
         }
         .link {
           line-height: clamp(0.65em, 0.9vmax + 0.2em, 1.15em);
-          font-size: clamp(0.65em, 0.9vmax + 0.2em, 1.15em);
+          font-size: clamp(0.65em, 0.85vmax + 0.2em, 1.15em);
           font-weight: 500;
           color: var(--custom-client-color);
           text-decoration: none;
