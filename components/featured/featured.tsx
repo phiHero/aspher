@@ -44,7 +44,7 @@ const Featured = ({ data }: { data: _randomAnime }) => {
           </div>
           {data.isMovie ? null : (
             <div className={styles.espisode}>
-              <span id='info-type'>Tập mới nhất: </span>
+              <span id={styles.infoType}>Tập mới nhất: </span>
               {data?.episode.map((item: _newEpisode, index: number) => {
                 return (
                   <Link
@@ -86,13 +86,13 @@ const Featured = ({ data }: { data: _randomAnime }) => {
 
           <div className={styles.genre}>
             <p className={styles.genreDisplay}>
-              <span id='info-type'>Thể loại:</span>{' '}
+              <span id={styles.infoType}>Thể loại:</span>{' '}
               {data.genre && data.genre.join(', ')}
             </p>
           </div>
           <div className={styles.bannerDescription}>
             <p>
-              <span id='info-type'>Mô tả: </span>
+              <span id={styles.infoType}>Mô tả: </span>
               {data.desc}
             </p>
           </div>

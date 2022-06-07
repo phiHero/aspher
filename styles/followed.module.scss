@@ -14,7 +14,7 @@
     margin: 2.5% 0;
     p {
       color: white;
-      font-size: 2em;
+      font-size: clamp(1.1em, 1vmax + 0.8em, 2em);
       font-weight: 600;
       margin-left: 2%;
       visibility: hidden;
@@ -28,22 +28,22 @@
     .underBar1,
     .underBar2 {
       content: '';
-      width: 75px;
+      width: max(4.5vmax, 50px);
       background-color: var(--custom-client-color);
-      height: 3px;
+      height: max(0.15vmax, 1.5px);
       position: relative;
       display: block;
       border-radius: 5px;
-      top: 15px;
+      top: 0.7vmax;
       transition: background-color 1.25s ease 0s;
       left: 2%;
     }
     .underBar2 {
-      height: 2.5px;
-      top: 25px;
-      left: calc(2% + 45px);
+      top: 1.4vmax;
+      left: calc(2% + max(2.5vmax, 30px));
     }
   }
+
   .likedCount {
     color: white;
     font-size: 1em;

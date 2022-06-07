@@ -83,7 +83,7 @@ const SideBar = () => {
             >
               <Link href={item.path}>
                 <a className={styles.sidebarLink}>
-                  {item.icon}
+                  <div className={styles.iconWrapper}>{item.icon}</div>
                   <div className={styles.hiddenSidebar}>{item.title}</div>
                 </a>
               </Link>
@@ -103,7 +103,9 @@ const SideBar = () => {
                   router.reload();
                 }}
               >
-                <LogoutIcon className={styles.sidebarIcon} />
+                <div className={styles.iconWrapper}>
+                  <LogoutIcon className={styles.sidebarIcon} />
+                </div>
                 <div className={styles.hiddenSidebar}>Đăng xuất</div>
               </span>
             ) : (
@@ -111,7 +113,9 @@ const SideBar = () => {
                 onClick={() => router.push('/auth/login')}
                 className={styles.sidebarLink}
               >
-                <LoginIcon className={styles.sidebarIcon} />
+                <div className={styles.iconWrapper}>
+                  <LoginIcon className={styles.sidebarIcon} />
+                </div>
                 <div className={styles.hiddenSidebar}>Đăng nhập</div>
               </span>
             )}
@@ -119,7 +123,9 @@ const SideBar = () => {
           <li className={styles.sidebarListItem}>
             <Link href={'/'}>
               <a className={styles.sidebarLink}>
-                <ForumIcon className={styles.sidebarIcon} />
+                <div className={styles.iconWrapper}>
+                  <ForumIcon className={styles.sidebarIcon} />
+                </div>
                 <div className={styles.hiddenSidebar}>Gửi Feedback</div>
               </a>
             </Link>

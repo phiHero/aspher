@@ -16,7 +16,7 @@ const MainLayout = ({ children }: _children) => {
     <>
       <div className={styles.MainLayout}>
         <HeaderBar />
-        <div className={styles.layout_container}>
+        <div className={styles.layoutContainer}>
           <SideBar />
           <main className={styles.mainContent}>
             <div className={styles.scroll} data-scroll-container>

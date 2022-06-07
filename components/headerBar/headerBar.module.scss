@@ -11,8 +11,7 @@
   box-shadow: black 0px 0px 10px 0px;
   height: var(--header-height);
   .menu_icon_btn {
-    margin-top: 5px;
-    margin-left: 15px;
+    margin: 5px max(2vmax, 20px) 0 1vmax;
     cursor: pointer;
     background: none;
     border: none;
@@ -21,14 +20,13 @@
     .menu_bar {
       display: block;
       width: 1.6rem;
-      height: 1px;
+      height: 0.5px;
       background-color: rgba(255, 255, 255, 0.4);
       transition: all 0.2s linear;
     }
     .menu_bar + #bar {
       margin-top: 5px;
       width: 1rem;
-      height: 0.5px;
     }
     .menu_bar + .menu_bar {
       margin-top: 5px;
@@ -41,7 +39,6 @@
     color: #ecf1ff;
     font-weight: bold;
     font-size: 1.1rem;
-    margin-left: 2%;
     i {
       font-size: 1.5rem;
       color: var(--custom-client-color);

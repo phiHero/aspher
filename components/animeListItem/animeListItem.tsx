@@ -25,7 +25,7 @@ const AnimeListItems = ({ item }: { item: _animeListItem }) => {
             src={item.backgroundImg}
             layout='fill'
             objectFit='cover'
-            alt='Ảnh nền anime'
+            alt={'Ảnh nền anime ' + item.title}
           />
         </div>
         <div className={styles.descContainer} data-hidden>

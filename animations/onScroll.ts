@@ -89,7 +89,7 @@ export async function SrFeatured() {
     { cleanup: true }
   );
 }
-export async function SrDetail() {
+export async function SrAnime() {
   const ScrollReveal = (await import('scrollreveal')).default;
   const sr = ScrollReveal({
     distance: '60px',
@@ -98,6 +98,46 @@ export async function SrDetail() {
     interval: 100,
     container: document.querySelector('[data-scroll-container]'),
   });
+  sr.reveal(
+    '#sr-left',
+    {
+      origin: 'left',
+      distance: '80px',
+      interval: 100,
+    },
+    { cleanup: true }
+  );
+  sr.reveal(
+    '#sr-right-long',
+    {
+      origin: 'right',
+      distance: '200px',
+      opacity: 0.6,
+      scale: 0.8,
+    },
+    { cleanup: true }
+  );
+  sr.reveal(
+    '[data-sr-bottom]',
+    {
+      origin: 'bottom',
+      distance: '30px',
+      interval: 150,
+      delay: 600,
+    },
+    { cleanup: true }
+  );
+  sr.reveal(
+    '[data-sr-bottom-delay]',
+    {
+      origin: 'bottom',
+      distance: '40px',
+      interval: 150,
+      reset: false,
+      delay: 1250,
+    },
+    { cleanup: true }
+  );
   sr.reveal(
     '#sr-bottom-delay',
     {
@@ -131,7 +171,7 @@ export async function SrSection() {
     distance: '60px',
     duration: 2800,
     reset: true,
-    interval: 100,
+
     container: document.querySelector('[data-scroll-container]'),
   });
   sr.reveal(
@@ -139,6 +179,7 @@ export async function SrSection() {
     {
       origin: 'right',
       distance: '80px',
+      interval: 100,
     },
     { cleanup: true }
   );
@@ -160,7 +201,5 @@ export const ListReveal = async (container) => {
 export default async function AnimationSync() {
   const ScrollReveal = (await import('scrollreveal')).default;
   const sr = ScrollReveal();
-  sr.debug = true;
-  console.log(sr.store);
   sr.sync();
 }

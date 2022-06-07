@@ -28,10 +28,10 @@ export default function Home({
         <Featured data={JSON.parse(randomAnime)[0]} />
       </div>
       <div className={styles.animeComponent}>
-        <div className='sectionTitle'>
-          <p id='sr-right'>Mới phát hành</p>
-          <div id='sr-right' className='underBar1'></div>
-          <div id='sr-right' className='underBar2'></div>
+        <div className={styles.sectionTitle}>
+          <p id='sr-right'>Mới cập nhật</p>
+          <div id='sr-right' className={styles.underBar1}></div>
+          <div id='sr-right' className={styles.underBar2}></div>
         </div>
         <AnimeList data={JSON.parse(latestAnime)} />
       </div>
@@ -66,7 +66,8 @@ export async function getStaticProps() {
         as: 'episode',
       },
     },
-    { $match: { title: 'a' } },
+    //  { $sample: { size: 1 } },
+    { $match: { title: 'Jujutsu kaisen' } },
   ]).catch((err) => {
     throw err;
   });

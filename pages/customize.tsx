@@ -1,3 +1,5 @@
+// Essentials
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import axios from 'axios';
@@ -6,6 +8,7 @@ import styles from '../styles/customize.module.scss';
 import MainLayout from '../layout/mainLayout/mainLayout';
 import LoginAlert from '../components/loginAlert/loginAlert';
 import { _user } from '../interface/_custom';
+import { Router } from '@mui/icons-material';
 
 export default function Customize() {
   const [user, setUser] = useState<_user>();
@@ -13,6 +16,7 @@ export default function Customize() {
   const usernameRef = useRef<string>();
   const profilePicRef = useRef<string>();
   const customColorRef = useRef<string>();
+  const router = useRouter();
   console.log(customColorRef.current?.value);
 
   useEffect(() => {
@@ -65,6 +69,7 @@ export default function Customize() {
       ).accessToken;
       setUser(res.data);
       localStorage.setItem('user', JSON.stringify(res.data));
+      router.reload();
     } catch (error) {
       console.log(error);
     }

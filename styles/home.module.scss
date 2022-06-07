@@ -3,4 +3,37 @@
   .featuredComponents {
     width: 100%;
   }
+  .sectionTitle {
+    margin: 15px 0;
+    p {
+      color: white;
+      font-size: clamp(1.1em, 1vmax + 0.8em, 2em);
+      font-weight: 600;
+      margin-left: 2%;
+      visibility: hidden;
+    }
+    .underBar1,
+    .underBar2 {
+      position: relative;
+      display: block;
+      visibility: hidden;
+    }
+    .underBar1,
+    .underBar2 {
+      content: '';
+      width: max(4.5vmax, 50px);
+      background-color: var(--custom-client-color);
+      height: max(0.15vmax, 1.5px);
+      position: relative;
+      display: block;
+      border-radius: 5px;
+      top: 0.7vmax;
+      transition: background-color 1.25s ease 0s;
+      left: 2%;
+    }
+    .underBar2 {
+      top: 1.4vmax;
+      left: calc(2% + max(2.5vmax, 30px));
+    }
+  }
 }

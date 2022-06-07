@@ -13,17 +13,17 @@ export default function Loader({
     <div
       style={{
         width: '100%',
-        height: height || 'calc(100vh - var(--header-height))',
+        height: height || 'calc(95vh - var(--header-height))',
         display: 'grid',
         placeItems: 'center',
         position: 'relative',
-        zIndex: '999',
+        zIndex: '500',
       }}
     >
       <BallTriangle
         color={color || 'var(--custom-client-color)'}
-        height={size || 80}
-        width={size || 80}
+        height={size || '5vmax'}
+        width={size || '5vmax'}
       />
     </div>
   );

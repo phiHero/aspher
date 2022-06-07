@@ -53,7 +53,6 @@ export default function Watch() {
   const [watchData, setWatchData] = useState();
   const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
   const [bookmarks, setBookmarks] = useState([]);
-  const [lightMode, setLightMode] = useState(true);
   const [videoConfig, setVideoConfig] = useState<_videoConfig>({
     playing: true,
     muted: false,
@@ -73,7 +72,7 @@ export default function Watch() {
     if (!router.isReady) return;
     const episodeData = data?.episode.filter((item) => item._id === episode);
     setEpisodeData(episodeData);
-    if (episodeData?.[0].url) {
+    if (episodeData?.[0]?.url) {
       const get = async () => {
         const wData = await getURL(episodeData?.[0].url);
         setWatchData(wData);
@@ -83,7 +82,7 @@ export default function Watch() {
   }, [data, episode, router.isReady]);
 
   if (error) return <Error />;
-  if (!data || !watchData) return <Loader />;
+  if (!data) return <Loader />;
   // Video player features
   const handlePlayPause = () => {
     setVideoConfig((prevState) => ({
@@ -214,13 +213,12 @@ export default function Watch() {
             ref={playerRef}
             // 5/30/2022
             url={
-              'https://video.fdad1-3.fna.fbcdn.net/v/t39.25447-2/284714171_3171697789735864_5172591483775649094_n.mp4?_nc_cat=1&vs=2df5faaee7044bf8&_nc_vs=HBksFQAYJEdMdGtfQkM0a3hkd3BFUUxBRWFGcUlhTXZNaEhibWRqQUFBRhUAAsgBABUAGCRHTjFiQVJFOEU4eGlqZThCQU9DVUt1eTdQUlllYnJGcUFBQUYVAgLIAQBLBogScHJvZ3Jlc3NpdmVfcmVjaXBlATENc3Vic2FtcGxlX2ZwcwAQdm1hZl9lbmFibGVfbnN1YgAgbWVhc3VyZV9vcmlnaW5hbF9yZXNvbHV0aW9uX3NzaW0AKGNvbXB1dGVfc3NpbV9vbmx5X2F0X29yaWdpbmFsX3Jlc29sdXRpb24AEWRpc2FibGVfcG9zdF9wdnFzABUAJQAcAAAm6vGmxrrfvgIVAigCQzMYC3Z0c19wcmV2aWV3HBdAeaV87ZFocxggZGFzaF92NF81c2VjZ29wX2hxMV9mcmFnXzJfdmlkZW8SABgYdmlkZW9zLnZ0cy5jYWxsYmFjay5wcm9kOBJWSURFT19WSUVXX1JFUVVFU1QbCogVb2VtX3RhcmdldF9lbmNvZGVfdGFnBm9lcF9oZBNvZW1fcmVxdWVzdF90aW1lX21zATAMb2VtX2NmZ19ydWxlB3VubXV0ZWQTb2VtX3JvaV9yZWFjaF9jb3VudAU5MjEzMxFvZW1faXNfZXhwZXJpbWVudAAMb2VtX3ZpZGVvX2lkDzU4ODM2ODM3MjQ4MTcyNRJvZW1fdmlkZW9fYXNzZXRfaWQPNzYyNjAwMjYxNzc1MjE3FW9lbV92aWRlb19yZXNvdXJjZV9pZA83MDA5MjkzNDExODUxNDEcb2VtX3NvdXJjZV92aWRlb19lbmNvZGluZ19pZBAzMTYzMzQxNDEzOTE0MjA1DnZ0c19yZXF1ZXN0X2lkACUCHAAlxAEbB4gBcwQxNDEwAmNkCjIwMjItMDUtMzADcmNiBTkyMTAwA2FwcAVWaWRlbwJjdBlDT05UQUlORURfUE9TVF9BVFRBQ0hNRU5UE29yaWdpbmFsX2R1cmF0aW9uX3MKNDEwLjM4OTMzMwJ0cxVwcm9ncmVzc2l2ZV9lbmNvZGluZ3MA&ccb=1-7&_nc_sid=9489be&efg=eyJ2ZW5jb2RlX3RhZyI6Im9lcF9oZCJ9&_nc_ohc=I15sF1mY4HsAX_downa&_nc_ht=video.fdad1-3.fna&oh=00_AT_xh7IaJ4dobWzONQ3XqgvIpMZL1EhDxQfwk0sEgftzwA&oe=629D4760&_nc_rid=7879996868872835'
+              //   'https://video.fdad1-3.fna.fbcdn.net/v/t39.25447-2/284714171_3171697789735864_5172591483775649094_n.mp4?_nc_cat=1&vs=2df5faaee7044bf8&_nc_vs=HBksFQAYJEdMdGtfQkM0a3hkd3BFUUxBRWFGcUlhTXZNaEhibWRqQUFBRhUAAsgBABUAGCRHTjFiQVJFOEU4eGlqZThCQU9DVUt1eTdQUlllYnJGcUFBQUYVAgLIAQBLBogScHJvZ3Jlc3NpdmVfcmVjaXBlATENc3Vic2FtcGxlX2ZwcwAQdm1hZl9lbmFibGVfbnN1YgAgbWVhc3VyZV9vcmlnaW5hbF9yZXNvbHV0aW9uX3NzaW0AKGNvbXB1dGVfc3NpbV9vbmx5X2F0X29yaWdpbmFsX3Jlc29sdXRpb24AEWRpc2FibGVfcG9zdF9wdnFzABUAJQAcAAAm6vGmxrrfvgIVAigCQzMYC3Z0c19wcmV2aWV3HBdAeaV87ZFocxggZGFzaF92NF81c2VjZ29wX2hxMV9mcmFnXzJfdmlkZW8SABgYdmlkZW9zLnZ0cy5jYWxsYmFjay5wcm9kOBJWSURFT19WSUVXX1JFUVVFU1QbCogVb2VtX3RhcmdldF9lbmNvZGVfdGFnBm9lcF9oZBNvZW1fcmVxdWVzdF90aW1lX21zATAMb2VtX2NmZ19ydWxlB3VubXV0ZWQTb2VtX3JvaV9yZWFjaF9jb3VudAU5MjEzMxFvZW1faXNfZXhwZXJpbWVudAAMb2VtX3ZpZGVvX2lkDzU4ODM2ODM3MjQ4MTcyNRJvZW1fdmlkZW9fYXNzZXRfaWQPNzYyNjAwMjYxNzc1MjE3FW9lbV92aWRlb19yZXNvdXJjZV9pZA83MDA5MjkzNDExODUxNDEcb2VtX3NvdXJjZV92aWRlb19lbmNvZGluZ19pZBAzMTYzMzQxNDEzOTE0MjA1DnZ0c19yZXF1ZXN0X2lkACUCHAAlxAEbB4gBcwQxNDEwAmNkCjIwMjItMDUtMzADcmNiBTkyMTAwA2FwcAVWaWRlbwJjdBlDT05UQUlORURfUE9TVF9BVFRBQ0hNRU5UE29yaWdpbmFsX2R1cmF0aW9uX3MKNDEwLjM4OTMzMwJ0cxVwcm9ncmVzc2l2ZV9lbmNvZGluZ3MA&ccb=1-7&_nc_sid=9489be&efg=eyJ2ZW5jb2RlX3RhZyI6Im9lcF9oZCJ9&_nc_ohc=I15sF1mY4HsAX_downa&_nc_ht=video.fdad1-3.fna&oh=00_AT_xh7IaJ4dobWzONQ3XqgvIpMZL1EhDxQfwk0sEgftzwA&oe=629D4760&_nc_rid=7879996868872835'
+              'https://www.dailymotion.com/embed/video/x8bas5g'
             }
-            //   light={watchData?.thumbnail}
             width={''}
             height={''}
             playing={playing}
-            //onStart={() => setLightMode(false)}
             muted={muted}
             volume={volume}
             playbackRate={playBackRate}
@@ -242,7 +240,7 @@ export default function Watch() {
           <div ref={controlRef} className={styles.VideoControl}>
             <VideoControl
               data={data}
-              episode={episodeData?.[0].tap}
+              episode={episodeData?.[0]?.tap}
               playing={playing}
               handlePlayPause={handlePlayPause}
               handleRewind={handleRewind}
@@ -273,22 +271,12 @@ export default function Watch() {
             <div id='sr-right' className='underBar1'></div>
             <div id='sr-right' className='underBar2'></div>
           </div>
-          <div className={styles.videoList}>
-            {data?.episode.map((item, index) => (
-              <VideoItem
-                item={item}
-                animeId={data?._id}
-                key={index}
-                container='.video-list'
-              />
-            ))}
-          </div>
         </div>
       </div>
       <div className={styles.titleBookmark}>
         <h1>
           {data?.title}
-          <span>{' tập ' + episodeData?.[0].tap}</span>
+          <span>{' tập ' + episodeData?.[0]?.tap}</span>
         </h1>
         <p>Danh sách đánh dấu:</p>
         <div className={styles.bookmark}>

@@ -1,6 +1,7 @@
 // Backend
 import dbConnect from '../../lib/dbConnect';
 import Anime from '../../lib/model/Anime';
+import Episode from '../../lib/model/Episode';
 // Essentials
 import { useRef, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -19,10 +20,14 @@ import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ThumbDownAltRounded from '@mui/icons-material/ThumbDownAltRounded';
 import MainLayout from '../../layout/mainLayout/mainLayout';
-import { SrDetail } from '../../animations/onScroll';
+import { SrAnime } from '../../animations/onScroll';
 import Loader from '../../components/loader/loader';
 import { useInView } from 'react-intersection-observer';
 import AnimationSync from '../../animations/onScroll';
+import ReactPlayer from 'react-player/youtube';
+import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
+import ThumbUpAltSharpIcon from '@mui/icons-material/ThumbUpAltSharp';
+import ArrowForwardSharpIcon from '@mui/icons-material/ArrowForwardSharp';
 
 export default function AnimeDetail({ anime }: { anime: string }) {
   const router = useRouter();
@@ -34,7 +39,7 @@ export default function AnimeDetail({ anime }: { anime: string }) {
     if (!anime) AnimationSync();
     anime && setData(JSON.parse(anime));
     if (anime && inView) {
-      SrDetail();
+      SrAnime();
     }
     setUser(JSON.parse(localStorage.getItem('user') || 'null'));
   }, [anime, inView]);
@@ -42,13 +47,14 @@ export default function AnimeDetail({ anime }: { anime: string }) {
     try {
       const res = await axios.put(
         `/api/user/action/like?action=${action}`,
-        { animeID: data._id },
+        { animeID: data?._id },
         {
           headers: {
-            authorization: 'Bearer ' + user.accessToken,
+            authorization: 'Bearer ' + user?.accessToken,
           },
         }
       );
+      res.data.episode = data?.episode;
       setData(res.data);
     } catch (err) {
       console.log(err);
@@ -81,8 +87,11 @@ export default function AnimeDetail({ anime }: { anime: string }) {
     router.push(`/watch/${data._id}?espisode=${data.episode[0].tap}`);
   };
   if (!data) return <Loader />;
+  console.log(data);
+
   return (
     <div className={styles.Detail}>
+      <div className={styles.background}></div>
       <div className={styles.detailHero}>
         <div ref={ref} className={styles.detailBackground}>
           {data.backgroundImg && (
@@ -98,7 +107,7 @@ export default function AnimeDetail({ anime }: { anime: string }) {
         <div ref={ref} className={styles.detailHeader} id='sr-bottom-delay'>
           <div className={styles.title}>{data.title}</div>
           <div className={styles.episode}>
-            <span>
+            <span className={styles.infoType}>
               {data.isMovie ? 'Tập đặc biệt - Tập lẻ:' : 'Tập mới nhất:'}
             </span>
             {data.episode
@@ -116,7 +125,7 @@ export default function AnimeDetail({ anime }: { anime: string }) {
                   </Link>
                 );
               })}
-          </div>{' '}
+          </div>
           <div className={styles.button}>
             <div className={styles.playButton}>
               <button onClick={play}>
@@ -125,13 +134,15 @@ export default function AnimeDetail({ anime }: { anime: string }) {
             </div>
             <div className={styles.infoButton}>
               <button>
-                <InfoOutlinedIcon className={styles.icon} />
-                Thông tin thêm
+                <a href='#episodeList'>
+                  <InfoOutlinedIcon className={styles.icon} />
+                  Thông tin thêm
+                </a>
               </button>
             </div>
             <div className={styles.likeButton}>
               <button
-                className={data.like.includes(user._id) ? styles.active : ''}
+                className={data.like.includes(user?._id) ? styles.active : ''}
                 onClick={() => likeDislike('like')}
               >
                 <ThumbUpAltRoundedIcon className={styles.icon} />
@@ -139,7 +150,9 @@ export default function AnimeDetail({ anime }: { anime: string }) {
             </div>
             <div className={styles.dislikeButton}>
               <button
-                className={data.dislike.includes(user._id) ? styles.active : ''}
+                className={
+                  data.dislike.includes(user?._id) ? styles.active : ''
+                }
                 onClick={() => likeDislike('dislike')}
               >
                 <ThumbDownAltRounded className={styles.icon} />
@@ -158,36 +171,93 @@ export default function AnimeDetail({ anime }: { anime: string }) {
             </div>
           </div>
           <div className={styles.genre}>
-            <span>Thể loại: </span> {data.genre && data.genre.join(', ')}
+            <span className={styles.infoType}>Thể loại: </span>{' '}
+            {data.genre && data.genre.join(', ')}
           </div>
           <div className={styles.desc}>
-            <span>Mô tả: </span> {data.desc}
+            <span className={styles.infoType}>Mô tả: </span> {data.desc}
           </div>
         </div>
       </div>
       {!data.isMovie ? (
         <div className={styles.detailBody}>
-          <div className='sectionTitle'>
-            <p id='sr-right'>Danh sách các tập</p>
-            <div id='sr-right' className='underBar1'></div>
-            <div id='sr-right' className='underBar2'></div>
+          <div className={styles.sectionTitle}>
+            <p id='sr-left'>Danh sách thông tin</p>
+            <div id='sr-left' className={styles.underBar1}></div>
+            <div id='sr-left' className={styles.underBar2}></div>
           </div>
-          {/* <div className={styles.trailer}>
-            <video autoPlay={false} src={data.trailer}></video>
-          </div> */}
-          {/* <div className={styles.episodeList}>
-            {data.episode &&
-              data.espisode.map((item, index) => {
-                return (
-                  <VideoListItem
-                    item={item}
-                    data={detail}
+          <div className={styles.moreInfo}>
+            <div className={styles.container}>
+              <div className={styles.info}>
+                <div className={styles.genre} id='sr-left'>
+                  <span className={styles.infoType}>Thể loại:</span>
+                  {data.genre.join(', ')}
+                </div>
+                <div className={styles.episodeCount} id='sr-left'>
+                  <span className={styles.infoType}>Số tập: </span>
+                  {data.episode.length} tập
+                </div>
+                <div className={styles.year} id='sr-left'>
+                  <span className={styles.infoType}>Năm ra mắt: </span>
+                  {data.year}
+                </div>
+                <div className={styles.likeCount} id='sr-left'>
+                  <span className={styles.infoType}>Số lượt thích: </span>
+                  {data.like.length} lượt thích
+                </div>
+                <div className={styles.followCount} id='sr-left'>
+                  <span className={styles.infoType}>Số lượt theo dõi: </span>
+                  {data.followed} lượt theo dõi
+                </div>
+                <div className={styles.rating}>
+                  <div className={styles.liked} data-sr-bottom>
+                    {(data?.like.length /
+                      (data?.like.length + data?.dislike.length)) *
+                      100 >
+                    90 ? (
+                      <span>
+                        <ThumbUpAltSharpIcon id={styles.icon} /> Được yêu thích
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className={styles.userRecommended} data-sr-bottom>
+                    {data.adminRecommended ? (
+                      <span>
+                        <FavoriteSharpIcon id={styles.icon} /> Đề xuất bởi Users
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className={styles.adminRecommended} data-sr-bottom>
+                    {data.adminRecommended ? (
+                      <span>
+                        <FavoriteSharpIcon id={styles.icon} /> Đề xuất bởi Admin
+                      </span>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+              <div className={styles.episodeList} id='episodeList'>
+                {data.episode.map((item, index) => (
+                  <Link
+                    href={`watch/${data._id}?episode${item._id}`}
                     key={index}
-                    container='.scroll'
-                  />
-                );
-              })}
-          </div> */}
+                  >
+                    <a className={styles.episodeLink} data-sr-bottom-delay>
+                      {item.tap}
+                    </a>
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <ReactPlayer
+              id='sr-right-long'
+              className={styles.video}
+              width={null}
+              height={null}
+              url={'https://www.youtube.com/watch?v=' + data.trailer}
+              controls={true}
+            />
+          </div>
         </div>
       ) : null}
     </div>
@@ -200,9 +270,11 @@ export async function getStaticProps(context: { params: { animeId: string } }) {
     throw err;
   });
   const id = context.params.animeId;
-  const R_anime = await Anime.findById(id).catch((err) => {
-    throw err;
-  });
+  const R_anime = await Anime.findById(id)
+    .populate({ path: 'episode', model: Episode })
+    .catch((err) => {
+      throw err;
+    });
   const anime = JSON.stringify(R_anime);
   return {
     props: {

@@ -27,14 +27,15 @@ const fetcher = (url: string) =>
 export default function Followed() {
   const [user, setUser] = useState<_user>();
   const { inView, ref } = useInView();
-  useEffect(() => {
-    inView && SrSection();
-    setUser(JSON.parse(localStorage.getItem('user') || 'null'));
-  }, [inView]);
   const { data, error } = useSWR(
     user ? `/api/user/data/followed` : null,
     fetcher
   );
+  useEffect(() => {
+    if (inView && data) SrSection();
+    setUser(JSON.parse(localStorage.getItem('user') || 'null'));
+  }, [inView, data]);
+
   // Exception handling
   if (!user) return <LoginAlert />;
   if (error) return <Error />;

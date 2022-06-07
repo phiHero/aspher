@@ -1,9 +1,22 @@
+@use '../../styles/responsive.module.scss' as rs;
 .AnimeList {
   z-index: 2;
-  width: 100%;
-  margin: 3% 0;
-  padding: 0 2%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75%;
+  width: 97%;
+  margin: 3% auto;
+  display: grid;
+  gap: 1%;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(max(14.75vmax, 210px), max(19.5%, 140px)), 1fr)
+  );
+  //minmax(min(300px, max(20%, 140px)), 1fr)
+  @include rs.breakpoint(x-large) {
+    grid-template-columns: repeat(auto-fill, minmax(max(19.5%, 140px), 1fr));
+  }
+  @include rs.breakpoint(large) {
+    grid-template-columns: repeat(auto-fill, minmax(max(30%, 140px), 1fr));
+  }
+  @include rs.breakpoint(medium) {
+    margin: 6% auto;
+  }
 }

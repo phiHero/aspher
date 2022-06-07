@@ -41,7 +41,7 @@ const GridLoading = () => {
     animeVisible: {
       duration: 500,
       delay: function (t: never, i: number) {
-        return i * 150 + 1600;
+        return i * 150 + 1550;
       },
       opacity: {
         value: [0, 1],
