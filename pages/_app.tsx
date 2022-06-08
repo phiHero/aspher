@@ -14,6 +14,10 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
     <>
       <Head>
         <title>{Component?.Title}</title>
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1, shrink-to-fit=no'
+        />
       </Head>
       {Component.PageLayout ? (
         <Component.PageLayout>
