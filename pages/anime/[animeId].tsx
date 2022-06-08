@@ -90,7 +90,7 @@ export default function AnimeDetail({ anime }: { anime: string }) {
   console.log(data);
 
   return (
-    <div className={styles.Detail}>
+    <div className={styles.Detail} data-anime-scroll-container>
       <div className={styles.background}></div>
       <div className={styles.detailHero}>
         <div ref={ref} className={styles.detailBackground}>
@@ -188,24 +188,24 @@ export default function AnimeDetail({ anime }: { anime: string }) {
           </div>
           <div className={styles.moreInfo}>
             <div className={styles.container}>
-              <div className={styles.info}>
-                <div className={styles.genre} id='sr-left'>
+              <div className={styles.info} id='sr-left'>
+                <div className={styles.genre}>
                   <span className={styles.infoType}>Thể loại:</span>
                   {data.genre.join(', ')}
                 </div>
-                <div className={styles.episodeCount} id='sr-left'>
+                <div className={styles.episodeCount}>
                   <span className={styles.infoType}>Số tập: </span>
                   {data.episode.length} tập
                 </div>
-                <div className={styles.year} id='sr-left'>
+                <div className={styles.year}>
                   <span className={styles.infoType}>Năm ra mắt: </span>
                   {data.year}
                 </div>
-                <div className={styles.likeCount} id='sr-left'>
+                <div className={styles.likeCount}>
                   <span className={styles.infoType}>Số lượt thích: </span>
                   {data.like.length} lượt thích
                 </div>
-                <div className={styles.followCount} id='sr-left'>
+                <div className={styles.followCount}>
                   <span className={styles.infoType}>Số lượt theo dõi: </span>
                   {data.followed} lượt theo dõi
                 </div>
@@ -239,24 +239,27 @@ export default function AnimeDetail({ anime }: { anime: string }) {
               <div className={styles.episodeList} id='episodeList'>
                 {data.episode.map((item, index) => (
                   <Link
-                    href={`watch/${data._id}?episode${item._id}`}
+                    href={`/watch/${data._id}?episode${item._id}`}
                     key={index}
                   >
-                    <a className={styles.episodeLink} data-sr-bottom-delay>
+                    <a
+                      className={styles.episodeLink}
+                      id='sr-bottom-episode-delay'
+                    >
                       {item.tap}
                     </a>
                   </Link>
                 ))}
               </div>
             </div>
-            <ReactPlayer
-              id='sr-right-long'
-              className={styles.video}
-              width={null}
-              height={null}
-              url={'https://www.youtube.com/watch?v=' + data.trailer}
-              controls={true}
-            />
+            <div className={styles.video} id='sr-right-long'>
+              <ReactPlayer
+                width={'100%'}
+                height={'100%'}
+                url={'https://www.youtube.com/watch?v=' + data.trailer}
+                controls={true}
+              />
+            </div>
           </div>
         </div>
       ) : null}

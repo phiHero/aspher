@@ -1,6 +1,14 @@
 @use './responsive.module' as rs;
 .Detail {
   width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
   // global
   .infoType {
     color: var(--medium-gray);
@@ -194,6 +202,11 @@
     }
     @include rs.breakpoint(medium) {
       height: calc(38vh - var(--header-height));
+      .detailHeader {
+        .desc {
+          -webkit-line-clamp: 4;
+        }
+      }
     }
   }
   .detailBody {
@@ -245,20 +258,20 @@
           color: rgb(236, 236, 236);
           font-size: clamp(0.5em, 0.55vmax + 0.45em, 1em);
           .followCount {
-            margin-bottom: max(3%, 10px);
+            margin-bottom: max(0.75vmax, 5px);
           }
           .rating {
             white-space: nowrap;
             margin-bottom: 1.25%;
             display: flex;
             align-items: center;
-            margin-bottom: max(6%, 20px);
+            margin-bottom: max(1.25vmax, 7.5px);
             .liked,
             .userRecommended,
             .adminRecommended {
               font-size: 0.71vmax;
               width: fit-content;
-              padding: 2px 15px 3px;
+              padding: 2px calc(0.5vmax + 0.4em) 3px;
               border-radius: 10px;
               #icon {
                 font-size: 0.8vmax;
@@ -298,17 +311,18 @@
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
+          gap: max(0.5vmax, 7px);
           .episodeLink {
-            width: 40px;
-            height: 30px;
+            width: clamp(20px, 1vmax + 2em, 40px);
+            height: calc(clamp(20px, 1vmax + 2em, 40px) / 1.3);
             display: grid;
             place-items: center;
             color: var(--custom-client-color);
+            font-size: clamp(0.5em, 0.7vmax + 0.4em, 1.4em);
             font-weight: 600;
             border: 2px solid var(--custom-client-color);
             border-radius: 5px;
             background-color: transparent;
-            margin-right: 3%;
             transition: background-color 0.5s ease, color 0.5s ease;
             opacity: 0.75;
             &:hover {
@@ -322,6 +336,17 @@
         width: 40%;
         aspect-ratio: 16/9;
         box-shadow: 3.5px 3.5px 20px -1px var(--custom-client-color);
+      }
+      @include rs.breakpoint(large) {
+        flex-direction: column;
+        .container {
+          .episodeList {
+            margin-bottom: max(20%, 150px);
+          }
+        }
+        .video {
+          width: min(100%, 500px);
+        }
       }
     }
   }

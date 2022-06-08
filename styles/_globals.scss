@@ -122,3 +122,9 @@ a {
     left: calc(2% + 45px);
   }
 }
+// hide before animation
+#sr-right-long,
+#sr-left,
+#sr-bottom-episode-delay {
+  visibility: hidden;
+}

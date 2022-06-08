@@ -95,28 +95,23 @@ export async function SrAnime() {
     distance: '60px',
     duration: 2800,
     reset: true,
-    interval: 100,
-    container: document.querySelector('[data-scroll-container]'),
+    container: document.querySelector('[data-anime-scroll-container]'),
   });
-  sr.reveal(
-    '#sr-left',
-    {
-      origin: 'left',
-      distance: '80px',
-      interval: 100,
-    },
-    { cleanup: true }
-  );
-  sr.reveal(
-    '#sr-right-long',
-    {
-      origin: 'right',
-      distance: '200px',
-      opacity: 0.6,
-      scale: 0.8,
-    },
-    { cleanup: true }
-  );
+  sr.reveal('#sr-left', {
+    origin: 'left',
+    distance: '80px',
+    interval: 100,
+  });
+  window.innerWidth > 900
+    ? sr.reveal('#sr-right-long', {
+        origin: 'right',
+        distance: '200px',
+        scale: 0.8,
+      })
+    : sr.reveal('#sr-right-long', {
+        origin: 'bottom',
+        distance: '0px',
+      });
   sr.reveal(
     '[data-sr-bottom]',
     {
@@ -128,7 +123,7 @@ export async function SrAnime() {
     { cleanup: true }
   );
   sr.reveal(
-    '[data-sr-bottom-delay]',
+    '#sr-bottom-episode-delay',
     {
       origin: 'bottom',
       distance: '40px',
