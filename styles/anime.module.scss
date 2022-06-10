@@ -201,7 +201,7 @@
       }
     }
     @include rs.breakpoint(medium) {
-      height: calc(38vh - var(--header-height));
+      height: max(calc(38vh - var(--header-height)), 225px);
       .detailHeader {
         .desc {
           -webkit-line-clamp: 4;

@@ -20,7 +20,7 @@
     .menu_bar {
       display: block;
       width: 1.6rem;
-      height: 0.5px;
+      min-height: 1px;
       background-color: rgba(255, 255, 255, 0.4);
       transition: all 0.2s linear;
     }
@@ -28,7 +28,7 @@
       margin-top: 5px;
       width: 1rem;
     }
-    .menu_bar + .menu_bar {
+    #bar + .menu_bar {
       margin-top: 5px;
     }
     &:hover > .menu_bar {

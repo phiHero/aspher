@@ -177,7 +177,7 @@
   }
   @include rs.breakpoint(medium) {
     .banner {
-      height: calc(38vh - var(--header-height));
+      height: max(calc(38vh - var(--header-height)), 225px);
       .bannerDetail {
         width: 80%;
         top: 52.5%;

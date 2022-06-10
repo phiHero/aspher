@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import cheerio from 'cheerio';
 import ReactPlayer from 'react-player/lazy';
+import Link from 'next/link';
 // Type
 import { _data, _episodeData, _videoConfig } from '../../interface/_custom';
 //Style
@@ -32,9 +33,9 @@ const format = (seconds: number) => {
   }
   return `${mm}:${ss}`;
 };
-const getURL = async (url: string) => {
+const getURL = async (fbID: string) => {
   try {
-    const res = await axios.post('/api/anime/watch/', { url: url });
+    const res = await axios.post('/api/anime/watch/', { fbID: fbID });
     return res.data;
   } catch (error) {
     throw error;
@@ -61,6 +62,7 @@ export default function Watch() {
     played: 0,
     seeking: false,
   });
+  const [setting, setSetting] = useState<boolean>(false);
   const { playing, muted, volume, playBackRate, played, seeking } = videoConfig;
   // Dealing with anime data
   const { episode } = router.query;
@@ -70,11 +72,11 @@ export default function Watch() {
   );
   useEffect(() => {
     if (!router.isReady) return;
-    const episodeData = data?.episode.filter((item) => item._id === episode);
+    let episodeData = data?.episode.filter((item) => item._id === episode);
     setEpisodeData(episodeData);
-    if (episodeData?.[0]?.url) {
+    if (episodeData?.[0]?.fbID) {
       const get = async () => {
-        const wData = await getURL(episodeData?.[0].url);
+        let wData = await getURL(episodeData[0].fbID);
         setWatchData(wData);
       };
       get();
@@ -82,7 +84,7 @@ export default function Watch() {
   }, [data, episode, router.isReady]);
 
   if (error) return <Error />;
-  if (!data) return <Loader />;
+  if (!data || !watchData) return <Loader />;
   // Video player features
   const handlePlayPause = () => {
     setVideoConfig((prevState) => ({
@@ -198,7 +200,9 @@ export default function Watch() {
     });
     setBookmarks(bookmarksCopy);
   };
-
+  const handleSetting = () => {
+    setSetting(!setting);
+  };
   return (
     <div className={styles.Watch}>
       <div className={styles.videoVideoList}>
@@ -213,8 +217,11 @@ export default function Watch() {
             ref={playerRef}
             // 5/30/2022
             url={
-              //   'https://video.fdad1-3.fna.fbcdn.net/v/t39.25447-2/284714171_3171697789735864_5172591483775649094_n.mp4?_nc_cat=1&vs=2df5faaee7044bf8&_nc_vs=HBksFQAYJEdMdGtfQkM0a3hkd3BFUUxBRWFGcUlhTXZNaEhibWRqQUFBRhUAAsgBABUAGCRHTjFiQVJFOEU4eGlqZThCQU9DVUt1eTdQUlllYnJGcUFBQUYVAgLIAQBLBogScHJvZ3Jlc3NpdmVfcmVjaXBlATENc3Vic2FtcGxlX2ZwcwAQdm1hZl9lbmFibGVfbnN1YgAgbWVhc3VyZV9vcmlnaW5hbF9yZXNvbHV0aW9uX3NzaW0AKGNvbXB1dGVfc3NpbV9vbmx5X2F0X29yaWdpbmFsX3Jlc29sdXRpb24AEWRpc2FibGVfcG9zdF9wdnFzABUAJQAcAAAm6vGmxrrfvgIVAigCQzMYC3Z0c19wcmV2aWV3HBdAeaV87ZFocxggZGFzaF92NF81c2VjZ29wX2hxMV9mcmFnXzJfdmlkZW8SABgYdmlkZW9zLnZ0cy5jYWxsYmFjay5wcm9kOBJWSURFT19WSUVXX1JFUVVFU1QbCogVb2VtX3RhcmdldF9lbmNvZGVfdGFnBm9lcF9oZBNvZW1fcmVxdWVzdF90aW1lX21zATAMb2VtX2NmZ19ydWxlB3VubXV0ZWQTb2VtX3JvaV9yZWFjaF9jb3VudAU5MjEzMxFvZW1faXNfZXhwZXJpbWVudAAMb2VtX3ZpZGVvX2lkDzU4ODM2ODM3MjQ4MTcyNRJvZW1fdmlkZW9fYXNzZXRfaWQPNzYyNjAwMjYxNzc1MjE3FW9lbV92aWRlb19yZXNvdXJjZV9pZA83MDA5MjkzNDExODUxNDEcb2VtX3NvdXJjZV92aWRlb19lbmNvZGluZ19pZBAzMTYzMzQxNDEzOTE0MjA1DnZ0c19yZXF1ZXN0X2lkACUCHAAlxAEbB4gBcwQxNDEwAmNkCjIwMjItMDUtMzADcmNiBTkyMTAwA2FwcAVWaWRlbwJjdBlDT05UQUlORURfUE9TVF9BVFRBQ0hNRU5UE29yaWdpbmFsX2R1cmF0aW9uX3MKNDEwLjM4OTMzMwJ0cxVwcm9ncmVzc2l2ZV9lbmNvZGluZ3MA&ccb=1-7&_nc_sid=9489be&efg=eyJ2ZW5jb2RlX3RhZyI6Im9lcF9oZCJ9&_nc_ohc=I15sF1mY4HsAX_downa&_nc_ht=video.fdad1-3.fna&oh=00_AT_xh7IaJ4dobWzONQ3XqgvIpMZL1EhDxQfwk0sEgftzwA&oe=629D4760&_nc_rid=7879996868872835'
-              'https://www.dailymotion.com/embed/video/x8bi0si'
+              (watchData.hd?.includes('/v/t39') && watchData.hd) ||
+              watchData.hd_nr ||
+              watchData.hd ||
+              watchData.sd_nr ||
+              watchData.sd
             }
             width={''}
             height={''}
@@ -244,7 +251,14 @@ export default function Watch() {
             src=''
           /> */}
           {/* {!lightMode && ( */}
-          <div ref={controlRef} className={styles.VideoControl}>
+          <div
+            ref={controlRef}
+            className={
+              setting
+                ? `${styles.VideoControl} ${styles.showSetting}`
+                : styles.VideoControl
+            }
+          >
             <VideoControl
               data={data}
               episode={episodeData?.[0]?.tap}
@@ -268,23 +282,31 @@ export default function Watch() {
               totalDuration={totalDuration}
               handleTimeDisplayFormat={handleTimeDisplayFormat}
               addBookmark={addBookmark}
+              handleSetting={handleSetting}
             />
           </div>
         </div>
-
-        <div className={styles.videoListContainer}>
-          <div className='sectionTitle' id={styles.sectionTitle}>
-            <p id='sr-right'>Danh sách các tập</p>
-            <div id='sr-right' className='underBar1'></div>
-            <div id='sr-right' className='underBar2'></div>
+        <div className={styles.episodeData}>
+          <h1>
+            {data?.title}
+            <span>{' tập ' + episodeData?.[0]?.tap}</span>
+          </h1>
+          <div className={styles.episodeList}>
+            {data.episode.map((item, index) => (
+              <Link
+                href={`/watch/${data._id}?episode=${item._id}`}
+                key={index}
+                shallow
+              >
+                <a className={styles.episodeLink} id='sr-bottom-episode-delay'>
+                  {item.tap}
+                </a>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
-      <div className={styles.titleBookmark}>
-        <h1>
-          {data?.title}
-          <span>{' tập ' + episodeData?.[0]?.tap}</span>
-        </h1>
+      <div className={styles.bookmarkWrapper}>
         <p>Danh sách đánh dấu:</p>
         <div className={styles.bookmark}>
           {bookmarks.map((bookmark, index) => (

@@ -224,8 +224,6 @@
     transition: transform 400ms var(--animation-timing-curve),
       width 400ms var(--animation-timing-curve);
   }
-}
-@include rs.breakpoint(medium) {
   .open {
     transform: translateX(0);
     transition: transform 200ms var(--animation-timing-curve),

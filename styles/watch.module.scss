@@ -1,10 +1,14 @@
+@use './responsive.module' as rs;
 .Watch {
   width: 100%;
+  display: flex;
+  flex-direction: row;
   .videoVideoList {
-    width: 100%;
+    width: 75%;
     display: flex;
+    flex-direction: column;
     .videoContainer {
-      width: 75%;
+      width: 100%;
       height: 625px;
       margin-right: 2.5%;
       position: relative;
@@ -24,83 +28,96 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        z-index: 1;
+        z-index: 2;
         color: white;
       }
-    }
-    .videoListContainer {
-      width: 35%;
-      position: sticky;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      #sectionTitle {
-        margin-bottom: 10%;
-        font-size: 0.8em;
-        p {
-          margin-left: unset;
+      .showSetting {
+        > * {
+          display: none;
         }
-        p + div {
-          left: 0;
-        }
+        background-color: #121212;
       }
-      .videoList {
-        width: 100%;
-        height: 550px;
-        overflow-y: scroll;
-        overflow-x: hidden;
+    }
+    .episodeData {
+      width: 97%;
+      margin: 1.5% auto;
+      h1 {
+        font-size: clamp(1.1em, 0.6vmax + 1em, 2em);
+        font-weight: 600;
+        color: white;
+        margin-bottom: max(2%, 20px);
+      }
+      .episodeList {
+        width: 65%;
         display: flex;
-        flex-direction: column;
-        .episode {
-          height: 20%;
-          .thumbnail {
-            width: 35%;
-          }
-          .episodeInfo {
-            font-size: 1em;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: max(0.5vmax, 7px);
+        .episodeLink {
+          visibility: visible !important;
+          width: clamp(20px, 1vmax + 2em, 40px);
+          height: calc(clamp(20px, 1vmax + 2em, 40px) / 1.3);
+          display: grid;
+          place-items: center;
+          color: var(--custom-client-color);
+          font-size: clamp(0.5em, 0.7vmax + 0.4em, 1.4em);
+          font-weight: 600;
+          border: 2px solid var(--custom-client-color);
+          border-radius: 5px;
+          background-color: transparent;
+          transition: background-color 0.5s ease, color 0.5s ease;
+          opacity: 0.75;
+          &:hover {
+            background-color: var(--custom-client-color);
+            color: white;
           }
         }
       }
     }
   }
-  .titleBookmark {
+
+  .bookmarkWrapper {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
     color: white;
     font-size: 0.8em;
     margin-left: 1%;
-    width: 100%;
-    h1 {
-      margin-bottom: 1%;
-      span {
-        font-size: 0.8em;
-      }
-    }
     p {
       color: var(--medium-gray);
       font-size: 1.25em;
       margin-left: 1%;
     }
     .bookmark {
-      display: grid;
-      width: 60%;
-      grid: auto auto auto auto auto / auto auto auto auto auto;
-      justify-content: space-around;
-      margin-top: 2%;
-      padding-bottom: 2%;
-      row-gap: 10%;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between;
+
       .bookmarkItem {
-        width: 160px;
-        height: 110px;
+        width: 48%;
         cursor: pointer;
         .paper {
-          box-shadow: 0 0 10px var(--medium-gray);
+          margin-bottom: 2%;
+          box-shadow: 0 0 10px rgb(67, 67, 67);
           background-color: #121212;
           .bookmarkImg {
             width: 100%;
-            height: 150px;
+            aspect-ratio: 9/7;
             position: relative;
           }
         }
       }
+    }
+  }
+  @include rs.breakpoint(large) {
+    flex-direction: column;
+    .videoVideoList {
+      width: 100%;
+    }
+    .bookmarkWrapper {
+      width: 100%;
     }
   }
 }
