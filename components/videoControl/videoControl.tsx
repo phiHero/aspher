@@ -14,8 +14,8 @@ import VolumeUp from '@mui/icons-material/VolumeUp';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Popover from '@mui/material/Popover';
 import SettingsIcon from '@mui/icons-material/Settings';
+import CloseIcon from '@mui/icons-material/Close';
 
 const VideoControl = ({
   data,
@@ -51,22 +51,16 @@ const VideoControl = ({
       </Tooltip>
     );
   }
-
-  const [anchorEl, setAnchorEl] = useState(null);
-  //Popover
-  const handlePopover = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'toc-do-popover' : undefined;
+  const [setting, setSetting] = useState<boolean>(false);
 
   return (
-    <>
+    <div
+      className={
+        setting
+          ? `${styles.VideoControl} ${styles.showSetting}`
+          : styles.VideoControl
+      }
+    >
       <div className={styles.gridHeader}>
         <div></div>
         <div className={styles.videoTitle}>
@@ -170,55 +164,12 @@ const VideoControl = ({
             </Button>
           </div>
           <div className={styles.footerButtonRight}>
-            <IconButton className={styles.footerButton} onClick={handleSetting}>
+            <IconButton
+              className={styles.footerButton}
+              onClick={() => setSetting(!setting)}
+            >
               <SettingsIcon />
             </IconButton>
-
-            {/* <Button
-              onClick={handlePopover}
-              variant='text'
-              className={styles.videoSpeed}
-            >
-              <Typography fontSize='inherit'>{playBackRate}x</Typography>
-            </Button>
-
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column-reverse',
-                  background: '#151515',
-                }}
-              >
-                {[0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map((rate, index) => (
-                  <Button
-                    onClick={() => handlePlayBackRateChange(rate)}
-                    variant='text'
-                    key={index}
-                  >
-                    <Typography
-                      color={rate === playBackRate ? 'white' : '#777a80'}
-                      fontSize='inherit'
-                    >
-                      {rate}x
-                    </Typography>
-                  </Button>
-                ))}
-              </div>
-            </Popover> */}
 
             <IconButton
               onClick={handleToggleFullScreen}
@@ -229,7 +180,41 @@ const VideoControl = ({
           </div>
         </div>
       </div>
-    </>
+      {setting && (
+        <div className={styles.setting}>
+          <IconButton
+            className={styles.close}
+            onClick={() => setSetting(!setting)}
+          >
+            <CloseIcon fontSize='inherit' />
+          </IconButton>
+          <div className={styles.settingBody}>
+            <div className={styles.server}>
+              <span>Máy chủ: </span>
+            </div>
+            <div className={styles.playbackRate}>
+              <span>Tốc độ: </span>
+              <div className={styles.option}>
+                {[0.25, 0.75, 1, 1.25, 1.5].map((rate, index) => (
+                  <div
+                    className={
+                      rate === playBackRate
+                        ? `${styles.optionButton} ${styles.active}`
+                        : styles.optionButton
+                    }
+                    onClick={() => handlePlayBackRateChange(rate)}
+                    variant='text'
+                    key={index}
+                  >
+                    {rate}x
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -62,7 +62,7 @@ export default function Watch() {
     played: 0,
     seeking: false,
   });
-  const [setting, setSetting] = useState<boolean>(false);
+
   const { playing, muted, volume, playBackRate, played, seeking } = videoConfig;
   // Dealing with anime data
   const { episode } = router.query;
@@ -168,14 +168,14 @@ export default function Watch() {
       timeDisplayFormat === 'normal' ? 'remaining' : 'normal'
     );
   };
-  const handleOnMouseMove = () => {
-    controlRef.current.style.visibility = 'visible';
-    countDown.current = 0;
-  };
-  const hanldeMouseLeave = () => {
-    controlRef.current.style.visibility = 'hidden';
-    countDown.current = 0;
-  };
+  // const handleOnMouseMove = () => {
+  //   controlRef.current.style.visibility = 'visible';
+  //   countDown.current = 0;
+  // };
+  // const hanldeMouseLeave = () => {
+  //   controlRef.current.style.visibility = 'hidden';
+  //   countDown.current = 0;
+  // };
   const addBookmark = () => {
     const canvas = canvasRef.current;
     canvas.width = 160;
@@ -200,15 +200,12 @@ export default function Watch() {
     });
     setBookmarks(bookmarksCopy);
   };
-  const handleSetting = () => {
-    setSetting(!setting);
-  };
   return (
     <div className={styles.Watch}>
       <div className={styles.videoVideoList}>
         <div
-          onMouseMove={handleOnMouseMove}
-          onMouseLeave={hanldeMouseLeave}
+          // onMouseMove={handleOnMouseMove}
+          // onMouseLeave={hanldeMouseLeave}
           ref={playerContainerRef}
           className={styles.videoContainer}
         >
@@ -251,40 +248,31 @@ export default function Watch() {
             src=''
           /> */}
           {/* {!lightMode && ( */}
-          <div
-            ref={controlRef}
-            className={
-              setting
-                ? `${styles.VideoControl} ${styles.showSetting}`
-                : styles.VideoControl
-            }
-          >
-            <VideoControl
-              data={data}
-              episode={episodeData?.[0]?.tap}
-              playing={playing}
-              handlePlayPause={handlePlayPause}
-              handleRewind={handleRewind}
-              handleFastForward={handleFastForward}
-              muted={muted}
-              handleMute={handleMute}
-              onVolumeChange={handleVolumeChange}
-              handleVolumeSeekUp={handleVolumeSeekUp}
-              volume={volume}
-              playBackRate={playBackRate}
-              handlePlayBackRateChange={handlePlayBackRateChange}
-              handleToggleFullScreen={handleToggleFullScreen}
-              played={played}
-              onSeek={handleSeekChange}
-              handleSeekMouseDown={handleSeekMouseDown}
-              handleSeekMouseUp={handleSeekMouseUp}
-              elapsedTime={elapsedTime}
-              totalDuration={totalDuration}
-              handleTimeDisplayFormat={handleTimeDisplayFormat}
-              addBookmark={addBookmark}
-              handleSetting={handleSetting}
-            />
-          </div>
+
+          <VideoControl
+            data={data}
+            episode={episodeData?.[0]?.tap}
+            playing={playing}
+            handlePlayPause={handlePlayPause}
+            handleRewind={handleRewind}
+            handleFastForward={handleFastForward}
+            muted={muted}
+            handleMute={handleMute}
+            onVolumeChange={handleVolumeChange}
+            handleVolumeSeekUp={handleVolumeSeekUp}
+            volume={volume}
+            playBackRate={playBackRate}
+            handlePlayBackRateChange={handlePlayBackRateChange}
+            handleToggleFullScreen={handleToggleFullScreen}
+            played={played}
+            onSeek={handleSeekChange}
+            handleSeekMouseDown={handleSeekMouseDown}
+            handleSeekMouseUp={handleSeekMouseUp}
+            elapsedTime={elapsedTime}
+            totalDuration={totalDuration}
+            handleTimeDisplayFormat={handleTimeDisplayFormat}
+            addBookmark={addBookmark}
+          />
         </div>
         <div className={styles.episodeData}>
           <h1>
