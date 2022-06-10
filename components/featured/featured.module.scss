@@ -1,12 +1,13 @@
 @use '../../styles/responsive.module' as rs;
 .Featured {
   width: 100%;
+  height: calc(100vh - var(--header-height));
   .banner {
     display: inline-block;
     overflow: hidden;
     position: relative;
     width: 100%;
-    height: calc(100vh - var(--header-height));
+    height: 100%;
     background: linear-gradient(60deg, black -10%, rgba(0, 0, 0, 0));
     color: white;
     text-shadow: 5px 5px 10px black;
