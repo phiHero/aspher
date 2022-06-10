@@ -4,8 +4,9 @@ const EpisodeSchema = new mongoose.Schema(
   {
     tap: { type: String || Number, required: true, unique: true },
     fbID: { type: String, required: false },
+    dlId: { type: String, required: false },
     cdn: { type: String, required: false },
-    thumbnail: { type: String, required: true },
+    thumbnail: { type: String, required: false },
     desc: { type: String },
     belongTo: {
       type: mongoose.Schema.Types.ObjectId,

@@ -115,6 +115,7 @@
             color: white;
             overflow: hidden;
             background-color: var(--custom-client-color);
+            text-shadow: 0 0 15px #000000;
             padding: 0 1.5vmax 0 1vmax;
             border: none;
             display: flex;
@@ -282,7 +283,7 @@
               border-radius: 10px;
               background-color: var(--custom-client-color);
               margin-right: 1.75%;
-              text-shadow: 1px 1px 10px black;
+              text-shadow: 0 0 10px #000000;
               span {
                 display: flex;
                 align-items: center;

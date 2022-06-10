@@ -36,7 +36,7 @@
     justify-content: space-evenly;
     .controlButton {
       color: #777;
-      font-size: clamp(1.2em, 2.25vw + 1.25em, 4.5em);
+      font-size: clamp(1.75em, 65% + 1vw + 2.5em, 5em);
       transform: scale(0.9);
       transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
       &:hover {
@@ -46,12 +46,13 @@
     }
   }
   .gridFooter {
-    padding: 0 1em 0.5em;
+    padding: 0 1em 0.3%;
     align-items: unset;
     flex-direction: column;
     .progressBar {
       span {
         padding: 0;
+        margin-bottom: max(0.5%, 2.5px);
       }
       :global(.MuiSlider-track) {
         color: var(--custom-client-color);
@@ -66,6 +67,9 @@
         width: 20px;
         background-color: #fff;
         border: 2px solid var(--custom-client-color);
+        @media (hover: none) {
+          pointer-events: none;
+        }
       }
       :global(.Mui-focusVisible) {
         box-shadow: 0px 0px 0px 8px rgba(136, 136, 136, 0.16);
@@ -141,16 +145,20 @@
       z-index: 10;
     }
     .settingBody {
+      // Global
+      span {
+        white-space: nowrap;
+        min-width: 70px;
+      }
       .server {
         margin-bottom: 3%;
       }
+      .server,
       .playbackRate {
         display: flex;
         align-items: center;
         gap: 4%;
-        span {
-          white-space: nowrap;
-        }
+
         .option {
           display: flex;
           gap: 2%;
@@ -162,16 +170,20 @@
             border-radius: 4px;
             color: #ddd;
             transition: background-color 0.5s ease-in-out,
-              color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+              color 0.5s ease-in-out, border-color 0.5s ease-in-out,
+              text-shadow 0.5s ease-in-out;
+            cursor: pointer;
             &.active {
               color: white;
               background-color: var(--custom-client-color);
               border-color: var(--custom-client-color);
+              text-shadow: 0 0 7.5px black;
             }
             &:hover {
               color: white;
               background-color: var(--custom-client-color);
               border-color: var(--custom-client-color);
+              text-shadow: 0 0 7.5px black;
             }
           }
         }

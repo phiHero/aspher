@@ -19,7 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const VideoControl = ({
   data,
-  episode,
+  episodeData,
   handlePlayPause,
   playing,
   handleRewind,
@@ -40,7 +40,8 @@ const VideoControl = ({
   totalDuration,
   handleTimeDisplayFormat,
   addBookmark,
-  handleSetting,
+  server,
+  setServer,
 }) => {
   function ValueLabelComponent(props) {
     const { children } = props;
@@ -52,6 +53,8 @@ const VideoControl = ({
     );
   }
   const [setting, setSetting] = useState<boolean>(false);
+  console.log(episodeData);
+  console.log(episodeData);
 
   return (
     <div
@@ -65,7 +68,7 @@ const VideoControl = ({
         <div></div>
         <div className={styles.videoTitle}>
           <h1>
-            <span>T{episode + ': '}</span>
+            <span>T{episodeData.tap + ': '}</span>
             {data?.title}
           </h1>
         </div>
@@ -191,6 +194,32 @@ const VideoControl = ({
           <div className={styles.settingBody}>
             <div className={styles.server}>
               <span>Máy chủ: </span>
+              <div className={styles.option}>
+                {episodeData.fbID && (
+                  <div
+                    className={
+                      server === 'FB'
+                        ? `${styles.optionButton} ${styles.active}`
+                        : styles.optionButton
+                    }
+                    onClick={() => setServer('FB')}
+                  >
+                    Thanos
+                  </div>
+                )}
+                {episodeData.dlID && (
+                  <div
+                    className={
+                      server === 'DL'
+                        ? `${styles.optionButton} ${styles.active}`
+                        : styles.optionButton
+                    }
+                    onClick={() => setServer('Dl')}
+                  >
+                    Excon
+                  </div>
+                )}
+              </div>
             </div>
             <div className={styles.playbackRate}>
               <span>Tốc độ: </span>
@@ -203,7 +232,6 @@ const VideoControl = ({
                         : styles.optionButton
                     }
                     onClick={() => handlePlayBackRateChange(rate)}
-                    variant='text'
                     key={index}
                   >
                     {rate}x

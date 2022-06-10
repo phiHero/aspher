@@ -97,21 +97,52 @@ export async function SrAnime() {
     reset: true,
     container: document.querySelector('[data-anime-scroll-container]'),
   });
-  sr.reveal('#sr-left', {
-    origin: 'left',
-    distance: '80px',
-    interval: 100,
-  });
-  window.innerWidth > 900
-    ? sr.reveal('#sr-right-long', {
-        origin: 'right',
-        distance: '200px',
-        scale: 0.8,
-      })
-    : sr.reveal('#sr-right-long', {
+
+  if (window.innerWidth > 900) {
+    sr.reveal('#sr-left', {
+      origin: 'left',
+      distance: '80px',
+      interval: 100,
+    });
+    sr.reveal(
+      '#sr-bottom-episode-delay',
+      {
         origin: 'bottom',
-        distance: '0px',
-      });
+        distance: '40px',
+        interval: 150,
+        reset: false,
+        delay: 1250,
+      },
+      { cleanup: true }
+    );
+    sr.reveal('#sr-right-long', {
+      origin: 'right',
+      distance: '200px',
+      scale: 0.8,
+    });
+  } else {
+    sr.reveal('#sr-left', {
+      origin: 'left',
+      distance: '80px',
+      interval: 100,
+      delay: 1100,
+    });
+    sr.reveal(
+      '#sr-bottom-episode-delay',
+      {
+        origin: 'bottom',
+        distance: '40px',
+        interval: 150,
+        reset: false,
+        delay: 2150,
+      },
+      { cleanup: true }
+    );
+    sr.reveal('#sr-right-long', {
+      origin: 'bottom',
+      distance: '0px',
+    });
+  }
   sr.reveal(
     '[data-sr-bottom]',
     {
@@ -122,17 +153,7 @@ export async function SrAnime() {
     },
     { cleanup: true }
   );
-  sr.reveal(
-    '#sr-bottom-episode-delay',
-    {
-      origin: 'bottom',
-      distance: '40px',
-      interval: 150,
-      reset: false,
-      delay: 1250,
-    },
-    { cleanup: true }
-  );
+
   sr.reveal(
     '#sr-bottom-delay',
     {

@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from 'react';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import cheerio from 'cheerio';
 import ReactPlayer from 'react-player/lazy';
 import Link from 'next/link';
 // Type
@@ -11,7 +10,6 @@ import { _data, _episodeData, _videoConfig } from '../../interface/_custom';
 //Style
 import styles from '../../styles/watch.module.scss';
 import Error from '../../components/error/error';
-import VideoItem from '../../components/videoItem/videoItem';
 import VideoControl from '../../components/videoControl/videoControl';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -33,7 +31,7 @@ const format = (seconds: number) => {
   }
   return `${mm}:${ss}`;
 };
-const getURL = async (fbID: string) => {
+const FBFetcher = async (fbID: string) => {
   try {
     const res = await axios.post('/api/anime/watch/', { fbID: fbID });
     return res.data;
@@ -50,6 +48,7 @@ export default function Watch() {
   const countDown = useRef<number>(0);
   const canvasRef = useRef<HTMLElement | null>(null);
 
+  const [server, setServer] = useState<string>();
   const [episodeData, setEpisodeData] = useState<_episodeData | undefined>();
   const [watchData, setWatchData] = useState();
   const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
@@ -70,18 +69,29 @@ export default function Watch() {
     router.isReady && `/api/anime/watch/${router.query.animeId}`,
     fetcher
   );
+  // Initializing basic data
   useEffect(() => {
     if (!router.isReady) return;
-    let episodeData = data?.episode.filter((item) => item._id === episode);
+    let episodeData = data?.episode.filter((item) => item._id === episode)[0];
     setEpisodeData(episodeData);
-    if (episodeData?.[0]?.fbID) {
+    if (episodeData?.fbID) {
+      setServer('FB');
+    } else if (episodeData?.dlID) {
+      setServer('DL');
+    }
+  }, [data, episode, router.isReady]);
+  // Get video data
+  useEffect(() => {
+    if (server === 'FB') {
       const get = async () => {
-        let wData = await getURL(episodeData[0].fbID);
+        let wData = await FBFetcher(episodeData?.fbID);
         setWatchData(wData);
       };
       get();
+    } else if (server === 'DL') {
+      setWatchData(episodeData?.dlID);
     }
-  }, [data, episode, router.isReady]);
+  }, [episodeData, server]);
 
   if (error) return <Error />;
   if (!data || !watchData) return <Loader />;
@@ -251,7 +261,7 @@ export default function Watch() {
 
           <VideoControl
             data={data}
-            episode={episodeData?.[0]?.tap}
+            episodeData={episodeData}
             playing={playing}
             handlePlayPause={handlePlayPause}
             handleRewind={handleRewind}
@@ -272,12 +282,14 @@ export default function Watch() {
             totalDuration={totalDuration}
             handleTimeDisplayFormat={handleTimeDisplayFormat}
             addBookmark={addBookmark}
+            server={server}
+            setServer={setServer}
           />
         </div>
         <div className={styles.episodeData}>
           <h1>
             {data?.title}
-            <span>{' tập ' + episodeData?.[0]?.tap}</span>
+            <span>{' tập ' + episodeData.tap}</span>
           </h1>
           <div className={styles.episodeList}>
             {data.episode.map((item, index) => (
@@ -286,7 +298,14 @@ export default function Watch() {
                 key={index}
                 shallow
               >
-                <a className={styles.episodeLink} id='sr-bottom-episode-delay'>
+                <a
+                  className={
+                    episode === item._id
+                      ? `${styles.episodeLink} ${styles.active}`
+                      : styles.episodeLink
+                  }
+                  id='sr-bottom-episode-delay'
+                >
                   {item.tap}
                 </a>
               </Link>

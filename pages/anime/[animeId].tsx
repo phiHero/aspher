@@ -4,7 +4,6 @@ import Anime from '../../lib/model/Anime';
 import Episode from '../../lib/model/Episode';
 // Essentials
 import { useRef, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 // Types
 import { _data, _user } from '../../interface/_custom';
@@ -31,7 +30,6 @@ import ThumbUpAltSharpIcon from '@mui/icons-material/ThumbUpAltSharp';
 import ArrowForwardSharpIcon from '@mui/icons-material/ArrowForwardSharp';
 
 export default function AnimeDetail({ anime }: { anime: string }) {
-  const router = useRouter();
   const { inView, ref } = useInView();
   const [data, setData] = useState<_data>();
   const [user, setUser] = useState<_user>();
@@ -83,10 +81,6 @@ export default function AnimeDetail({ anime }: { anime: string }) {
       console.log(err);
     }
   };
-
-  const play = () => {
-    router.push(`/watch/${data._id}?espisode=${data.episode[0].tap}`);
-  };
   if (!data) return <Loader />;
 
   return (
@@ -128,7 +122,7 @@ export default function AnimeDetail({ anime }: { anime: string }) {
                 .map((item, index) => {
                   return (
                     <Link
-                      href={`/watch/${data._id}?espisode=${item.tap}`}
+                      href={`/watch/${data._id}?espisode=${item._id}`}
                       key={index}
                     >
                       <a className={styles.link}>Tập {item.tap}</a>
@@ -138,9 +132,15 @@ export default function AnimeDetail({ anime }: { anime: string }) {
             </div>
             <div className={styles.button}>
               <div className={styles.playButton}>
-                <button onClick={play}>
-                  <PlayArrowIcon className={styles.icon} /> Xem
-                </button>
+                <Link
+                  href={`/watch/${data._id}?episode=${data.episode[0]._id}`}
+                >
+                  <a>
+                    <button>
+                      <PlayArrowIcon className={styles.icon} /> Xem
+                    </button>
+                  </a>
+                </Link>
               </div>
               <div className={styles.infoButton}>
                 <button>
@@ -266,12 +266,12 @@ export default function AnimeDetail({ anime }: { anime: string }) {
                 </div>
               </div>
               <div className={styles.video} id='sr-right-long'>
-                {/* <ReactPlayer
+                <ReactPlayer
                   width={'100%'}
                   height={'100%'}
                   url={'https://www.youtube.com/watch?v=' + data.trailer}
                   controls={true}
-                /> */}
+                />
               </div>
             </div>
           </div>
