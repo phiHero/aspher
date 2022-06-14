@@ -1,5 +1,6 @@
 .headerBar {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   position: sticky;
   z-index: 999;
@@ -10,43 +11,150 @@
   padding: 0 0.5rem;
   box-shadow: black 0px 0px 10px 0px;
   height: var(--header-height);
-  .menu_icon_btn {
-    margin: 5px max(2vmax, 20px) 0 1vmax;
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0;
+  .leftCorner {
+    display: flex;
+    .menu_icon_btn {
+      margin: 5px max(2vmax, 20px) 0 1vmax;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
 
-    .menu_bar {
-      display: block;
-      width: 1.6rem;
-      min-height: 1px;
-      background-color: rgba(255, 255, 255, 0.4);
-      transition: all 0.2s linear;
+      .menu_bar {
+        display: block;
+        width: 1.6rem;
+        min-height: 1px;
+        background-color: rgba(255, 255, 255, 0.4);
+        transition: all 0.2s linear;
+      }
+      .menu_bar + #bar {
+        margin-top: 5px;
+        width: 1rem;
+      }
+      #bar + .menu_bar {
+        margin-top: 5px;
+      }
+      &:hover > .menu_bar {
+        background-color: #f1f1f1;
+      }
     }
-    .menu_bar + #bar {
-      margin-top: 5px;
-      width: 1rem;
+    .logo {
+      color: #ecf1ff;
+      font-weight: bold;
+      font-size: 1.1rem;
+      i {
+        font-size: 1.5rem;
+        color: var(--custom-client-color);
+      }
     }
-    #bar + .menu_bar {
-      margin-top: 5px;
-    }
-    &:hover > .menu_bar {
-      background-color: #f1f1f1;
+    .menuIconBtn {
+      background: none;
+      border: none;
+      padding: 0;
     }
   }
-  .logo {
-    color: #ecf1ff;
-    font-weight: bold;
-    font-size: 1.1rem;
-    i {
-      font-size: 1.5rem;
-      color: var(--custom-client-color);
-    }
-  }
-  .menuIconBtn {
-    background: none;
+  .iconButton {
+    background-color: transparent;
     border: none;
-    padding: 0;
+    display: grid;
+    place-items: center;
+    .icon {
+      color: rgba(255, 255, 255, 0.6);
+      transition: color 0.2s linear;
+      cursor: pointer;
+      font-size: 2em;
+      display: grid;
+      place-items: center;
+      margin-right: 0.5em;
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  .searchBar {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: translateY(-100%);
+    transition: transform 0.2s linear;
+    .search {
+      position: relative;
+      width: max(50%, 300px);
+      height: 70%;
+      input {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(38, 38, 38, 0.695);
+        border: none;
+        color: white;
+        border-radius: 5px;
+        padding: 4px 40px 4px 15px;
+        &:focus {
+          outline: 1.75px solid var(--medium-gray);
+        }
+      }
+      .searchResult {
+        width: 100%;
+        max-height: calc(75vh - var(--header-height));
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin-top: 0.5%;
+        display: flex;
+        flex-direction: column;
+        background-color: #0f0f0f;
+        border-radius: 4px;
+        .searchItem {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          cursor: pointer;
+          .infoType {
+            color: var(--medium-gray);
+            font-weight: bold;
+            margin-right: 0.3vmax;
+            font-size: clamp(0.5em, 0.6vmax + 5px, 0.8em);
+          }
+
+          .searchItemBgWrapper {
+            width: 18%;
+            aspect-ratio: 16/9;
+            position: relative;
+            margin-right: 5%;
+          }
+          .searchItemDetail {
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            .searchItemTitle {
+              font-size: 1.1em;
+              font-weight: 500;
+            }
+          }
+          &:hover {
+            background-color: var(--lightest-gray);
+          }
+        }
+      }
+      .iconButton {
+        position: absolute;
+        top: 4.5px;
+        right: -5px;
+        .icon {
+          font-size: 1.9em;
+        }
+      }
+    }
+    &.visible {
+      transform: translateY(0);
+    }
   }
 }

@@ -82,6 +82,7 @@ export default function AnimeDetail({ anime }: { anime: string }) {
     }
   };
   if (!data) return <Loader />;
+  console.log(data.episode);
 
   return (
     <>
@@ -133,7 +134,7 @@ export default function AnimeDetail({ anime }: { anime: string }) {
             <div className={styles.button}>
               <div className={styles.playButton}>
                 <Link
-                  href={`/watch/${data._id}?episode=${data.episode[0]._id}`}
+                  href={`/watch/${data._id}?episode=${data.episode[0]?._id}`}
                 >
                   <a>
                     <button>

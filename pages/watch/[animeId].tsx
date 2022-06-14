@@ -228,7 +228,8 @@ export default function Watch() {
               watchData.hd_nr ||
               watchData.hd ||
               watchData.sd_nr ||
-              watchData.sd
+              watchData.sd ||
+              'https://www.dailymotion.com/embed/video/' + watchData
             }
             width={''}
             height={''}
