@@ -94,7 +94,7 @@ export async function SrAnime() {
   const sr = ScrollReveal({
     distance: '60px',
     duration: 2800,
-    reset: true,
+    reset: false,
     container: document.querySelector('[data-anime-scroll-container]'),
   });
 
@@ -110,7 +110,6 @@ export async function SrAnime() {
         origin: 'bottom',
         distance: '40px',
         interval: 150,
-        reset: false,
         delay: 1250,
       },
       { cleanup: true }
@@ -133,7 +132,6 @@ export async function SrAnime() {
         origin: 'bottom',
         distance: '40px',
         interval: 150,
-        reset: false,
         delay: 2150,
       },
       { cleanup: true }
@@ -173,7 +171,6 @@ export async function SrAnime() {
       scale: 1.2,
       easing: 'ease-out',
       duration: 1250,
-      reset: false,
       beforeReveal: () =>
         document.querySelector('#sr-right-img') &&
         (document.querySelector('#sr-right-img')!.style.visibility = 'visible'),

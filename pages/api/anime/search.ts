@@ -9,21 +9,22 @@ export default async function handler(
   //   return;
   // }
   try {
-    console.log('start');
-
     const data = await Anime.aggregate([
       {
         $search: {
           index: 'default',
-          text: {
-            query: req.query.q,
-            path: 'title',
-            fuzzy: {
-              maxEdits: 2,
-            },
-          },
-          highlight: {
-            path: ['title'],
+          compound: {
+            must: [
+              {
+                text: {
+                  query: req.query.q,
+                  path: 'title',
+                  fuzzy: {
+                    maxEdits: 2,
+                  },
+                },
+              },
+            ],
           },
         },
       },
@@ -41,10 +42,6 @@ export default async function handler(
         },
       },
     ]);
-    console.log('data: ' + data);
-
-    console.log('end');
-
     if (data) return res.status(200).json(data);
     res.status(200).json([]);
   } catch (error) {
