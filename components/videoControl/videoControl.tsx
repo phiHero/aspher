@@ -53,8 +53,8 @@ const VideoControl = ({
     );
   }
   const [setting, setSetting] = useState<boolean>(false);
-  console.log(episodeData);
-  console.log(episodeData);
+  console.log(elapsedTime);
+  console.log(played);
 
   return (
     <div

@@ -111,10 +111,12 @@
         flex-direction: column;
         background-color: #0f0f0f;
         border-radius: 4px;
+        padding-top: max(1%, 5px);
         .searchItem {
           width: 100%;
           display: flex;
           flex-direction: row;
+          margin-bottom: max(1%, 5px);
           cursor: pointer;
           .infoType {
             color: var(--medium-gray);
@@ -124,7 +126,7 @@
           }
 
           .searchItemBgWrapper {
-            width: 18%;
+            width: max(20%, 80px);
             aspect-ratio: 16/9;
             position: relative;
             margin-right: 5%;
@@ -134,9 +136,11 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            font-size: clamp(0.5em, 0.5vmax + 0.35em, 0.9em);
             .searchItemTitle {
-              font-size: 1.1em;
+              font-size: clamp(0.5em, 0.6vmax + 0.6em, 1.25em);
               font-weight: 500;
+              margin-bottom: max(0.5%, 3px);
             }
           }
           &:hover {

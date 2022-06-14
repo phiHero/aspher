@@ -5,7 +5,7 @@ export default function Loader({
   height,
   color,
 }: {
-  size?: number;
+  size?: string;
   height?: string;
   color?: string;
 }) {

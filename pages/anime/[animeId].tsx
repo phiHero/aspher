@@ -270,7 +270,7 @@ export default function AnimeDetail({ anime }: { anime: string }) {
                 <ReactPlayer
                   width={'100%'}
                   height={'100%'}
-                  url={'https://www.youtube.com/watch?v=' + data.trailer}
+                  //  url={'https://www.youtube.com/watch?v=' + data.trailer}
                   controls={true}
                 />
               </div>

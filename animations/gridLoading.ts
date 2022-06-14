@@ -185,11 +185,14 @@ const GridLoading = () => {
   function applyFx() {
     // Simulate loading grid to show the effect.
     clearTimeout(loadingTimeout);
-    loadingTimeout = setTimeout(function () {
-      // Apply effect.
-      // GridLoaderFx.prototype._render.call(loaders[currentGrid]);
-      loaders[currentGrid]._render();
-    }, 1800);
+    loadingTimeout = setTimeout(
+      function () {
+        // Apply effect.
+        // GridLoaderFx.prototype._render.call(loaders[currentGrid]);
+        loaders[currentGrid]._render();
+      },
+      window.innerWidth > 900 ? 200 : 1800
+    );
   }
 
   // Initialize the animation with scrollmagic

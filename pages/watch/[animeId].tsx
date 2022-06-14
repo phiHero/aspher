@@ -160,19 +160,19 @@ export default function Watch() {
     setVideoConfig({ ...videoConfig, seeking: false });
   };
 
-  const currentTime = playerRef.current
-    ? playerRef.current.getCurrentTime()
-    : '00:00';
-  const duration = playerRef.current
-    ? playerRef.current.getDuration()
-    : '00:00';
+  const currentTime =
+    playerRef && playerRef.current
+      ? playerRef.current.getCurrentTime()
+      : '00:00';
 
+  const duration =
+    playerRef && playerRef.current ? playerRef.current.getDuration() : '00:00';
   const elapsedTime =
-    timeDisplayFormat === 'normal'
+    timeDisplayFormat == 'normal'
       ? format(currentTime)
       : `-${format(duration - currentTime)}`;
-  const totalDuration = format(duration);
 
+  const totalDuration = format(duration);
   const handleTimeDisplayFormat = () => {
     setTimeDisplayFormat(
       timeDisplayFormat === 'normal' ? 'remaining' : 'normal'
@@ -254,11 +254,6 @@ export default function Watch() {
               },
             }}
           />
-          {/* <video
-            className={styles.video}
-            src=''
-          /> */}
-          {/* {!lightMode && ( */}
 
           <VideoControl
             data={data}

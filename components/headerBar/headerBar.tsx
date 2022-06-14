@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import Loader from '../loader/loader';
 
 const getSearchResult = async (query: string) => {
   try {
@@ -18,20 +19,28 @@ const getSearchResult = async (query: string) => {
 const HeaderBar = () => {
   const [searchData, setSearchData] = useState([]);
   const [display, setDisplay] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const searchBarRef = useRef<HTMLInputElement>(null);
   const searchBarVisible = () => {
     searchBarRef.current?.classList.toggle(styles.visible);
-    setDisplay(!display);
+    setDisplay(false);
   };
   const getSearchResultOnChange = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    if (e.target.value.length > 3) {
-      let data = await getSearchResult(e.target.value as string);
+    let query: string = e.target.value.trim();
+    if (query.length > 3) {
+      setIsLoading(true);
+      let data = await getSearchResult(query);
       setSearchData(data);
       console.log(data);
+      if (data) setIsLoading(false);
+    } else {
+      setIsLoading(false);
+      setSearchData([]);
     }
   };
+  console.log(display);
   return (
     <header className={styles.headerBar}>
       <div className={styles.leftCorner}>
@@ -64,37 +73,41 @@ const HeaderBar = () => {
             type='text'
             placeholder='Tìm kiếm anime...'
             onChange={(e) => getSearchResultOnChange(e)}
-            onClick={() => setDisplay(true)}
+            onFocus={() => setDisplay(true)}
           />
 
           {display && (
             <div className={styles.searchResult}>
-              {searchData?.map((item, index: number) => (
-                <Link href={`/anime/${item._id}`} key={index}>
-                  <a className={styles.searchItem}>
-                    <div className={styles.searchItemBgWrapper}>
-                      <Image
-                        className={styles.searchItemImg}
-                        src={item.backgroundImg}
-                        layout='fill'
-                        objectFit='cover'
-                        alt={item.title + ' background image.'}
-                      />
-                    </div>
-                    <div className={styles.searchItemDetail}>
-                      <h1 className={styles.searchItemTitle}>{item.title}</h1>
-                      <div className={styles.searchItemOtherName}>
-                        <span className={styles.infoType}>Tên khác: </span>
-                        {item.otherName?.join(', ') || 'n/a'}
+              {isLoading ? (
+                <Loader height='40vh' size='2.5vmax' />
+              ) : (
+                searchData?.map((item, index: number) => (
+                  <Link href={`/anime/${item._id}`} key={index}>
+                    <a className={styles.searchItem} onClick={searchBarVisible}>
+                      <div className={styles.searchItemBgWrapper}>
+                        <Image
+                          className={styles.searchItemImg}
+                          src={item.backgroundImg}
+                          layout='fill'
+                          objectFit='cover'
+                          alt={item.title + ' background image.'}
+                        />
                       </div>
-                      <div className={styles.searchItemEpisode}>
-                        <span className={styles.infoType}>Số tập: </span>{' '}
-                        {(item.episode?.length || '?') + ' tập'}
+                      <div className={styles.searchItemDetail}>
+                        <h1 className={styles.searchItemTitle}>{item.title}</h1>
+                        <div className={styles.searchItemOtherName}>
+                          <span className={styles.infoType}>Tên khác: </span>
+                          {item.otherName?.join(', ') || 'n/a'}
+                        </div>
+                        <div className={styles.searchItemEpisode}>
+                          <span className={styles.infoType}>Số tập: </span>{' '}
+                          {(item.episode?.length || '?') + ' tập'}
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </Link>
-              ))}
+                    </a>
+                  </Link>
+                ))
+              )}
             </div>
           )}
           <button className={styles.iconButton} onClick={searchBarVisible}>

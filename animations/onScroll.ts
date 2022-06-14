@@ -204,16 +204,26 @@ export async function SrHome() {
     reset: true,
     container: document.querySelector('[data-scroll-container]'),
   });
-  sr.reveal(
-    '#sr-right',
-    {
-      origin: 'right',
-      distance: '80px',
-      interval: 100,
-      delay: 1200,
-    },
-    { cleanup: true }
-  );
+  window.innerWidth > 900
+    ? sr.reveal(
+        '#sr-right',
+        {
+          origin: 'right',
+          distance: '80px',
+          interval: 100,
+        },
+        { cleanup: true }
+      )
+    : sr.reveal(
+        '#sr-right',
+        {
+          origin: 'right',
+          distance: '80px',
+          interval: 100,
+          delay: 1200,
+        },
+        { cleanup: true }
+      );
 }
 export const ListReveal = async (container) => {
   const ScrollReveal = (await import('scrollreveal')).default;
