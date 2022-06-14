@@ -9,6 +9,8 @@ export default async function handler(
   //   return;
   // }
   try {
+    console.log('start');
+
     const data = await Anime.aggregate([
       {
         $search: {
@@ -39,6 +41,10 @@ export default async function handler(
         },
       },
     ]);
+    console.log('data: ' + data);
+
+    console.log('end');
+
     if (data) return res.status(200).json(data);
     res.status(200).json([]);
   } catch (error) {
