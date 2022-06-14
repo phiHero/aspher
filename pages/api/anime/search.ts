@@ -21,7 +21,7 @@ export default async function handler(
               {
                 text: {
                   query: req.query.q,
-                  path: 'title',
+                  path: ['title', 'otherName'],
                   fuzzy: {
                     maxEdits: 2,
                   },
@@ -31,7 +31,7 @@ export default async function handler(
           },
         },
       },
-      { $limit: 1 },
+      { $limit: 10 },
       {
         $project: {
           _id: 1,
