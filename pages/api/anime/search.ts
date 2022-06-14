@@ -4,10 +4,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== 'POST') {
-    res.status(405).end();
-    return;
-  }
+  // if (req.method !== 'POST') {
+  //   res.status(405).end();
+  //   return;
+  // }
   try {
     const data = await Anime.aggregate([
       {
