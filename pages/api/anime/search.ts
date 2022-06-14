@@ -8,6 +8,7 @@ export default async function handler(
   //   res.status(405).end();
   //   return;
   // }
+  if (!req.query.q || req.query.q?.length < 3) return;
   try {
     const data = await Anime.aggregate([
       {
@@ -19,16 +20,16 @@ export default async function handler(
                 text: {
                   query: req.query.q,
                   path: 'title',
-                  fuzzy: {
-                    maxEdits: 2,
-                  },
+                  // fuzzy: {
+                  //   maxEdits: 2,
+                  // },
                 },
               },
             ],
           },
         },
       },
-      { $limit: 10 },
+      { $limit: 1 },
       {
         $project: {
           _id: 1,
