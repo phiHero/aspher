@@ -1,15 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Anime from '../../../lib/model/Anime';
+import dbConnect from '../../../lib/dbConnect';
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // if (req.method !== 'POST') {
-  //   res.status(405).end();
-  //   return;
-  // }
-  if (!req.query.q || req.query.q?.length < 3) return;
+  if (req.method !== 'POST') {
+    res.status(405).end();
+    return;
+  }
+  if (!req.query.q || req.query.q?.length <= 3) return;
   try {
+    await dbConnect();
     const data = await Anime.aggregate([
       {
         $search: {
@@ -17,12 +19,12 @@ export default async function handler(
           compound: {
             must: [
               {
-                search: {
+                text: {
                   query: req.query.q,
                   path: 'title',
-                  // fuzzy: {
-                  //   maxEdits: 2,
-                  // },
+                  fuzzy: {
+                    maxEdits: 2,
+                  },
                 },
               },
             ],
