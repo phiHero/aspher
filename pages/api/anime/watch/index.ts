@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import * as cheerio from 'cheerio';
 import axios from 'axios';
 
 export default async function handler(

@@ -17,7 +17,7 @@ export default async function handler(
           compound: {
             must: [
               {
-                text: {
+                search: {
                   query: req.query.q,
                   path: 'title',
                   // fuzzy: {
