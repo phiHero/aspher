@@ -177,58 +177,56 @@
     }
   }
   @include rs.breakpoint(medium) {
-    .Featured {
-      height: max(calc(38vh - var(--header-height)), 225px);
-      .banner {
-        .bannerDetail {
-          width: 80%;
-          top: 52.5%;
-          left: 7.5%;
-          //Rating
-          .bannerRating {
-            margin-bottom: 1.75%;
-            .liked,
-            .userRecommended,
-            .adminRecommended {
-              width: fit-content;
-              padding: 0.15vmax 0.8vmax;
-              border-radius: 10px;
+    height: max(calc(38vh - var(--header-height)), 225px);
+    .banner {
+      .bannerDetail {
+        width: 80%;
+        top: 52.5%;
+        left: 7.5%;
+        //Rating
+        .bannerRating {
+          margin-bottom: 1.75%;
+          .liked,
+          .userRecommended,
+          .adminRecommended {
+            width: fit-content;
+            padding: 0.15vmax 0.8vmax;
+            border-radius: 10px;
+            #icon {
+              margin-right: 2.5px;
+            }
+          }
+          .liked {
+            border-radius: 10px;
+            margin-right: 1.75%;
+          }
+          .userRecommended {
+            margin-right: 1.75%;
+            span {
+              display: flex;
+              align-items: center;
+              color: black;
               #icon {
-                margin-right: 2.5px;
-              }
-            }
-            .liked {
-              border-radius: 10px;
-              margin-right: 1.75%;
-            }
-            .userRecommended {
-              margin-right: 1.75%;
-              span {
-                display: flex;
-                align-items: center;
-                color: black;
-                #icon {
-                  color: #ff4d4d;
-                }
+                color: #ff4d4d;
               }
             }
           }
+        }
 
-          .genre p {
+        .genre p {
+          font-size: 1.15vmax;
+        }
+
+        .bannerDescription {
+          margin-bottom: 1.5%;
+          width: 85%;
+          p {
+            -webkit-line-clamp: 3;
             font-size: 1.15vmax;
           }
-
-          .bannerDescription {
-            margin-bottom: 1.5%;
-            width: 85%;
-            p {
-              -webkit-line-clamp: 3;
-              font-size: 1.15vmax;
-            }
-          }
-          .moreInfoButton {
-            display: none;
-          }
+        }
+        .moreInfoButton {
+          display: none;
         }
       }
     }
