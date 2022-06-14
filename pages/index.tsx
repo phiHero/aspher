@@ -9,7 +9,7 @@ import styles from '../styles/home.module.scss';
 import MainLayout from '../layout/mainLayout/mainLayout';
 import Featured from '../components/featured/featured';
 import AnimeList from '../components/animeList/animeList';
-import { SrSection } from '../animations/onScroll';
+import { SrHome } from '../animations/onScroll';
 import { _randomAnime } from '../interface/_custom';
 
 export default function Home({
@@ -20,7 +20,7 @@ export default function Home({
   latestAnime: string;
 }) {
   useEffect(() => {
-    SrSection();
+    SrHome();
   }, []);
   return (
     <div className={styles.Home}>

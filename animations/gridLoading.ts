@@ -189,18 +189,28 @@ const GridLoading = () => {
       // Apply effect.
       // GridLoaderFx.prototype._render.call(loaders[currentGrid]);
       loaders[currentGrid]._render();
-    }, 500);
+    }, 1800);
   }
 
   // Initialize the animation with scrollmagic
   async function AnimationFired() {
     const ScrollReveal = (await import('scrollreveal')).default;
-    ScrollReveal({
-      reset: false,
-      container: document.querySelector('[data-scroll-container]'),
-    }).reveal('#AnimeList', {
-      beforeReveal: () => applyFx(),
-    });
+    if (window.innerWidth > 900) {
+      ScrollReveal({
+        reset: false,
+        container: document.querySelector('[data-scroll-container]'),
+      }).reveal('#AnimeList', {
+        beforeReveal: () => applyFx(),
+      });
+    } else {
+      ScrollReveal({
+        reset: false,
+        container: document.querySelector('[data-scroll-container]'),
+      }).reveal('#AnimeList', {
+        delay: 1600,
+        beforeReveal: () => applyFx(),
+      });
+    }
   }
 };
 

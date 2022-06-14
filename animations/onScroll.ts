@@ -184,7 +184,6 @@ export async function SrSection() {
     distance: '60px',
     duration: 2800,
     reset: true,
-
     container: document.querySelector('[data-scroll-container]'),
   });
   sr.reveal(
@@ -193,6 +192,25 @@ export async function SrSection() {
       origin: 'right',
       distance: '80px',
       interval: 100,
+    },
+    { cleanup: true }
+  );
+}
+export async function SrHome() {
+  const ScrollReveal = (await import('scrollreveal')).default;
+  const sr = ScrollReveal({
+    distance: '60px',
+    duration: 2800,
+    reset: true,
+    container: document.querySelector('[data-scroll-container]'),
+  });
+  sr.reveal(
+    '#sr-right',
+    {
+      origin: 'right',
+      distance: '80px',
+      interval: 100,
+      delay: 1200,
     },
     { cleanup: true }
   );
