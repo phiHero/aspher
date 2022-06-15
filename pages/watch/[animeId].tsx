@@ -140,13 +140,13 @@ export default function Watch() {
     screenfull.toggle(playerContainerRef.current);
   };
   const handleProgress = (changeState) => {
-    // if (countDown.current >= 3) {
-    //   controlRef.current.style.visibility = 'hidden';
-    //   countDown.current = 0;
-    // }
-    // if (controlRef.current.style.visibility === 'visible') {
-    //   countDown.current++;
-    // }
+    if (countDown.current > 2) {
+      controlRef.current.style.display = 'none';
+      countDown.current = 0;
+    }
+    if (controlRef.current.style.display === 'flex') {
+      countDown.current++;
+    }
     if (!seeking) {
       console.log(seeking);
 
@@ -208,21 +208,21 @@ export default function Watch() {
 
   const totalDuration = format(duration);
 
-  // const handleOnMouseMove = () => {
-  //   controlRef.current.style.visibility = 'visible';
-  //   countDown.current = 0;
-  // };
-  // const hanldeMouseLeave = () => {
-  //   controlRef.current.style.visibility = 'hidden';
-  //   countDown.current = 0;
-  // };
+  const handleOnMouseMove = () => {
+    controlRef.current.style.display = 'flex';
+    countDown.current = 0;
+  };
+  const hanldeMouseLeave = () => {
+    controlRef.current.style.visibility = 'none';
+    countDown.current = 0;
+  };
 
   return (
     <div className={styles.Watch}>
       <div className={styles.videoVideoList}>
         <div
-          // onMouseMove={handleOnMouseMove}
-          // onMouseLeave={hanldeMouseLeave}
+          onMouseMove={handleOnMouseMove}
+          onMouseLeave={hanldeMouseLeave}
           ref={playerContainerRef}
           className={styles.videoContainer}
         >
@@ -264,6 +264,7 @@ export default function Watch() {
           />
 
           <VideoControl
+            controlRef={controlRef}
             data={data}
             episodeData={episodeData}
             playing={playing}

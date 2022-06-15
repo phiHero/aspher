@@ -42,6 +42,7 @@ const VideoControl = ({
   addBookmark,
   server,
   setServer,
+  controlRef,
 }: {
   data: any;
   episodeData: any;
@@ -67,6 +68,7 @@ const VideoControl = ({
   addBookmark: any;
   server: any;
   setServer: any;
+  controlRef: HTMLDivElement;
 }) => {
   function ValueLabelComponent(props) {
     const { children } = props;
@@ -86,122 +88,120 @@ const VideoControl = ({
           : styles.VideoControl
       }
     >
-      <div className={styles.gridHeader}>
-        <div></div>
-        <div className={styles.videoTitle}>
-          <h1>
-            <span>T{episodeData.tap + ': '}</span>
-            {data?.title}
-          </h1>
+      <div className={styles.controlWrapper} ref={controlRef}>
+        <div className={styles.gridHeader}>
+          <div></div>
+          <div className={styles.videoTitle}>
+            <h1>
+              <span>T{episodeData.tap + ': '}</span>
+              {data?.title}
+            </h1>
+          </div>
+          <div className={styles.bookmark}>
+            <IconButton
+              onClick={addBookmark}
+              className={styles.bookmarkButton}
+              aria-label='reqind'
+            >
+              <BookmarkIcon fontSize='inherit' />
+            </IconButton>
+          </div>
         </div>
-        <div className={styles.bookmark}>
+        <div className={styles.gridBody}>
           <IconButton
-            onClick={addBookmark}
-            className={styles.bookmarkButton}
+            onClick={handleRewind}
+            className={styles.controlButton}
             aria-label='reqind'
           >
-            <BookmarkIcon fontSize='inherit' />
+            <Replay10Icon fontSize='inherit' />
+          </IconButton>
+          <IconButton
+            onClick={handlePlayPause}
+            className={styles.controlButton}
+            aria-label='reqind'
+          >
+            {playing ? (
+              <PauseIcon fontSize='inherit' />
+            ) : (
+              <PlayArrowIcon fontSize='inherit' />
+            )}
+          </IconButton>
+          <IconButton
+            onClick={handleFastForward}
+            className={styles.controlButton}
+            aria-label='reqind'
+          >
+            <Forward10Icon fontSize='inherit' />
           </IconButton>
         </div>
-      </div>
-      <div className={styles.gridBody}>
-        <IconButton
-          onClick={handleRewind}
-          className={styles.controlButton}
-          aria-label='reqind'
-        >
-          <Replay10Icon fontSize='inherit' />
-        </IconButton>
-
-        <IconButton
-          onClick={handlePlayPause}
-          className={styles.controlButton}
-          aria-label='reqind'
-        >
-          {playing ? (
-            <PauseIcon fontSize='inherit' />
-          ) : (
-            <PlayArrowIcon fontSize='inherit' />
-          )}
-        </IconButton>
-
-        <IconButton
-          onClick={handleFastForward}
-          className={styles.controlButton}
-          aria-label='reqind'
-        >
-          <Forward10Icon fontSize='inherit' />
-        </IconButton>
-      </div>
-      <div className={styles.gridFooter}>
-        <div className={styles.progressBar}>
-          <Slider
-            valueLabelDisplay='auto'
-            components={{
-              ValueLabel: ValueLabelComponent,
-            }}
-            min={0}
-            max={100}
-            value={played * 100}
-            onChange={onSeek}
-            onMouseDown={handleSeekMouseDown}
-            onChangeCommitted={handleSeekMouseUp}
-          />
-        </div>
-        <div className={styles.footerButtonWrapper}>
-          <div className={styles.footerButtonLeft}>
-            <IconButton
-              onClick={handlePlayPause}
-              className={styles.footerButton}
-            >
-              {playing ? (
-                <PauseIcon fontSize='large' />
-              ) : (
-                <PlayArrowIcon fontSize='large' />
-              )}
-            </IconButton>
-
-            <IconButton onClick={handleMute} className={styles.footerButton}>
-              {muted ? (
-                <VolumeOffIcon fontSize='inherit' />
-              ) : (
-                <VolumeUp fontSize='inherit' />
-              )}
-            </IconButton>
+        <div className={styles.gridFooter}>
+          <div className={styles.progressBar}>
             <Slider
-              className={styles.volumeSlider}
-              aria-label='Volume'
-              size='small'
+              valueLabelDisplay='auto'
+              components={{
+                ValueLabel: ValueLabelComponent,
+              }}
               min={0}
               max={100}
-              value={volume * 100}
-              onChange={onVolumeChange}
-              onChangeCommitted={handleVolumeSeekUp}
+              value={played * 100}
+              onChange={onSeek}
+              onMouseDown={handleSeekMouseDown}
+              onChangeCommitted={handleSeekMouseUp}
             />
-            <Button
-              onClick={handleTimeDisplayFormat}
-              variant='text'
-              className={styles.time}
-            >
-              <Typography fontSize='inherit'>
-                {elapsedTime} / {totalDuration}
-              </Typography>
-            </Button>
           </div>
-          <div className={styles.footerButtonRight}>
-            <IconButton
-              className={styles.footerButton}
-              onClick={() => setSetting(!setting)}
-            >
-              <SettingsIcon />
-            </IconButton>
-
-            <IconButton
-              onClick={handleToggleFullScreen}
-              className={styles.footerButton}
-            >
-              <FullscreenIcon fontSize='inherit' />
-            </IconButton>
+          <div className={styles.footerButtonWrapper}>
+            <div className={styles.footerButtonLeft}>
+              <IconButton
+                onClick={handlePlayPause}
+                className={styles.footerButton}
+              >
+                {playing ? (
+                  <PauseIcon fontSize='large' />
+                ) : (
+                  <PlayArrowIcon fontSize='large' />
+                )}
+              </IconButton>
+              <IconButton onClick={handleMute} className={styles.footerButton}>
+                {muted ? (
+                  <VolumeOffIcon fontSize='inherit' />
+                ) : (
+                  <VolumeUp fontSize='inherit' />
+                )}
+              </IconButton>
+              <Slider
+                className={styles.volumeSlider}
+                aria-label='Volume'
+                size='small'
+                min={0}
+                max={100}
+                value={volume * 100}
+                onChange={onVolumeChange}
+                onChangeCommitted={handleVolumeSeekUp}
+              />
+              <Button
+                onClick={handleTimeDisplayFormat}
+                variant='text'
+                className={styles.time}
+              >
+                <Typography fontSize='inherit'>
+                  {elapsedTime} / {totalDuration}
+                </Typography>
+              </Button>
+            </div>
+            <div className={styles.footerButtonRight}>
+              <IconButton
+                className={styles.footerButton}
+                onClick={() => setSetting(!setting)}
+              >
+                <SettingsIcon />
+              </IconButton>
+              <IconButton
+                onClick={handleToggleFullScreen}
+                className={styles.footerButton}
+              >
+                <FullscreenIcon fontSize='inherit' />
+              </IconButton>
+            </div>
           </div>
         </div>
       </div>
