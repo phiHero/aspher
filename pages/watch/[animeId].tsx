@@ -140,7 +140,6 @@ export default function Watch() {
     screenfull.toggle(playerContainerRef.current);
   };
   const handleProgress = (changeState) => {
-    console.log(changeState);
     // if (countDown.current >= 3) {
     //   controlRef.current.style.visibility = 'hidden';
     //   countDown.current = 0;
@@ -149,13 +148,18 @@ export default function Watch() {
     //   countDown.current++;
     // }
     if (!seeking) {
+      console.log(seeking);
+
       setVideoConfig((prevState) => ({ ...prevState, ...changeState }));
     }
   };
-  console.log(videoConfig);
 
   const handleSeekChange = (e, newValue: number) => {
-    setVideoConfig({ ...videoConfig, played: parseFloat(newValue / 100) });
+    setVideoConfig({
+      ...videoConfig,
+      played: parseFloat(newValue / 100),
+      //   seeking: true,
+    });
   };
   const handleSeekMouseDown = () => {
     setVideoConfig({ ...videoConfig, seeking: true });
