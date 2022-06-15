@@ -33,14 +33,12 @@ const HeaderBar = () => {
       setIsLoading(true);
       let data = await getSearchResult(query);
       setSearchData(data);
-      console.log(data);
       if (data) setIsLoading(false);
     } else {
       setIsLoading(false);
       setSearchData([]);
     }
   };
-  console.log(display);
   return (
     <header className={styles.headerBar}>
       <div className={styles.leftCorner}>

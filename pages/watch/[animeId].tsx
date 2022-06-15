@@ -54,21 +54,24 @@ export default function Watch() {
   const [timeDisplayFormat, setTimeDisplayFormat] = useState('normal');
   const [bookmarks, setBookmarks] = useState([]);
   const [videoConfig, setVideoConfig] = useState<_videoConfig>({
-    playing: true,
+    playing: false,
     muted: false,
     volume: 1,
     playBackRate: 1.0,
     played: 0,
     seeking: false,
+    duration: 0,
   });
 
-  const { playing, muted, volume, playBackRate, played, seeking } = videoConfig;
+  const { playing, muted, volume, playBackRate, played, seeking, duration } =
+    videoConfig;
   // Dealing with anime data
   const { episode } = router.query;
   const { data, error } = useSWR<_data, any>(
     router.isReady && `/api/anime/watch/${router.query.animeId}`,
     fetcher
   );
+
   // Initializing basic data
   useEffect(() => {
     if (!router.isReady) return;
@@ -80,6 +83,7 @@ export default function Watch() {
       setServer('DL');
     }
   }, [data, episode, router.isReady]);
+
   // Get video data
   useEffect(() => {
     if (server === 'FB') {
@@ -136,6 +140,7 @@ export default function Watch() {
     screenfull.toggle(playerContainerRef.current);
   };
   const handleProgress = (changeState) => {
+    console.log('progress ' + changeState);
     if (countDown.current >= 3) {
       controlRef.current.style.visibility = 'hidden';
       countDown.current = 0;
@@ -147,45 +152,25 @@ export default function Watch() {
       setVideoConfig((prevState) => ({ ...prevState, ...changeState }));
     }
   };
+
   const handleSeekChange = (e, newValue: number) => {
     setVideoConfig({ ...videoConfig, played: parseFloat(newValue / 100) });
-    playerRef.current.seekTo(newValue / 100, 'fraction');
   };
-
   const handleSeekMouseDown = () => {
     setVideoConfig({ ...videoConfig, seeking: true });
   };
-
-  const handleSeekMouseUp = () => {
+  const handleSeekMouseUp = (e, newValue: number) => {
     setVideoConfig({ ...videoConfig, seeking: false });
+    playerRef.current.seekTo(newValue / 100, 'fraction');
   };
-
-  const currentTime =
-    playerRef && playerRef.current
-      ? playerRef.current.getCurrentTime()
-      : '00:00';
-
-  const duration =
-    playerRef && playerRef.current ? playerRef.current.getDuration() : '00:00';
-  const elapsedTime =
-    timeDisplayFormat == 'normal'
-      ? format(currentTime)
-      : `-${format(duration - currentTime)}`;
-
-  const totalDuration = format(duration);
+  const handleDuration = (duration) => {
+    setVideoConfig({ ...videoConfig, duration: duration });
+  };
   const handleTimeDisplayFormat = () => {
     setTimeDisplayFormat(
       timeDisplayFormat === 'normal' ? 'remaining' : 'normal'
     );
   };
-  // const handleOnMouseMove = () => {
-  //   controlRef.current.style.visibility = 'visible';
-  //   countDown.current = 0;
-  // };
-  // const hanldeMouseLeave = () => {
-  //   controlRef.current.style.visibility = 'hidden';
-  //   countDown.current = 0;
-  // };
   const addBookmark = () => {
     const canvas = canvasRef.current;
     canvas.width = 160;
@@ -210,6 +195,23 @@ export default function Watch() {
     });
     setBookmarks(bookmarksCopy);
   };
+  const currentTime = duration * played;
+  const elapsedTime =
+    timeDisplayFormat == 'normal'
+      ? format(currentTime)
+      : `-${format(duration - currentTime)}`;
+
+  const totalDuration = format(duration);
+
+  // const handleOnMouseMove = () => {
+  //   controlRef.current.style.visibility = 'visible';
+  //   countDown.current = 0;
+  // };
+  // const hanldeMouseLeave = () => {
+  //   controlRef.current.style.visibility = 'hidden';
+  //   countDown.current = 0;
+  // };
+
   return (
     <div className={styles.Watch}>
       <div className={styles.videoVideoList}>
@@ -238,8 +240,9 @@ export default function Watch() {
             muted={muted}
             volume={volume}
             playbackRate={playBackRate}
-            onProgress={handleProgress}
+            onProgress={() => console.log('progress')}
             onError={(err) => console.log(err)}
+            onDuration={handleDuration}
             config={{
               file: {
                 attributes: {

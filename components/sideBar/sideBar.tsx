@@ -31,7 +31,12 @@ const SideBar = () => {
         <Link href={'/customize'}>
           <a className={styles.userLogo}>
             <div className={styles.userLogoBorder}>
-              <Image src={picture} layout='responsive' alt='Ảnh đại diện' />
+              <Image
+                src={user?.profilePic || picture}
+                layout='fill'
+                objectFit='cover'
+                alt='Ảnh đại diện'
+              />
             </div>
           </a>
         </Link>

@@ -82,7 +82,6 @@ export default function AnimeDetail({ anime }: { anime: string }) {
     }
   };
   if (!data) return <Loader />;
-  console.log(data.episode);
 
   return (
     <>
@@ -123,7 +122,7 @@ export default function AnimeDetail({ anime }: { anime: string }) {
                 .map((item, index) => {
                   return (
                     <Link
-                      href={`/watch/${data._id}?espisode=${item._id}`}
+                      href={`/watch/${data._id}?episode=${item._id}`}
                       key={index}
                     >
                       <a className={styles.link}>Tập {item.tap}</a>
@@ -270,7 +269,7 @@ export default function AnimeDetail({ anime }: { anime: string }) {
                 <ReactPlayer
                   width={'100%'}
                   height={'100%'}
-                  //  url={'https://www.youtube.com/watch?v=' + data.trailer}
+                  url={'https://www.youtube.com/watch?v=' + data.trailer}
                   controls={true}
                 />
               </div>

@@ -92,7 +92,7 @@ export default function Customize() {
             <div className={styles.heading}>Ảnh đại diện:</div>
             <input
               type='text'
-              placeholder='Link ảnh (chỉ hỗ trợ từ www.facebook.com)...'
+              placeholder='Link ảnh (chỉ hỗ trợ từ www.pinterest.com)...'
               defaultValue={user?.profilePic}
               ref={profilePicRef}
             />

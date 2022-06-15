@@ -42,6 +42,31 @@ const VideoControl = ({
   addBookmark,
   server,
   setServer,
+}: {
+  data: any;
+  episodeData: any;
+  handlePlayPause: any;
+  playing: boolean;
+  handleRewind: any;
+  handleFastForward: any;
+  muted: boolean;
+  handleMute: any;
+  onVolumeChange: any;
+  handleVolumeSeekUp: any;
+  volume: number;
+  playBackRate: any;
+  handlePlayBackRateChange: any;
+  handleToggleFullScreen: any;
+  played: number;
+  onSeek: any;
+  handleSeekMouseDown: any;
+  handleSeekMouseUp: any;
+  elapsedTime: string;
+  totalDuration: string;
+  handleTimeDisplayFormat: any;
+  addBookmark: any;
+  server: any;
+  setServer: any;
 }) => {
   function ValueLabelComponent(props) {
     const { children } = props;
@@ -53,9 +78,6 @@ const VideoControl = ({
     );
   }
   const [setting, setSetting] = useState<boolean>(false);
-  console.log(elapsedTime);
-  console.log(played);
-
   return (
     <div
       className={
