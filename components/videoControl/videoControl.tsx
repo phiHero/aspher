@@ -156,9 +156,9 @@ const VideoControl = ({
                 className={styles.footerButton}
               >
                 {playing ? (
-                  <PauseIcon fontSize='large' />
+                  <PauseIcon fontSize='inherit' />
                 ) : (
-                  <PlayArrowIcon fontSize='large' />
+                  <PlayArrowIcon fontSize='inherit' />
                 )}
               </IconButton>
               <IconButton onClick={handleMute} className={styles.footerButton}>
@@ -193,7 +193,7 @@ const VideoControl = ({
                 className={styles.footerButton}
                 onClick={() => setSetting(!setting)}
               >
-                <SettingsIcon />
+                <SettingsIcon fontSize='inherit' />
               </IconButton>
               <IconButton
                 onClick={handleToggleFullScreen}

@@ -54,9 +54,8 @@
       align-items: unset;
       flex-direction: column;
       .progressBar {
-        span {
-          padding: 0;
-          margin-bottom: max(0.5%, 2.5px);
+        :global(.MuiSlider-root) {
+          padding: max(10px, 1.15%) 0;
         }
         :global(.MuiSlider-track) {
           color: var(--custom-client-color);
@@ -89,7 +88,7 @@
         justify-content: space-between;
         .footerButton {
           color: #999;
-          font-size: 1.6em;
+          font-size: clamp(1.5em, 1vw + 1em, 3em);
           transform: scale(0.9);
           transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
           padding: 0.25em;
@@ -105,13 +104,15 @@
           align-items: center;
 
           .volumeSlider {
-            width: 100px;
+            min-width: 100px;
+            max-width: 100.1px;
             color: var(--custom-client-color);
+            margin-right: max(7%, 5px);
           }
           .time {
             color: #fff;
-            margin-left: 16px;
-            font-size: 0.8em;
+            font-size: clamp(0.6em, 0.4vw + 0.4em, 0.85em);
+            white-space: nowrap;
           }
         }
         .footerButtonRight {
