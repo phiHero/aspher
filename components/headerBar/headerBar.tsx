@@ -67,6 +67,9 @@ const HeaderBar = () => {
       <div className={styles.searchBar} ref={searchBarRef}>
         <div></div>
         <div className={styles.search}>
+          <button className={styles.iconButton} onClick={searchBarVisible}>
+            <SearchRoundedIcon className={styles.icon} />
+          </button>
           <input
             type='text'
             placeholder='Tìm kiếm anime...'
@@ -108,9 +111,6 @@ const HeaderBar = () => {
               )}
             </div>
           )}
-          <button className={styles.iconButton} onClick={searchBarVisible}>
-            <SearchRoundedIcon className={styles.icon} />
-          </button>
         </div>
         <button className={styles.iconButton} onClick={searchBarVisible}>
           <CloseIcon className={styles.icon} />
