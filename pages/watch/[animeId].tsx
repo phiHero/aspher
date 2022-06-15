@@ -152,7 +152,7 @@ export default function Watch() {
       setVideoConfig((prevState) => ({ ...prevState, ...changeState }));
     }
   };
-  console.log('video +' + videoConfig);
+  console.log(videoConfig);
 
   const handleSeekChange = (e, newValue: number) => {
     setVideoConfig({ ...videoConfig, played: parseFloat(newValue / 100) });
