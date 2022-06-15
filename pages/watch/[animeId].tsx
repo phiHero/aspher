@@ -141,13 +141,13 @@ export default function Watch() {
   };
   const handleProgress = (changeState) => {
     console.log(changeState);
-    if (countDown.current >= 3) {
-      controlRef.current.style.visibility = 'hidden';
-      countDown.current = 0;
-    }
-    if (controlRef.current.style.visibility === 'visible') {
-      countDown.current++;
-    }
+    // if (countDown.current >= 3) {
+    //   controlRef.current.style.visibility = 'hidden';
+    //   countDown.current = 0;
+    // }
+    // if (controlRef.current.style.visibility === 'visible') {
+    //   countDown.current++;
+    // }
     if (!seeking) {
       setVideoConfig((prevState) => ({ ...prevState, ...changeState }));
     }
