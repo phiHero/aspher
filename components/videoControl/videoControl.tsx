@@ -78,8 +78,6 @@ const VideoControl = ({
     );
   }
   const [setting, setSetting] = useState<boolean>(false);
-  console.log('played ' + played);
-
   return (
     <div
       className={

@@ -158,7 +158,7 @@ export default function Watch() {
     setVideoConfig({
       ...videoConfig,
       played: parseFloat(newValue / 100),
-      //   seeking: true,
+      seeking: true,
     });
   };
   const handleSeekMouseDown = () => {
