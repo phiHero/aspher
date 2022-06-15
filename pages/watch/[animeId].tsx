@@ -240,7 +240,7 @@ export default function Watch() {
             muted={muted}
             volume={volume}
             playbackRate={playBackRate}
-            onProgress={() => console.log('progress')}
+            onProgress={handleProgress}
             onError={(err) => console.log(err)}
             onDuration={handleDuration}
             config={{
