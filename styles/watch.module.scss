@@ -72,6 +72,7 @@
       color: var(--medium-gray);
       font-size: 1.25em;
       margin-left: 1%;
+      margin-bottom: 2.5%;
     }
     .bookmark {
       width: 100%;
@@ -82,15 +83,33 @@
 
       .bookmarkItem {
         width: 48%;
+        max-width: 200px;
         cursor: pointer;
+
         .paper {
-          margin-bottom: 2%;
-          box-shadow: 0 0 10px rgb(67, 67, 67);
-          background-color: #121212;
+          width: 100%;
+          aspect-ratio: 16/9;
+
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgb(15, 15, 15) 115%
+          );
+          overflow: hidden;
           .bookmarkImg {
             width: 100%;
-            aspect-ratio: 9/7;
+            height: 100%;
             position: relative;
+            text-align: left;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 0 0.4em 0.8em;
+            color: rgba(255, 255, 255, 0.8);
+            .img {
+              position: absolute;
+              pointer-events: none;
+              z-index: -1;
+            }
           }
         }
       }
@@ -103,6 +122,22 @@
     }
     .bookmarkWrapper {
       width: 100%;
+      .bookmark {
+        justify-content: unset;
+        gap: 1%;
+        .bookmarkItem {
+          width: 32%;
+          max-width: unset;
+        }
+      }
+    }
+  }
+  @include rs.breakpoint(medium) {
+    .bookmark {
+      gap: 3% !important;
+      .bookmarkItem {
+        width: 47% !important;
+      }
     }
   }
 }

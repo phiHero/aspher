@@ -130,7 +130,7 @@
           width: 100%;
           display: flex;
           flex-direction: row;
-          margin-bottom: max(1%, 5px);
+          margin: max(0.5%, 2.5px) 0;
           cursor: pointer;
           .infoType {
             color: var(--medium-gray);

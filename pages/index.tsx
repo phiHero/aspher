@@ -1,6 +1,7 @@
 // Backend
 import dbConnect from '../lib/dbConnect';
 import Anime from '../lib/model/Anime';
+import Episode from '../lib/model/Episode';
 // Essentials
 import { useEffect } from 'react';
 // Types
@@ -71,20 +72,31 @@ export async function getStaticProps() {
   ]).catch((err) => {
     throw err;
   });
-  const R_latestAnime = await Anime.aggregate([
+  const R_latestAnime = await Episode.aggregate([
+    { $sort: { createdAt: -1 } },
+    { $limit: 20 },
     {
-      $project: {
-        title: 1,
-        episode: 1,
-        backgroundImg: 1,
-        updatedAt: 1,
+      $group: {
+        _id: '$belongTo',
+        createdAt: { $first: '$createdAt' },
+        //tap: { $first: '$tap' },
       },
     },
-    { $sort: { updatedAt: -1 } },
-    { $limit: 20 },
+    {
+      $lookup: {
+        from: 'animes',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'anime',
+      },
+    },
   ]);
+  console.log(R_latestAnime);
+
   const randomAnime = JSON.stringify(R_randomAnime);
-  const latestAnime = JSON.stringify(R_latestAnime);
+  const latestAnime = JSON.stringify(
+    R_latestAnime.map((item) => item.anime[0])
+  );
   return {
     props: {
       randomAnime,

@@ -11,8 +11,6 @@ import { _data, _episodeData, _videoConfig } from '../../interface/_custom';
 import styles from '../../styles/watch.module.scss';
 import Error from '../../components/error/error';
 import VideoControl from '../../components/videoControl/videoControl';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import MainLayout from '../../layout/mainLayout/mainLayout';
 import Loader from '../../components/loader/loader';
@@ -140,7 +138,7 @@ export default function Watch() {
     screenfull.toggle(playerContainerRef.current);
   };
   const handleProgress = (changeState) => {
-    if (countDown.current > 2) {
+    if (countDown.current >= 2) {
       controlRef.current.style.display = 'none';
       countDown.current = 0;
     }
@@ -178,8 +176,8 @@ export default function Watch() {
   };
   const addBookmark = () => {
     const canvas = canvasRef.current;
-    canvas.width = 160;
-    canvas.height = 90;
+    canvas.width = 858;
+    canvas.height = 480;
     const ctx = canvas.getContext('2d');
 
     ctx.drawImage(
@@ -213,7 +211,7 @@ export default function Watch() {
     countDown.current = 0;
   };
   const hanldeMouseLeave = () => {
-    controlRef.current.style.visibility = 'none';
+    controlRef.current.style.display = 'none';
     countDown.current = 0;
   };
 
@@ -323,31 +321,31 @@ export default function Watch() {
         <div className={styles.bookmark}>
           {bookmarks.map((bookmark, index) => (
             <div className={styles.bookmarkItem} key={index}>
-              <Paper
+              <div
                 className={styles.paper}
                 onClick={() => {
                   playerRef.current.seekTo(bookmark.time);
-                  controlRef.current.style.visibility = 'visible';
+                  controlRef.current.style.display = 'flex';
 
                   setTimeout(() => {
-                    controlRef.current.style.visibility = 'hidden';
+                    controlRef.current.style.display = 'none';
                   }, 1000);
                 }}
-                elevation={3}
               >
                 <div className={styles.bookmarkImg}>
                   <Image
+                    className={styles.img}
                     crossOrigin='anonymous'
                     src={bookmark.image}
                     alt={`Đánh dấu lúc ${bookmark.display}`}
                     layout='fill'
                     objectFit='cover'
                   />
+                  <span className={styles.bookmarkTime}>
+                    {bookmark.display}
+                  </span>
                 </div>
-                <Typography color={'#777a80'} variant='body2' align='center'>
-                  Đánh dấu lúc {bookmark.display}
-                </Typography>
-              </Paper>
+              </div>
             </div>
           ))}
         </div>

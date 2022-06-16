@@ -26,10 +26,11 @@
       justify-content: space-between;
       padding: 25px;
       h1 {
+        text-shadow: 0 0 10px black;
         span {
           color: var(--light-gray);
         }
-        font-size: 1.2em;
+        font-size: clamp(0.7em, 0.9vmax + 0.5em, 1.6em);
         font-weight: 600;
       }
       .bookmarkButton {
@@ -40,7 +41,7 @@
       justify-content: space-evenly;
       .controlButton {
         color: #777;
-        font-size: clamp(1.75em, 65% + 1vw + 2.5em, 5em);
+        font-size: clamp(1.75em, 2vmax + 2em, 5em);
         transform: scale(0.9);
         transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
         &:hover {
@@ -88,7 +89,7 @@
         justify-content: space-between;
         .footerButton {
           color: #999;
-          font-size: clamp(1.5em, 1vw + 1em, 3em);
+          font-size: clamp(1.5em, 0.7vmax + 1em, 2.5em);
           transform: scale(0.9);
           transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
           padding: 0.25em;
@@ -104,14 +105,14 @@
           align-items: center;
 
           .volumeSlider {
-            min-width: 100px;
-            max-width: 100.1px;
+            min-width: calc(2vmax + 4em);
+            max-width: 100px;
             color: var(--custom-client-color);
             margin-right: max(7%, 5px);
           }
           .time {
             color: #fff;
-            font-size: clamp(0.6em, 0.4vw + 0.4em, 0.85em);
+            font-size: clamp(0.6em, 0.4vmax + 0.4em, 0.85em);
             white-space: nowrap;
           }
         }
@@ -128,7 +129,7 @@
   background-color: rgba(0, 0, 0, 0.4);
 
   .controlWrapper {
-    display: none;
+    display: none !important;
   }
 
   .setting {
