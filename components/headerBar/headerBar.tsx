@@ -55,9 +55,11 @@ const HeaderBar = () => {
           <span className={styles.menu_bar} id={styles.bar}></span>
           <span className={styles.menu_bar}></span>
         </button>
-        <div className={styles.logo} unselectable='on'>
-          <i>A</i>sphero
-        </div>
+        <Link href={'/'}>
+          <a className={styles.logo} unselectable='on'>
+            <i>A</i>sphero
+          </a>
+        </Link>
       </div>
       <div className={styles.rightCorner}>
         <button className={styles.iconButton} onClick={searchBarVisible}>

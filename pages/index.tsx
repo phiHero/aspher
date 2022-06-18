@@ -91,8 +91,6 @@ export async function getStaticProps() {
       },
     },
   ]);
-  console.log(R_latestAnime);
-
   const randomAnime = JSON.stringify(R_randomAnime);
   const latestAnime = JSON.stringify(
     R_latestAnime.map((item) => item.anime[0])

@@ -3,6 +3,7 @@ import User from '../../../lib/model/User';
 import dbConnect from '../../../lib/dbConnect';
 import CryptoJS from 'crypto-js';
 import { sign } from 'jsonwebtoken';
+import { serialize } from 'cookie';
 
 export default async function handler(
   req: NextApiRequest,
@@ -32,10 +33,16 @@ export default async function handler(
       process.env.SECRET_KEY,
       { expiresIn: '7d' }
     );
-
+    const cookie = serialize('atk', accessToken, {
+      httpOnly: true,
+      //  secure: process.env.NODE_ENV !== 'development',
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 24 * 7,
+      path: '/',
+    });
     const { password, ...info } = user._doc;
-
-    res.status(200).json({ ...info, accessToken });
+    res.setHeader('Set-Cookie', cookie);
+    res.status(200).json({ ...info });
   } catch (err) {
     console.log(err);
 

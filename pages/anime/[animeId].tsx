@@ -27,7 +27,6 @@ import AnimationSync from '../../animations/onScroll';
 import ReactPlayer from 'react-player/youtube';
 import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
 import ThumbUpAltSharpIcon from '@mui/icons-material/ThumbUpAltSharp';
-import ArrowForwardSharpIcon from '@mui/icons-material/ArrowForwardSharp';
 
 export default function AnimeDetail({ anime }: { anime: string }) {
   const { inView, ref } = useInView();
@@ -44,39 +43,23 @@ export default function AnimeDetail({ anime }: { anime: string }) {
   }, [anime, inView]);
   const likeDislike = async (action: string) => {
     try {
-      const res = await axios.put(
-        `/api/user/action/like?action=${action}`,
-        { animeID: data?._id },
-        {
-          headers: {
-            authorization: 'Bearer ' + user?.accessToken,
-          },
-        }
-      );
+      const res = await axios.put(`/api/user/action/like?action=${action}`, {
+        animeID: data?._id,
+      });
       res.data.episode = data?.episode;
       setData(res.data);
     } catch (err) {
       console.log(err);
     }
   };
+  console.log(data);
   const following = async () => {
     try {
-      const res = await axios.put(
-        `/api/user/action/following`,
-        {
-          animeID: data._id,
-        },
-        {
-          headers: {
-            authorization: 'Bearer ' + user.accessToken,
-          },
-        }
-      );
-      res.data.accessToken = JSON.parse(
-        localStorage.getItem('user') || 'null'
-      ).accessToken;
+      const res = await axios.put(`/api/user/action/following`, {
+        animeID: data._id,
+      });
       localStorage.setItem('user', JSON.stringify(res.data));
-      setUser(JSON.parse(localStorage.getItem('user') || 'null'));
+      setUser(res.data);
     } catch (err) {
       console.log(err);
     }

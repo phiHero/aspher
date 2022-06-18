@@ -17,11 +17,11 @@ const SideBarData = [
     icon: <FavoriteRoundedIcon className={styles.sidebarIcon} />,
     path: '/followed',
   },
-  {
-    title: 'Nhận xét',
-    icon: <CommentRoundedIcon className={styles.sidebarIcon} />,
-    path: '/comment',
-  },
+  // {
+  //   title: 'Nhận xét',
+  //   icon: <CommentRoundedIcon className={styles.sidebarIcon} />,
+  //   path: '/comment',
+  // },
   {
     title: 'Giao diện',
     icon: <AutoFixHighIcon className={styles.sidebarIcon} />,

@@ -1,14 +1,14 @@
 .Login {
   width: 100%;
   height: 100%;
-  a,
-  i {
+  .highlight {
     color: var(--custom-color-auth);
+  }
+  a {
     font-weight: bold;
     transition: color 1.25s ease 0s;
     text-decoration: none;
   }
-
   .wrapper {
     width: max(min(21%, 385px), 275px);
     height: 100%;
@@ -81,13 +81,23 @@
           background-color: var(--background-input-color);
           color: white;
           padding-left: 12.5px;
-          margin-bottom: 7.5%;
-
+          margin-bottom: 1%;
           &::placeholder {
             color: lightgray;
           }
         }
-
+        input:not(.emailInput) {
+          margin-top: 7.5%;
+        }
+        .error {
+          border: 1px solid #dc3545;
+          &:focus {
+            outline: none;
+          }
+        }
+        span {
+          color: #dc3545;
+        }
         button {
           height: min(15%, 44px);
           border-radius: 5px;
@@ -97,7 +107,7 @@
           border-color: var(--custom-color-auth) !important;
           font-size: 18px;
           font-weight: 500;
-          margin-top: 2.5%;
+          margin-top: 10%;
           cursor: pointer;
           transition: all 1.25s ease 0s;
         }

@@ -10,7 +10,7 @@
     box-shadow: 7px 7px 15px black;
     border-radius: 0.3em;
     transition: box-shadow 0.3s ease-in-out;
-    text-align: center;
+    text-align: left;
     .username,
     .profilePic,
     .customColor,
@@ -23,7 +23,6 @@
       font-size: 0.9em;
       color: var(--heading-color);
       margin-bottom: 0.5em;
-      text-align: left;
     }
     input {
       width: 100%;
@@ -37,6 +36,17 @@
       &:focus {
         outline: 1px solid var(--custom-client-color);
       }
+    }
+    .error {
+      border: 1px solid #dc3545;
+      &:focus {
+        outline: none;
+      }
+    }
+    .errorMessage {
+      width: 100%;
+      color: #dc3545;
+      font-size: 0.7em;
     }
     button {
       padding: 0.25em 1em;

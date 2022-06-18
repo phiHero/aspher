@@ -176,8 +176,14 @@
       // }
     }
   }
+  @include rs.breakpoint(x-large) {
+    height: max(calc(85vh - var(--header-height)), 500px);
+  }
+  @include rs.breakpoint(large) {
+    height: max(calc(70vh - var(--header-height)), 400px);
+  }
   @include rs.breakpoint(medium) {
-    height: max(calc(38vh - var(--header-height)), 225px);
+    height: max(calc(55vh - var(--header-height)), 225px);
     .banner {
       .bannerDetail {
         width: 80%;
@@ -227,6 +233,9 @@
         }
       }
     }
+  }
+  @include rs.breakpoint(small) {
+    height: max(calc(38vh - var(--header-height)), 225px);
   }
 }
 

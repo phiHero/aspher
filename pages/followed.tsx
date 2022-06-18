@@ -13,16 +13,7 @@ import { _user } from '../interface/_custom';
 import { SrSection } from '../animations/onScroll';
 import { useInView } from 'react-intersection-observer';
 
-const fetcher = (url: string) =>
-  axios
-    .get(url, {
-      headers: {
-        authorization:
-          'Bearer ' +
-          JSON.parse(localStorage.getItem('user') || 'null').accessToken,
-      },
-    })
-    .then((res) => res.data);
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function Followed() {
   const [user, setUser] = useState<_user>();
