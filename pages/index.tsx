@@ -67,8 +67,7 @@ export async function getStaticProps() {
         as: 'episode',
       },
     },
-    //  { $sample: { size: 1 } },
-    { $match: { title: 'Jujutsu kaisen' } },
+    { $sample: { size: 1 } },
   ]).catch((err) => {
     throw err;
   });
