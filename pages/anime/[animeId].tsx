@@ -52,7 +52,6 @@ export default function AnimeDetail({ anime }: { anime: string }) {
       console.log(err);
     }
   };
-  console.log(data);
   const following = async () => {
     try {
       const res = await axios.put(`/api/user/action/following`, {

@@ -146,8 +146,6 @@ export default function Watch() {
       countDown.current++;
     }
     if (!seeking) {
-      console.log(seeking);
-
       setVideoConfig((prevState) => ({ ...prevState, ...changeState }));
     }
   };
