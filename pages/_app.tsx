@@ -19,13 +19,16 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           content='width=device-width, initial-scale=1, shrink-to-fit=no'
         />
       </Head>
-      {Component.PageLayout ? (
+      {/* {Component.PageLayout ? (
         <Component.PageLayout>
           <Component {...pageProps} />
         </Component.PageLayout>
       ) : (
         <Component {...pageProps} />
-      )}
+      )} */}
+      <Component {...pageProps}>
+        <div></div>
+      </Component>
     </>
   );
 }
