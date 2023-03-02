@@ -20,7 +20,7 @@ const MainLayout = ({ children }: _children) => {
           <SideBar />
           <main className={styles.mainContent}>
             <div className={styles.scroll} data-scroll-container>
-              {children}
+              {/* {children} */}
             </div>
           </main>
         </div>

@@ -62,7 +62,7 @@ const AuthPageLayout = ({ children }: _children) => {
         <div className={styles.bimg} id={styles.bimg2}></div>
         <div className={styles.bimg} id={styles.bimg3}></div>
       </div>
-      {children}
+      {/* {children} */}
     </div>
   );
 };
