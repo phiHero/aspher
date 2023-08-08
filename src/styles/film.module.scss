@@ -1,0 +1,352 @@
+@use './responsive.module' as rs;
+.Detail {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  // global
+  .infoType {
+    color: var(--medium-gray);
+    font-weight: bold;
+    margin-right: 0.3vmax;
+    font-size: clamp(0.5em, 0.6vmax + 5px, 1em);
+  }
+  //
+  .background {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -10;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .detailHero {
+    width: 100%;
+    height: 80vh;
+    background: linear-gradient(60deg, black 2%, rgba(0, 0, 0, 0));
+    .detailBackground {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      float: right;
+      background: linear-gradient(190deg, rgba(0, 0, 0, 0) 0%, black 120%);
+
+      .img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+        position: absolute;
+        z-index: -1;
+        //        visibility: hidden;
+      }
+    }
+    .detailHeader {
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      top: -40%;
+      left: 4%;
+      text-shadow: 5px 5px 10px black;
+      color: white;
+      visibility: hidden;
+
+      .title {
+        color: rgb(236, 236, 236);
+        font-size: clamp(1.1em, 1.7vmax + 0.2em, 2em);
+        font-weight: 700;
+        margin-bottom: 0.25%;
+      }
+      .rating {
+        display: flex;
+        margin-bottom: 0.5%;
+        .like {
+          display: flex;
+          align-items: center;
+          .icon {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+          }
+        }
+      }
+
+      .episode {
+        margin-bottom: max(0.75%, 6px);
+        span {
+          margin: unset;
+        }
+        .link {
+          line-height: clamp(0.65em, 0.9vmax + 0.2em, 1.15em);
+          font-size: clamp(0.65em, 0.85vmax + 0.2em, 1.15em);
+          font-weight: 500;
+          color: var(--custom-client-color);
+          text-decoration: none;
+          margin-left: 1.3vmax;
+        }
+      }
+      .button {
+        display: flex;
+        margin-bottom: max(0.75%, 6px);
+        .icon {
+          display: grid;
+          place-items: center;
+        }
+        button {
+          height: clamp(1.5em, max(2.25vmax, 25px), 2.5em);
+          font-size: clamp(0.65em, 0.8vmax + 0.3em, 1.15em);
+          .icon {
+            font-size: calc(clamp(0.65em, 0.9vmax + 0.2em, 1.15em) + 0.5em);
+            margin-right: 2%;
+          }
+        }
+        .playButton {
+          margin-right: 1.5%;
+          button {
+            color: white;
+            overflow: hidden;
+            background-color: var(--custom-client-color);
+            text-shadow: 0 0 15px #000000;
+            padding: 0 1.5vmax 0 1vmax;
+            border: none;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+          }
+        }
+        .infoButton {
+          margin-right: max(1.5%, 10px);
+          button {
+            white-space: nowrap;
+            overflow: hidden;
+            color: black;
+            background-color: white;
+            padding: 0 1.5vmax 0 1vmax;
+            border: none;
+            a {
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+            }
+          }
+        }
+        .unactive {
+          opacity: 0.25;
+          button {
+            cursor: default;
+          }
+        }
+        .likeButton,
+        .dislikeButton {
+          margin-right: max(0.75%, 6px);
+          button {
+            display: grid;
+            place-items: center;
+            width: clamp(1.5em, max(2.25vmax, 25px), 2.5em);
+            color: var(--medium-gray);
+            background-color: rgba(0, 0, 0, 0);
+            border-radius: 50%;
+            border: 3px solid var(--medium-gray);
+            cursor: pointer;
+            .icon {
+              font-size: calc(clamp(0.65em, 0.9vmax + 0.2em, 1.15em) + 0.35em);
+              margin: unset;
+            }
+          }
+          .active {
+            border: 3px solid var(--custom-client-color);
+            color: var(--custom-client-color);
+          }
+        }
+        .followButton {
+          button {
+            display: grid;
+            place-items: center;
+            width: clamp(1.5em, max(2.25vmax, 25px), 2.5em);
+            color: var(--medium-gray);
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+            cursor: pointer;
+            .icon {
+              width: 120%;
+              height: 120%;
+              font-weight: bold;
+            }
+            .active {
+              color: var(--custom-client-color);
+            }
+          }
+        }
+      }
+      .genre {
+        margin-bottom: max(0.25%, 1.5px);
+        font-weight: 500;
+        font-size: clamp(0.5em, 0.55vmax + 0.4em, 1em);
+      }
+      .desc {
+        width: max(45%, 350px);
+        font-size: clamp(0.5em, 0.55vmax + 0.4em, 1em);
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+    @include rs.breakpoint(medium) {
+      height: max(calc(38vh - var(--header-height)), 225px);
+      .detailHeader {
+        .desc {
+          -webkit-line-clamp: 4;
+        }
+      }
+    }
+  }
+  .detailBody {
+    width: 100%;
+    margin-top: max(10vmax, 135px);
+    padding: 0 0 1em;
+    .sectionTitle {
+      margin-left: 2%;
+      margin-bottom: max(3%, 25px);
+      p {
+        color: white;
+        font-size: clamp(1.1em, 1vmax + 0.8em, 2em);
+        font-weight: 600;
+        margin-left: 2%;
+      }
+      .underBar1,
+      .underBar2 {
+        position: relative;
+        display: block;
+      }
+      .underBar1,
+      .underBar2 {
+        content: '';
+        width: max(4.5vmax, 50px);
+        background-color: var(--custom-client-color);
+        height: max(0.15vmax, 1.5px);
+        position: relative;
+        display: block;
+        border-radius: 5px;
+        top: 0.7vmax;
+        transition: background-color 1.25s ease 0s;
+        left: 2%;
+      }
+      .underBar2 {
+        top: 1.4vmax;
+        left: calc(2% + max(2.5vmax, 30px));
+      }
+    }
+    .moreInfo {
+      width: 92%;
+      margin: auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .container {
+        .info {
+          color: rgb(236, 236, 236);
+          font-size: clamp(0.5em, 0.55vmax + 0.45em, 1em);
+          .followCount {
+            margin-bottom: max(0.75vmax, 5px);
+          }
+          .rating {
+            white-space: nowrap;
+            margin-bottom: 1.25%;
+            display: flex;
+            align-items: center;
+            margin-bottom: max(1.25vmax, 7.5px);
+            .liked,
+            .userRecommended,
+            .adminRecommended {
+              font-size: 0.71vmax;
+              width: fit-content;
+              padding: 2px calc(0.5vmax + 0.4em) 3px;
+              border-radius: 10px;
+              #icon {
+                font-size: 0.8vmax;
+                margin-right: 4px;
+              }
+            }
+            .liked {
+              border-radius: 10px;
+              background-color: var(--custom-client-color);
+              margin-right: 1.75%;
+              text-shadow: 0 0 10px #000000;
+              span {
+                display: flex;
+                align-items: center;
+                color: white;
+              }
+            }
+            .userRecommended {
+              background-color: white;
+              text-shadow: none;
+              margin-right: 1.75%;
+              span {
+                display: flex;
+                align-items: center;
+                color: black;
+                #icon {
+                  color: #ff4d4d;
+                }
+              }
+            }
+            .adminRecommended {
+              background-color: #3e1897;
+            }
+          }
+        }
+        .episodeList {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: max(0.5vmax, 7px);
+          .episodeLink {
+            width: clamp(20px, 1vmax + 2em, 40px);
+            height: calc(clamp(20px, 1vmax + 2em, 40px) / 1.3);
+            display: grid;
+            place-items: center;
+            color: var(--custom-client-color);
+            font-size: clamp(0.5em, 0.7vmax + 0.4em, 1.4em);
+            font-weight: 600;
+            border: 2px solid var(--custom-client-color);
+            border-radius: 5px;
+            background-color: transparent;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            opacity: 0.75;
+            &:hover {
+              background-color: var(--custom-client-color);
+              color: white;
+            }
+          }
+        }
+      }
+      .video {
+        width: 40%;
+        aspect-ratio: 16/9;
+        box-shadow: 3.5px 3.5px 20px -1px var(--custom-client-color);
+      }
+      @include rs.breakpoint(large) {
+        flex-direction: column;
+        .container {
+          .episodeList {
+            margin-bottom: max(20%, 150px);
+          }
+        }
+        .video {
+          width: min(100%, 500px);
+        }
+      }
+    }
+  }
+}

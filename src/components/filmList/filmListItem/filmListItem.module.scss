@@ -1,0 +1,115 @@
+@use '../../../styles/responsive.module.scss' as rs;
+
+.GridItem {
+  margin-bottom: 4%;
+  aspect-ratio: 16/9;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  .listItemImg {
+    width: 100%;
+    height: 100%;
+    //  opacity: 0;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    .img {
+      pointer-events: none;
+      z-index: -1;
+    }
+  }
+  .listItemImg::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background-image: linear-gradient(
+      190deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgb(10, 10, 10) 160%
+    );
+  }
+  .descContainer {
+    //    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 99;
+    padding: 0.5em;
+    background-image: linear-gradient(
+      to bottom,
+      hsl(0 0% 0% /0),
+      hsl(0 0% 0% /1) 70%
+    );
+    transform: translateY(-50%);
+    .desc {
+      padding: 0.5vmax;
+      .filmName {
+        font-size: 0.95vmax;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 5%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        &::after {
+          content: '';
+          display: block;
+          width: 50%;
+          height: 0.11vmax;
+          border-radius: 1px;
+          background-color: var(--custom-client-color);
+          position: absolute;
+          left: 0.5em;
+          margin-top: 0.35vmax;
+        }
+      }
+      .episode {
+        font-size: 0.75vmax;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      > *:not(.filmName) {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+}
+
+@media (hover) {
+  .GridItem {
+    .descContainer {
+      transform: translateY(-35%);
+      transition: transform 0.5s ease;
+      transition-delay: 0.5s;
+      .desc {
+        .filmName::after {
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.5s ease;
+        }
+        > *:not(.filmName) {
+          opacity: 0;
+          transition: opacity 0.4s linear;
+        }
+      }
+    }
+    &:hover {
+      .descContainer {
+        transform: translateY(-50%);
+        .filmName::after {
+          transform: scaleX(1);
+        }
+        .desc > *:not(.filmName) {
+          opacity: 1;
+          transition-delay: 1s;
+        }
+      }
+    }
+  }
+}
