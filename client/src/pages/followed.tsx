@@ -45,8 +45,8 @@ export default function Followed() {
 
       {data?.length === 0 ? (
         <div className={styles.none}>
-          Wow! You have such high standard! Haven't saved any films yet! Σ(っ °Д
-          °;)っ
+          Wow! You have such high standard! Haven&apos;t saved any films yet!
+          Σ(っ °Д °;)っ
         </div>
       ) : (
         <FilmList data={data} />

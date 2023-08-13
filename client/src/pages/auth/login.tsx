@@ -75,7 +75,7 @@ export default function Login() {
               </button>
             </div>
             <span>
-              Don't have an account?
+              Don&apos;t have an account?
               <Link href={'/auth/register'}>
                 <a className={styles.highlight}> Sign up </a>
               </Link>
