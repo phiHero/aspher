@@ -1,0 +1,88 @@
+.FuzzySearch {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  .iconButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    background-color: transparent;
+    border: none;
+    display: grid;
+    place-items: center;
+    .icon {
+      font-size: 1.9em;
+      color: rgba(0, 0, 0, 0.75);
+      transition: color 0.2s linear;
+      cursor: pointer;
+      font-size: 2em;
+      display: grid;
+      place-items: center;
+      margin-right: 0.5em;
+      &:hover {
+        color: black;
+      }
+    }
+  }
+  input {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, 0.075);
+    border: none;
+    color: black;
+    border-radius: 10px;
+    padding: 4px 40px 4px 15px;
+    &:focus {
+      outline: 1.75px solid var(--medium-gray);
+    }
+  }
+  .searchResult {
+    position: absolute;
+    width: 100%;
+    max-height: calc(75vh - var(--header-height));
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 0.5%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--backgound-color-primary);
+    border-radius: 4px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    .searchItem {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      margin: max(0.5%, 2.5px) 0;
+      cursor: pointer;
+      .infoType {
+        color: var(--medium-gray);
+        font-weight: bold;
+        margin-right: 0.3vmax;
+        font-size: clamp(0.5em, 0.6vmax + 5px, 0.8em);
+      }
+
+      .searchItemBgWrapper {
+        width: max(20%, 80px);
+        aspect-ratio: 16/9;
+        position: relative;
+        margin-right: 5%;
+      }
+      .searchItemDetail {
+        color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: clamp(0.5em, 0.5vmax + 0.35em, 0.9em);
+        .searchItemTitle {
+          font-size: clamp(0.5em, 0.6vmax + 0.6em, 1.25em);
+          font-weight: 500;
+          margin-bottom: max(0.5%, 3px);
+        }
+      }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.075);
+      }
+    }
+  }
+}

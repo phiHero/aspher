@@ -1,0 +1,19 @@
+.MainLayout {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  .layout_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    main {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      background-color: var(--backgound-color-secondary);
+    }
+  }
+}

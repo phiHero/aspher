@@ -1,0 +1,184 @@
+.Login {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgb(15, 15, 15) 100%
+  ) !important;
+  background-size: cover !important;
+  position: relative;
+  overflow: hidden;
+  .link_tag,
+  i {
+    color: var(--custom-color);
+    font-weight: bold;
+    transition: color 1.25s ease 0s;
+    text-decoration: none;
+  }
+  .change {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    cursor: pointer;
+  }
+  .img_con {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: -2;
+    background: url('./img/Ghostblade_1.jpg') !important;
+    background-size: cover !important;
+    // .bimg {
+    //   width: 100%;
+    //   height: 100%;
+    //   position: relative;
+    //   z-index: -1;
+    //   // display: none;
+    // }
+    // .fade-in {
+    //   animation: fade-in 0.625s linear;
+    // }
+    // .fade-out {
+    //   animation: fade-out 0.625s linear;
+    // }
+  }
+
+  .wrapper {
+    .container {
+      width: max(min(21%, 385px), 275px);
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      z-index: 2;
+      form {
+        width: 100%;
+        height: 100%;
+        padding: max(9.25%, 32.5px);
+        background-color: #0b0b0b5a;
+        display: flex;
+        flex-direction: column;
+        .logo {
+          height: 25%;
+          .a_logo {
+            font-size: 1.2em;
+            letter-spacing: 1px;
+            animation: slide 1.25s ease-out;
+            i {
+              font-size: 1.35em;
+            }
+          }
+          .slide {
+            animation: slide 1.25s ease-out;
+          }
+        }
+        .formBox {
+          display: flex;
+          flex-direction: column;
+          height: 70%;
+          .login_logo {
+            margin-bottom: 13.25%;
+            h2 {
+              font-size: 1.5em;
+              font-weight: 500;
+            }
+            .underBar {
+              position: relative;
+              display: block;
+            }
+            .underBar:before,
+            .underBar:after {
+              content: '';
+              width: 75px;
+              background-color: var(--custom-color);
+              height: 2.5px;
+              position: relative;
+              display: block;
+              border-radius: 5px;
+              top: 5px;
+              transition: background-color 1.25s ease 0s;
+            }
+            .underBar::before {
+              top: 20px;
+              left: 37.5px;
+            }
+          }
+
+          input {
+            height: max(8.75%, 41.5px);
+            border-radius: 5px;
+            border: 2px solid black;
+            background-color: var(--custom_input_color);
+            color: white;
+            padding-left: 12.5px;
+            margin-bottom: 7.5%;
+
+            &::placeholder {
+              color: lightgray;
+            }
+          }
+
+          button {
+            height: max(7.75%, 39.5px);
+            border-radius: 5px;
+            color: var(--custom-color);
+            background-color: var(--custom_input_color);
+            border: 2px solid !important;
+            border-color: var(--custom-color) !important;
+            font-size: 18px;
+            font-weight: 500;
+            margin-top: 2.5%;
+            cursor: pointer;
+            transition: all 1.25s ease 0s;
+          }
+          button:hover {
+            color: #ffffff !important;
+            background: var(--custom-color);
+            border-color: var(--custom-color) !important;
+            transition: all 0.4s ease 0s;
+          }
+        }
+
+        span {
+          color: lightgray;
+          font-size: 12px;
+          b {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+  .fade {
+    animation: fade 1.25s linear;
+  }
+}
+@keyframes slide {
+  from {
+    padding-left: 100px;
+    opacity: 0;
+  }
+  to {
+    padding-left: 0px;
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.25;
+    transform: scale(1.15);
+  }
+}

@@ -1,0 +1,41 @@
+.scroll {
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--background-color-primary) !important;
+  .Table {
+    width: 100%;
+    background-color: var(--background-color-primary);
+    border-color: rgba(158, 158, 158, 0.1);
+    max-height: 50vh;
+    .tableCell {
+      color: var(--heading-color);
+      border-color: rgba(158, 158, 158, 0.1);
+      height: 30px;
+      background-color: var(--background-color-primary);
+
+      .icon {
+        color: var(--heading-color);
+        font-size: 1.5em;
+        width: fit-content;
+        cursor: pointer;
+        &:hover {
+          color: var(--custom-color);
+        }
+      }
+      .imgBorder {
+        display: flex;
+        align-items: center;
+        .image {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 10px;
+          object-fit: cover;
+        }
+      }
+    }
+    #id {
+      color: var(--custom-color);
+    }
+  }
+}
