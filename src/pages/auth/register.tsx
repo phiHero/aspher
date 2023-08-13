@@ -9,6 +9,11 @@ import Link from 'next/link';
 import styles from '../../styles/login.module.scss';
 import AuthLayout from '../../layout/authLayouts/authLayout';
 
+type _joiError = {
+  email: string;
+  username: string;
+  password: string;
+};
 export default function Register() {
   const router = useRouter();
   const [formValue, setFormValue] = useState<{
@@ -16,7 +21,7 @@ export default function Register() {
     username: string;
     password: string;
   }>({ email: '', username: '', password: '' });
-  const [error, setError] = useState({});
+  const [error, setError] = useState<_joiError | null>(null);
   const schema = Joi.object({
     email: Joi.string()
       .email({
@@ -25,25 +30,21 @@ export default function Register() {
       })
       .required()
       .messages({
-        'string.empty': `"Email" không thể để trống!`,
-        'any.required': `"Email" là bắt buộc!`,
-        'string.email': `"Email" không đúng định dạng!`,
+        'string.empty': `"Email" cannot be empty!`,
+        'any.required': `"Email" is required!`,
+        'string.email': `"Email" is not in the right format!`,
       }),
     username: Joi.string().alphanum().min(3).max(30).required().messages({
-      'string.empty': `"Tên tài khoản" không thể để trống!`,
-      'string.min': `"Tên tài khoản" cần có độ dài ít nhất là {#limit}!`,
-      'string.max': `"Tên tài khoản" cần có độ dài nhiều nhất là {#limit}!`,
-      'any.required': `"Tên tài khoản" là bắt buộc!`,
+      'string.empty': `"Username" cannot be empty!`,
+      'string.min': `"Username" has a minimum length of {#limit}!`,
+      'string.max': `"Username" has a maximun length of {#limit}!`,
+      'any.required': `"Username" is required!`,
     }),
-    password: Joi.string()
-      .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-      .required()
-      .messages({
-        'string.empty': `"Mật khẩu" không thể để trống!`,
-        'any.required': `"Mật khẩu" là bắt buộc!`,
-        'string.pattern.base':
-          '"Mật khẩu" phải chứa các kí tự từ a-z, 0-9 và có độ dài từ 3-30!',
-      }),
+    password: Joi.string().min(6).required().messages({
+      'string.empty': `"Password" cannot be empty!`,
+      'any.required': `"Password" is required!`,
+      'string.min': `"Password" has a minimum length of {#limit}!`,
+    }),
   });
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -53,21 +54,25 @@ export default function Register() {
     e.preventDefault();
     const { error } = schema.validate(formValue, { abortEarly: false });
     if (error?.details) {
-      let errors: { email: string; username: string; password: string } = {};
+      let errors = { email: '', username: '', password: '' };
       for (let item of error.details) {
         const label = item.path[0];
         const message = item.message;
-        errors[label] = message;
+        errors[label as 'email' | 'username' | 'password'] = message;
       }
-      setError(errors);
+      setError(errors as _joiError);
       return;
     }
-    setError({});
+    setError(null);
     try {
       const res = await axios.post(`/api/auth/register`, formValue);
-      res.status === 201 && router.push('/auth/login');
+      if (res.status === 201) {
+        alert('Success!');
+        router.push('/auth/login');
+      }
     } catch (err) {
       console.log(err);
+      alert('Error! Please try again!');
     }
   };
   return (
@@ -78,13 +83,13 @@ export default function Register() {
             <div className={styles.logo}>
               <Link href={'/'}>
                 <a className={styles.a_logo}>
-                  <i className={styles.highlight}>A</i>sphero
+                  <i className={styles.highlight}>A</i>spher
                 </a>
               </Link>
             </div>
             <div className={styles.formBox}>
               <div className={styles.login_logo}>
-                <h2>Đăng ký</h2>
+                <h2>Sign up</h2>
                 <div className={styles.underBar}></div>
               </div>
               <input
@@ -95,25 +100,25 @@ export default function Register() {
                 }
                 name='email'
                 type='email'
-                placeholder='Địa chỉ email'
+                placeholder='Email address'
                 value={formValue?.email}
                 onChange={handleOnChange}
               />
               {error?.email && <span>{error.email}</span>}
               <input
-                className={error?.username ? styles.error : null}
+                className={error?.username ? styles.error : ''}
                 name='username'
                 type='text'
-                placeholder='Tên tài khoản'
+                placeholder='username'
                 value={formValue?.username}
                 onChange={handleOnChange}
               />
               {error?.username && <span>{error.username}</span>}
               <input
-                className={error.password ? styles.error : null}
+                className={error?.password ? styles.error : ''}
                 name='password'
                 type='password'
-                placeholder='Mật khẩu'
+                placeholder='Password'
                 value={formValue?.password}
                 onChange={handleOnChange}
               />
@@ -123,11 +128,11 @@ export default function Register() {
               </button>
             </div>
             <span>
-              Đã có tài khoản?
+              Already have an account?
               <Link href={'/auth/login'}>
-                <a className={styles.highlight}> Đăng nhập </a>
+                <a className={styles.highlight}> Sign in </a>
               </Link>
-              ngay!
+              now!
             </span>
           </form>
         </div>

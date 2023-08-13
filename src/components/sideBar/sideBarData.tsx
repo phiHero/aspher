@@ -8,12 +8,12 @@ import styles from './sideBar.module.scss';
 
 const SideBarData = [
   {
-    title: 'Trang chủ',
+    title: 'Home page',
     icon: <DashboardIcon className={styles.sidebarIcon} />,
     path: '/',
   },
   {
-    title: 'Yêu thích',
+    title: 'Followed',
     icon: <FavoriteRoundedIcon className={styles.sidebarIcon} />,
     path: '/followed',
   },
@@ -23,7 +23,7 @@ const SideBarData = [
   //   path: '/comment',
   // },
   {
-    title: 'Giao diện',
+    title: 'Customize',
     icon: <AutoFixHighIcon className={styles.sidebarIcon} />,
     path: '/customize',
   },
@@ -33,9 +33,9 @@ const SideBarData = [
   //   path: '/donation',
   // },
   {
-    title: 'Điều khoản',
+    title: 'Terms & condition',
     icon: <AssignmentIcon className={styles.sidebarIcon} />,
-    path: '',
+    path: '/terms',
   },
 ];
 

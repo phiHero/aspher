@@ -3,16 +3,16 @@ import dbConnect from '../../lib/dbConnect';
 import Film from '../../lib/model/Film';
 import Episode from '../../lib/model/Episode';
 // Essentials
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 // Types
-import { _data, _user } from '../../src/interface/_custom';
+import { _user } from '@/interface/_user';
 // Performance
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 // Styles
-import styles from '../../styles/film.module.scss';
+import s from '../../styles/film.module.scss';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -21,238 +21,253 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ThumbDownAltRounded from '@mui/icons-material/ThumbDownAltRounded';
 import MainLayout from '../../layout/mainLayout/mainLayout';
 import { SrFilm } from '../../animations/onScroll';
-import Loader from '../../components/loader/loader';
 import { useInView } from 'react-intersection-observer';
-import AnimationSync from '../../animations/onScroll';
-import ReactPlayer from 'react-player/youtube';
 import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
 import ThumbUpAltSharpIcon from '@mui/icons-material/ThumbUpAltSharp';
+import EpisodeList from '@/components/EpisodeList/EpisodeList';
+import { _filmData } from '@/interface/_film';
 
-export default function FilmDetail({ film }: { film: string }) {
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+const ReactPlayer = dynamic(() => import('react-player/youtube'), {
+  ssr: false,
+});
+
+export default function FilmDetail({ film }: { film: _filmData }) {
+  const router = useRouter();
   const { inView, ref } = useInView();
-  const [data, setData] = useState<_data>();
-  const [user, setUser] = useState<_user>();
+  const [data, setData] = useState<_filmData | null>(film);
+  const [user, setUser] = useState<_user | null>(null);
+  const [showDesc, setShowDesc] = useState(false);
   //const [espisode, setEspisode] = useState([]);
   useEffect(() => {
-    if (!film) AnimationSync();
-    film && setData(JSON.parse(film));
-    if (film && inView) {
+    if (inView) {
       SrFilm();
     }
     setUser(JSON.parse(localStorage.getItem('user') || 'null'));
-  }, [film, inView]);
+  }, [inView]);
+
+  const errHandler = (err: any) => {
+    if (err.response.status === 401) {
+      confirm('You need to login!') && router.push('/auth/login');
+    } else {
+      alert('Failed!');
+    }
+  };
+
   const likeDislike = async (action: string) => {
     try {
       const res = await axios.put(`/api/user/action/like?action=${action}`, {
-        filmID: data?._id,
+        filmId: film?._id,
       });
-      res.data.episode = data?.episode;
+      res.data.episode = film?.episode;
       setData(res.data);
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      errHandler(err);
     }
   };
   const following = async () => {
     try {
       const res = await axios.put(`/api/user/action/following`, {
-        filmID: data._id,
+        filmId: film._id,
       });
       localStorage.setItem('user', JSON.stringify(res.data));
       setUser(res.data);
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      errHandler(err);
     }
   };
-  if (!data) return <Loader />;
 
   return (
     <>
       <Head>
-        <title>{data.title} - Asphero</title>
+        <title>{film.title} - Aspher</title>
         <meta
           name='description'
           content={`Latest episode: episode ${
-            data.episode[data.episode.length - 1]?.tap || 'trailer'
-          } - ${data.desc}`}
+            film.episode[film.episode.length - 1]?.name || 'trailer'
+          } - ${film.desc}`}
         />
       </Head>
-      <div className={styles.Detail} data-film-scroll-container>
-        <div className={styles.background}></div>
-        <div className={styles.detailHero}>
-          <div ref={ref} className={styles.detailBackground}>
-            {data.backgroundImg && (
+      <div className={s.Detail} data-film-scroll-container>
+        <div className={s.gradient}></div>
+        <div className={s.detailHero}>
+          <div ref={ref} className={s.detailBackground + ' unselectable'}>
+            {film.backgroundImg && (
               <Image
-                className={styles.img}
+                className={s.img}
                 id='sr-right-img'
-                src={data.backgroundImg}
+                src={film.backgroundImg}
                 layout='fill'
                 alt=''
               />
             )}
           </div>
-          <div ref={ref} className={styles.detailHeader} id='sr-bottom-delay'>
-            <div className={styles.title}>{data.title}</div>
-            <div className={styles.episode}>
-              <span className={styles.infoType}>
-                {data.isMovie ? 'Tập đặc biệt - Tập lẻ:' : 'Tập mới nhất:'}
+          <div ref={ref} className={s.detailHeader} id='sr-bottom-delay'>
+            <div className={s.title}>{film.title}</div>
+            <div className={s.episode}>
+              <span className={s.infoType}>
+                {film.isMovie ? 'Movie:' : 'Latest episodes:'}
               </span>
-              {data.episode
+              {film.episode
                 .filter((item: any, i: number) => {
-                  return i >= data.episode.length - 3;
+                  return i >= film.episode.length - 3;
                 })
                 .reverse()
                 .map((item: any, index: number) => {
                   return (
                     <Link
-                      href={`/watch/${data._id}?episode=${item._id}`}
+                      href={`/watch/${film._id}?episode=${item._id}`}
                       key={index}
                     >
-                      <a className={styles.link}>EP {item.name}</a>
+                      <a className={s.link}>
+                        {!data?.isMovie && 'EP'} {item.name}
+                      </a>
                     </Link>
                   );
                 })}
             </div>
-            <div className={styles.button}>
-              <div className={styles.playButton}>
+            <div className={s.button}>
+              <div className={s.playButton}>
                 <Link
-                  href={`/watch/${data._id}?episode=${data.episode[0]?._id}`}
+                  href={`/watch/${film._id}?episode=${film.episode[0]?._id}`}
                 >
                   <a>
                     <button>
-                      <PlayArrowIcon className={styles.icon} /> Watch
+                      <PlayArrowIcon className={s.icon} /> Watch
                     </button>
                   </a>
                 </Link>
               </div>
-              <div className={styles.infoButton}>
+              <div className={s.infoButton}>
                 <button>
-                  <a href='#episodeList'>
-                    <InfoOutlinedIcon className={styles.icon} />
+                  <a href='#moreInfo'>
+                    <InfoOutlinedIcon className={s.icon} />
                     More info
                   </a>
                 </button>
               </div>
-              <div className={styles.likeButton}>
-                <button
-                  className={data.like.includes(user?._id) ? styles.active : ''}
-                  onClick={() => likeDislike('like')}
-                >
-                  <ThumbUpAltRoundedIcon className={styles.icon} />
-                </button>
-              </div>
-              <div className={styles.dislikeButton}>
+              <div className={s.likeButton}>
                 <button
                   className={
-                    data.dislike.includes(user?._id) ? styles.active : ''
+                    user?._id && data?.like.includes(user._id) ? s.active : ''
+                  }
+                  onClick={() => likeDislike('like')}
+                >
+                  <ThumbUpAltRoundedIcon className={s.icon} />
+                </button>
+              </div>
+              <div className={s.dislikeButton}>
+                <button
+                  className={
+                    user?._id && data?.dislike.includes(user._id)
+                      ? s.active
+                      : ''
                   }
                   onClick={() => likeDislike('dislike')}
                 >
-                  <ThumbDownAltRounded className={styles.icon} />
+                  <ThumbDownAltRounded className={s.icon} />
                 </button>
               </div>
-              <div className={styles.followButton}>
+              <div className={s.followButton}>
                 <button onClick={following}>
-                  {user?.followedFilm.includes(data._id) ? (
-                    <FavoriteRoundedIcon
-                      className={`${styles.icon} ${styles.active}`}
-                    />
+                  {user?.followedFilm.includes(film._id) ? (
+                    <FavoriteRoundedIcon className={`${s.icon} ${s.active}`} />
                   ) : (
-                    <FavoriteBorderRoundedIcon className={styles.icon} />
+                    <FavoriteBorderRoundedIcon className={s.icon} />
                   )}
                 </button>
               </div>
             </div>
-            <div className={styles.genre}>
-              <span className={styles.infoType}>Genres: </span>{' '}
-              {data.genre && data.genre.join(', ')}
+            <div className={s.genre}>
+              <span className={s.infoType}>Genres: </span>{' '}
+              {film.genre && film.genre.join(', ')}
             </div>
-            <div className={styles.desc}>
-              <span className={styles.infoType}>Description: </span> {data.desc}
+            <div className={s.desc}>
+              <p id='filmDesc' className={showDesc ? s.show : ''}>
+                <span className={s.infoType}>Description: </span>
+                {film.desc}
+              </p>
+              <button onClick={() => setShowDesc(!showDesc)}>
+                {showDesc ? 'Hide' : 'Show more'}
+              </button>
             </div>
           </div>
         </div>
-        {!data.isMovie ? (
-          <div className={styles.detailBody}>
-            <div className={styles.sectionTitle}>
-              <p>Information</p>
-              <div className={styles.underBar1}></div>
-              <div className={styles.underBar2}></div>
-            </div>
-            <div className={styles.moreInfo}>
-              <div className={styles.container}>
-                <div className={styles.info}>
-                  <div className={styles.genre}>
-                    <span className={styles.infoType}>Genres:</span>
-                    {data.genre.join(', ')}
-                  </div>
-                  <div className={styles.episodeCount}>
-                    <span className={styles.infoType}>Episode count: </span>
-                    {data.episode.length} tập
-                  </div>
-                  <div className={styles.year}>
-                    <span className={styles.infoType}>Year: </span>
-                    {data.year}
-                  </div>
-                  <div className={styles.likeCount}>
-                    <span className={styles.infoType}>Likes: </span>
-                    {data.like.length} lượt thích
-                  </div>
-                  <div className={styles.followCount}>
-                    <span className={styles.infoType}>Follows: </span>
-                    {data.followed} lượt theo dõi
-                  </div>
-                  <div className={styles.rating}>
-                    <div className={styles.liked}>
-                      {(data?.like.length /
-                        (data?.like.length + data?.dislike.length)) *
-                        100 >
-                      90 ? (
-                        <span>
-                          <ThumbUpAltSharpIcon id={styles.icon} /> Được yêu
-                          thích
-                        </span>
-                      ) : null}
-                    </div>
-                    <div className={styles.userRecommended} data-sr-bottom>
-                      {data.adminRecommended ? (
-                        <span>
-                          <FavoriteSharpIcon id={styles.icon} /> Đề xuất bởi
-                          Users
-                        </span>
-                      ) : null}
-                    </div>
-                    <div className={styles.adminRecommended} data-sr-bottom>
-                      {data.adminRecommended ? (
-                        <span>
-                          <FavoriteSharpIcon id={styles.icon} /> Admin
-                          recommended
-                        </span>
-                      ) : null}
-                    </div>
-                  </div>
+        <div className={s.detailBody}>
+          <div className={s.sectionTitle}>
+            <p>Full information</p>
+            <div className={s.underBar1}></div>
+            <div className={s.underBar2}></div>
+          </div>
+          <div className={s.moreInfo}>
+            <div className={s.container}>
+              <div className={s.info}>
+                <div className={s.episodeCount}>
+                  <span className={s.infoType}>Number of episodes: </span>
+                  {film.episode.length}
                 </div>
-                <div className={styles.episodeList} id='episodeList'>
-                  {data.episode.map((item, index) => (
-                    <Link
-                      href={`/watch/${data._id}?episode=${item._id}`}
-                      key={index}
-                    >
-                      <a className={styles.episodeLink}>{item.tap}</a>
-                    </Link>
-                  ))}
+                <div className={s.year}>
+                  <span className={s.infoType}> Release year: </span>
+                  {film.year}
+                </div>
+                <div className={s.likeCount}>
+                  <span className={s.infoType}>Likes: </span>
+                  {film.like.length}
+                </div>
+                <div className={s.likeCount}>
+                  <span className={s.infoType}>Dislikes: </span>
+                  {film.dislike.length}
+                </div>
+                <div className={s.followCount}>
+                  <span className={s.infoType}>Follows: </span>
+                  {film.followed}
+                </div>
+                <div className={s.rating} id='moreInfo'>
+                  <div className={s.liked}>
+                    {(film.like.length /
+                      (film.like.length + film?.dislike.length)) *
+                      100 >
+                    90 ? (
+                      <span>
+                        <ThumbUpAltSharpIcon id={s.icon} /> Most liked
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className={s.userRecommended} data-sr-bottom>
+                    {film.adminRecommended ? (
+                      <span>
+                        <FavoriteSharpIcon id={s.icon} /> Most followed
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className={s.adminRecommended} data-sr-bottom>
+                    {film.adminRecommended ? (
+                      <span>
+                        <FavoriteSharpIcon id={s.icon} /> High scores
+                      </span>
+                    ) : null}
+                  </div>
                 </div>
               </div>
-              <div className={styles.video} id='sr-right-long'>
+              {!film.isMovie && (
+                <div className={s.episode_list_wrapper}>
+                  <EpisodeList filmId={film._id} episodes={film.episode} />
+                </div>
+              )}
+            </div>
+            {data?.trailer && (
+              <div className={s.video} id='sr-right-long'>
                 <ReactPlayer
                   width={'100%'}
                   height={'100%'}
-                  url={data.trailer}
+                  url={film.trailer}
                   controls={true}
                 />
               </div>
-            </div>
+            )}
           </div>
-        ) : null}
+        </div>
       </div>
     </>
   );
@@ -264,15 +279,14 @@ export async function getStaticProps(context: { params: { filmId: string } }) {
     throw err;
   });
   const id = context.params.filmId;
-  const R_film = await Film.findById(id)
+  const film = await Film.findById(id)
     .populate({ path: 'episode', model: Episode })
     .catch((err) => {
       throw err;
     });
-  const film = JSON.stringify(R_film);
   return {
     props: {
-      film,
+      film: JSON.parse(JSON.stringify(film)),
     },
   };
 }

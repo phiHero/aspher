@@ -7,10 +7,11 @@ import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import Loader from '../loader/loader';
+import { _filmData } from '@/interface/_film';
 
 const getSearchResult = async (query: string) => {
   try {
-    const { data } = await axios.post(`/api/anime/search?q=${query}`);
+    const { data } = await axios.post(`/api/film/search?q=${query}`);
     return data;
   } catch (error) {
     console.log(error);
@@ -57,7 +58,7 @@ const HeaderBar = () => {
         </button>
         <Link href={'/'}>
           <a className={styles.logo} unselectable='on'>
-            <i>A</i>sphero
+            <i>A</i>spher
           </a>
         </Link>
       </div>
@@ -74,7 +75,7 @@ const HeaderBar = () => {
           </button>
           <input
             type='text'
-            placeholder='Tìm kiếm anime...'
+            placeholder='Search films...'
             onChange={(e) => getSearchResultOnChange(e)}
             onFocus={() => setDisplay(true)}
           />
@@ -84,8 +85,8 @@ const HeaderBar = () => {
               {isLoading ? (
                 <Loader height='40vh' size='2.5vmax' />
               ) : (
-                searchData?.map((item, index: number) => (
-                  <Link href={`/anime/${item._id}`} key={index}>
+                searchData?.map((item: _filmData, index: number) => (
+                  <Link href={`/film/${item._id}`} key={index}>
                     <a className={styles.searchItem} onClick={searchBarVisible}>
                       <div className={styles.searchItemBgWrapper}>
                         <Image
@@ -99,12 +100,14 @@ const HeaderBar = () => {
                       <div className={styles.searchItemDetail}>
                         <h1 className={styles.searchItemTitle}>{item.title}</h1>
                         <div className={styles.searchItemOtherName}>
-                          <span className={styles.infoType}>Tên khác: </span>
-                          {item.otherName?.join(', ') || 'n/a'}
+                          <span className={styles.infoType}>Other name: </span>
+                          {item.otherName || 'none'}
                         </div>
                         <div className={styles.searchItemEpisode}>
-                          <span className={styles.infoType}>Số tập: </span>{' '}
-                          {(item.episode?.length || '?') + ' tập'}
+                          <span className={styles.infoType}>
+                            Number of episodes:{' '}
+                          </span>{' '}
+                          {(item.episode?.length || '?') + ' EP'}
                         </div>
                       </div>
                     </a>

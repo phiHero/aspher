@@ -7,12 +7,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 // Style
 import styles from './sideBar.module.scss';
-import picture from './unknown.png';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+// import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import ForumIcon from '@mui/icons-material/Forum';
-import { _user } from '../../src/interface/_custom';
+import { _user } from '@/interface/_user';
+import axios from 'axios';
 
 const SideBar = () => {
   let router = useRouter();
@@ -24,6 +24,15 @@ const SideBar = () => {
       JSON.parse(localStorage.getItem('user') || '{}')?.customColor || '#008048'
     );
   }, []);
+  const handleLogOut = async () => {
+    try {
+      await axios.get('/api/auth/logout');
+      localStorage.removeItem('user');
+      router.reload();
+    } catch (error) {
+      alert('Logout failed, please try later!');
+    }
+  };
   return (
     <aside className={styles.Sidebar}>
       {/* Top sidebar */}
@@ -32,7 +41,7 @@ const SideBar = () => {
           <a className={styles.userLogo}>
             <div className={styles.userLogoBorder}>
               <Image
-                src={user?.profilePic || picture}
+                src={user?.profilePic || '/unknown.png'}
                 layout='fill'
                 objectFit='cover'
                 alt='Ảnh đại diện'
@@ -45,7 +54,7 @@ const SideBar = () => {
         </div>
         <div className={`${styles.hiddenSidebar} ${styles.ten}`}>
           {/* {user.username} */}
-          {user ? user.username : 'Ẩn danh'}
+          {user ? user.username : 'Incognito'}
         </div>
       </div>
       {/* Middle sidebar */}
@@ -55,7 +64,7 @@ const SideBar = () => {
             className={styles.sidebarListItem}
             id={styles.sidebarListItemSearch}
           >
-            <Link href={'/'}>
+            {/* <Link href={'/'}>
               <a className={styles.sidebarLink} id={styles.sidebarLinkSearch}>
                 <SearchRoundedIcon
                   className={styles.sidebarIcon}
@@ -63,14 +72,14 @@ const SideBar = () => {
                 />
                 <input type='text' placeholder='Tìm kiếm...' />
               </a>
-            </Link>
+            </Link> */}
           </li>
           {SideBarData.map((item, index) => (
             <li
               className={
                 router.pathname === item.path ||
-                router.pathname === item.path + 'anime/[animeId]' ||
-                router.pathname === item.path + 'watch/[animeId]'
+                router.pathname === item.path + 'film/[filmId]' ||
+                router.pathname === item.path + 'watch/[filmId]'
                   ? // url ===
                     //   item.path +
                     //     `detail/${location.pathname.substring(
@@ -101,28 +110,22 @@ const SideBar = () => {
         <ul className={styles.sidebarList}>
           <li className={styles.sidebarListItem}>
             {user ? (
-              <span
-                className={styles.sidebarLink}
-                onClick={() => {
-                  localStorage.setItem('user', 'null');
-                  router.reload();
-                }}
-              >
+              <button className={styles.sidebarLink} onClick={handleLogOut}>
                 <div className={styles.iconWrapper}>
                   <LogoutIcon className={styles.sidebarIcon} />
                 </div>
-                <div className={styles.hiddenSidebar}>Đăng xuất</div>
-              </span>
+                <div className={styles.hiddenSidebar}>Logout</div>
+              </button>
             ) : (
-              <span
+              <button
                 onClick={() => router.push('/auth/login')}
                 className={styles.sidebarLink}
               >
                 <div className={styles.iconWrapper}>
                   <LoginIcon className={styles.sidebarIcon} />
                 </div>
-                <div className={styles.hiddenSidebar}>Đăng nhập</div>
-              </span>
+                <div className={styles.hiddenSidebar}>Login</div>
+              </button>
             )}
           </li>
           <li className={styles.sidebarListItem}>
@@ -131,7 +134,7 @@ const SideBar = () => {
                 <div className={styles.iconWrapper}>
                   <ForumIcon className={styles.sidebarIcon} />
                 </div>
-                <div className={styles.hiddenSidebar}>Gửi Feedback</div>
+                <div className={styles.hiddenSidebar}>Feedback</div>
               </a>
             </Link>
           </li>

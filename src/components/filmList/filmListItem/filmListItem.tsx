@@ -1,14 +1,14 @@
 // Essentials
 import { useState } from 'react';
 // Types
-import { _filmListItem } from '../../../src/interface/_custom';
+import { _filmData, _filmListItem } from '@/interface/_film';
 // Performance
 import Image from 'next/image';
 import Link from 'next/link';
 // Styles
 import styles from './filmListItem.module.scss';
 
-const AnimeListItems = ({ item }: { item: _filmListItem }) => {
+const AnimeListItems = ({ item }: { item: _filmData }) => {
   const [isHovered, setisHovered] = useState(false);
 
   return (
@@ -32,7 +32,7 @@ const AnimeListItems = ({ item }: { item: _filmListItem }) => {
           <div className={styles.desc}>
             <div className={styles.filmName}>{item.title}</div>
             <div className={styles.episode}>
-              Số tập: {item.episode.length} tập
+              Episodes: {item.episode.length} EP
             </div>
           </div>
         </div>

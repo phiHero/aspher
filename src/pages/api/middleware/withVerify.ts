@@ -2,9 +2,16 @@ import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
 import User from '../../../lib/model/User';
 import { NextApiHandler, NextApiResponse } from 'next';
-import { _verifiedApiUser } from '../../../src/interface/_custom';
+import { _verifiedApiUser } from '@/interface/_user';
 
-export default function WithProtect(handler: NextApiHandler) {
+type _handler =
+  | NextApiHandler
+  | ((
+      req: _verifiedApiUser,
+      res: NextApiResponse
+    ) => Promise<unknown> | unknown);
+
+export default function WithProtect(handler: _handler) {
   return async (req: _verifiedApiUser, res: NextApiResponse) => {
     const token = req.cookies.atk;
     if (!token) {

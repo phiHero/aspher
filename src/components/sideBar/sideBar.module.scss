@@ -23,7 +23,10 @@
     width: 0;
     transition: opacity var(--animation-duration) var(--animation-timing-curve);
   }
-
+  button {
+    background-color: #fff0;
+    border: none;
+  }
   .topSidebar {
     display: flex;
     flex-direction: column;

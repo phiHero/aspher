@@ -1,8 +1,8 @@
 import type { NextApiResponse } from 'next';
 import WithProtect from '../../middleware/withVerify';
-import Anime from '../../../../lib/model/Anime';
-import dbConnect from '../../../../lib/dbConnect';
-import { _verifiedApiUser } from '../../../../src/interface/_custom';
+import Film from '@/lib/model/Film';
+import dbConnect from '@/lib/dbConnect';
+import { _verifiedApiUser } from '@/interface/_user';
 
 const handler = async (req: _verifiedApiUser, res: NextApiResponse) => {
   if (req.method !== 'PUT') {
@@ -13,32 +13,35 @@ const handler = async (req: _verifiedApiUser, res: NextApiResponse) => {
     await dbConnect();
     const userID = req.user._id;
     const action = req.query.action;
-    const anime = await Anime.findById(req.body.animeID);
-
+    const film = await Film.findById(req.body.filmId);
     if (action === 'like') {
-      if (anime.like.includes(userID)) {
-        await anime.like.splice(anime.like.indexOf(userID), 1);
-      } else if (anime.dislike.includes(userID)) {
-        await anime.dislike.splice(anime.dislike.indexOf(userID), 1);
-        await anime.like.push(userID);
+      // if user has already liked remove the like
+      if (film.like.includes(userID)) {
+        await film.like.splice(film.like.indexOf(userID), 1);
+        // if user has already disliked then change to like
+      } else if (film.dislike.includes(userID)) {
+        await film.dislike.splice(film.dislike.indexOf(userID), 1);
+        await film.like.push(userID);
       } else {
-        await anime.like.push(userID);
+        await film.like.push(userID);
       }
     } else if (action === 'dislike') {
-      if (anime.dislike.includes(userID)) {
-        await anime.dislike.splice(anime.dislike.indexOf(userID), 1);
-      } else if (anime.like.includes(userID)) {
-        await anime.like.splice(anime.like.indexOf(userID), 1);
-        await anime.dislike.push(userID);
+      if (film.dislike.includes(userID)) {
+        await film.dislike.splice(film.dislike.indexOf(userID), 1);
+      } else if (film.like.includes(userID)) {
+        await film.like.splice(film.like.indexOf(userID), 1);
+        await film.dislike.push(userID);
       } else {
-        await anime.dislike.push(userID);
+        await film.dislike.push(userID);
       }
     }
 
-    const like = await anime.save();
+    const like = await film.save();
     res.status(200).json(like);
   } catch (err) {
-    console.log(err);
+    res
+      .status(500)
+      .json({ message: 'There was an error please try again later!' });
   }
 };
 export default WithProtect(handler);

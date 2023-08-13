@@ -14,18 +14,18 @@ export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const schema = Joi.object({
-    email: Joi.string()
-      .email({
-        minDomainSegments: 2,
-        tlds: { allow: ['com', 'net'] },
-      })
-      .required(),
-    username: Joi.string().alphanum().min(3).max(30).required(),
-    password: Joi.string()
-      .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-      .required(),
-  });
+  // const schema = Joi.object({
+  //   email: Joi.string()
+  //     .email({
+  //       minDomainSegments: 2,
+  //       tlds: { allow: ['com', 'net'] },
+  //     })
+  //     .required(),
+  //   username: Joi.string().alphanum().min(3).max(30).required(),
+  //   password: Joi.string()
+  //     .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+  //     .required(),
+  // });
 
   const handleLogin = async (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
@@ -33,18 +33,16 @@ export default function Login() {
       const res = await axios.post(`/api/auth/login`, { email, password });
       if (res.data && res.status === 200) {
         localStorage.setItem('user', JSON.stringify(res.data));
-        await router.push('/');
-      } else {
-        throw new Error('Có lỗi xảy ra, vui lòng thử lại sau!');
+        router.push('/');
       }
     } catch (error) {
-      throw error;
+      alert('Wrong password or email!');
     }
   };
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Sign in</title>
       </Head>
       <div className={styles.Login}>
         <div className={styles.wrapper}>
@@ -52,24 +50,24 @@ export default function Login() {
             <div className={styles.logo}>
               <Link href={'/'}>
                 <a className={styles.a_logo}>
-                  <i className={styles.highlight}>A</i>sphero
+                  <i className={styles.highlight}>A</i>spher
                 </a>
               </Link>
             </div>
 
             <div className={styles.formBox}>
               <div className={styles.login_logo}>
-                <h2>Đăng nhập</h2>
+                <h2>Sign In</h2>
                 <div className={styles.underBar}></div>
               </div>
               <input
                 type='email'
-                placeholder='Địa chỉ email'
+                placeholder='Email address'
                 onChange={(e) => setEmail(e.target.value)}
               />
               <input
                 type='password'
-                placeholder='Mật khẩu'
+                placeholder='Password'
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button className={styles.loginButton} type='submit'>
@@ -77,11 +75,11 @@ export default function Login() {
               </button>
             </div>
             <span>
-              Không có tài khoản?
+              Don't have an account?
               <Link href={'/auth/register'}>
-                <a className={styles.highlight}> Đăng ký </a>
+                <a className={styles.highlight}> Sign up </a>
               </Link>
-              ngay!
+              now!
             </span>
           </form>
         </div>

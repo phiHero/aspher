@@ -1,18 +1,17 @@
 // Essentials
 import { useEffect, useRef } from 'react';
 // Types
-import { _newEpisode, _randomAnime } from '../../src/interface/_custom';
+import { _episodeData, _filmData } from '@/interface/_film';
 // Performance
 import Link from 'next/link';
 import Image from 'next/image';
 // Style
-import styles from './featured.module.scss';
+import s from './featured.module.scss';
 import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
 import ThumbUpAltSharpIcon from '@mui/icons-material/ThumbUpAltSharp';
-import ArrowForwardSharpIcon from '@mui/icons-material/ArrowForwardSharp';
 import { SrFeatured } from '../../animations/onScroll';
 
-const Featured = ({ data }: { data: _randomAnime }) => {
+const Featured = ({ data }: { data: _filmData }) => {
   const imageRef = useRef<HTMLImageElement>(null);
   useEffect(() => {
     if (
@@ -23,87 +22,82 @@ const Featured = ({ data }: { data: _randomAnime }) => {
   }, []);
 
   return (
-    <div className={styles.Featured}>
-      <div className={styles.banner}>
-        <div className={styles.backgroundImg} ref={imageRef}>
-          {data.backgroundImg && (
-            <Image
-              data-sr-img-hero
-              className={styles.img}
-              unselectable='on'
-              src={data.backgroundImg}
-              alt='Highest rating anime'
-              layout='fill'
-              objectFit='cover'
-            />
-          )}
-        </div>
-        <div className={styles.bannerDetail} id='sr-bottom-delay-hero'>
-          <div className={styles.bannerName}>
+    <div className={s.Featured}>
+      <div className={s.banner}>
+        <Link href={`/film/${data._id}`}>
+          <div className={s.backgroundImg} ref={imageRef} id='unselectable'>
+            {data.backgroundImg && (
+              <Image
+                data-sr-img-hero
+                className={s.img}
+                unselectable='on'
+                src={data.backgroundImg}
+                alt='Highest rating anime'
+                layout='fill'
+                objectFit='cover'
+              />
+            )}
+          </div>
+        </Link>
+
+        <div className={s.bannerDetail} id='sr-bottom-delay-hero'>
+          <div className={s.bannerName}>
             <h1>{data.title}</h1>
           </div>
           {data.isMovie ? null : (
-            <div className={styles.espisode}>
-              <span id={styles.infoType}>Tập mới nhất: </span>
-              {data?.episode.map((item: _newEpisode, index: number) => {
+            <div className={s.espisode}>
+              <span id={s.infoType}>Latest episodes: </span>
+              {data?.episode.map((item: _episodeData, index: number) => {
                 return (
                   <Link
                     key={index}
                     href={`/watch/${data._id}?episode=${item._id}`}
                   >
-                    <a className={styles.link}>Tập {item.tap}</a>
+                    <a className={s.link}>EP {item.name}</a>
                   </Link>
                 );
               })}
             </div>
           )}
-          <div className={styles.bannerRating}>
-            <div className={styles.liked}>
+          <div className={s.bannerRating}>
+            <div className={s.badge} id={s.liked}>
               {(data?.like.length /
                 (data?.like.length + data?.dislike.length)) *
                 100 >
               90 ? (
                 <span>
-                  <ThumbUpAltSharpIcon id={styles.icon} /> Được yêu thích
+                  <ThumbUpAltSharpIcon id={s.icon} /> Most liked
                 </span>
               ) : null}
             </div>
-            <div className={styles.userRecommended}>
+            <div className={s.badge} id={s.userRecommended}>
               {data.adminRecommended ? (
                 <span>
-                  <FavoriteSharpIcon id={styles.icon} /> Đề xuất bởi Users
+                  <FavoriteSharpIcon id={s.icon} /> Most followed
                 </span>
               ) : null}
             </div>
-            <div className={styles.adminRecommended}>
+            <div className={s.badge} id={s.adminRecommended}>
               {data.adminRecommended ? (
                 <span>
-                  <FavoriteSharpIcon id={styles.icon} /> Đề xuất bởi Admin
+                  <FavoriteSharpIcon id={s.icon} /> High scores
                 </span>
               ) : null}
             </div>
           </div>
 
-          <div className={styles.genre}>
-            <p className={styles.genreDisplay}>
-              <span id={styles.infoType}>Thể loại:</span>{' '}
+          <div className={s.genre}>
+            <p className={s.genreDisplay}>
+              <span id={s.infoType}>Genres:</span>{' '}
               {data.genre && data.genre.join(', ')}
             </p>
           </div>
-          <div className={styles.bannerDescription}>
+          <div className={s.bannerDescription}>
             <p>
-              <span id={styles.infoType}>Mô tả: </span>
+              <span id={s.infoType}>Description: </span>
               {data.desc}
             </p>
           </div>
-          {/* <div className={styles.moreInfoButton}>
-            <Link href={`/anime/${data._id}`}>
-              <a className={styles.link}>
-                <ArrowForwardSharpIcon id={styles.icon} />
-                <span>Xem thêm</span>
-              </a>
-            </Link>
-          </div> */}
         </div>
       </div>
     </div>

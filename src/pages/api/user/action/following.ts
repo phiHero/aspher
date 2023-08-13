@@ -1,8 +1,8 @@
 import type { NextApiResponse } from 'next';
 import WithProtect from '../../middleware/withVerify';
-import Anime from '../../../../lib/model/Anime';
+import Film from '../../../../lib/model/Film';
 import dbConnect from '../../../../lib/dbConnect';
-import { _verifiedApiUser } from '../../../../src/interface/_custom';
+import { _user, _verifiedApiUser } from '@/interface/_user';
 
 const handler = async (req: _verifiedApiUser, res: NextApiResponse) => {
   if (req.method !== 'PUT') {
@@ -11,21 +11,21 @@ const handler = async (req: _verifiedApiUser, res: NextApiResponse) => {
   }
   try {
     await dbConnect();
-    const user = req.user;
-    const animeID = req.body.animeID;
-    const anime = await Anime.findById(animeID);
-    if (user.followedAnime.includes(animeID)) {
-      await user.followedAnime.splice(user.followedAnime.indexOf(animeID), 1);
-      anime.followed--;
+    const user: any = req.user;
+    const filmId = req.body.filmId;
+    const anime = await Film.findById(filmId);
+    if (user.followedFilm.includes(filmId)) {
+      user.followedFilm.splice(user.followedFilm.indexOf(filmId), 1);
+      anime.followed > 0 && anime.followed--;
     } else {
-      await user.followedAnime.push(animeID);
+      user.followedFilm.push(filmId);
       anime.followed++;
     }
-    const follow = await user.save();
+    const follow = await user.save(); // user get from middleware;
     await anime.save();
     res.status(200).json(follow);
   } catch (err) {
-    console.log(err);
+    res.status(500);
   }
 };
 export default WithProtect(handler);

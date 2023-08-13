@@ -11,13 +11,17 @@ import MainLayout from '../layout/mainLayout/mainLayout';
 import Featured from '../components/featured/featured';
 import FilmList from '../components/filmList/filmList';
 import { SrHome } from '../animations/onScroll';
+import { _filmData } from '@/interface/_film';
+import GridLoading from '@/animations/gridLoading';
 
 export default function Home({
-  randomFilm,
+  featuredFilm,
   latestFilm,
+  popularFilms,
 }: {
-  randomFilm: string;
-  latestFilm: string;
+  featuredFilm: _filmData[];
+  latestFilm: _filmData[];
+  popularFilms: _filmData[];
 }) {
   useEffect(() => {
     SrHome();
@@ -26,7 +30,7 @@ export default function Home({
   return (
     <div className={styles.Home}>
       <div className={styles.featuredComponents}>
-        <Featured data={JSON.parse(randomFilm)[0]} />
+        <Featured data={featuredFilm[0]} />
       </div>
       <div className={styles.filmComponent}>
         <div className={styles.sectionTitle}>
@@ -34,7 +38,7 @@ export default function Home({
           <div id='sr-right' className={styles.underBar1}></div>
           <div id='sr-right' className={styles.underBar2}></div>
         </div>
-        <FilmList data={JSON.parse(latestFilm)} />
+        <FilmList data={latestFilm} />
       </div>
 
       <div className={styles.filmComponent}>
@@ -43,20 +47,20 @@ export default function Home({
           <div id='sr-right' className={styles.underBar1}></div>
           <div id='sr-right' className={styles.underBar2}></div>
         </div>
-        <FilmList data={JSON.parse(latestFilm)} />
+        <FilmList data={popularFilms} />
       </div>
     </div>
   );
 }
 
 Home.PageLayout = MainLayout;
-Home.Title = 'Trang chủ';
+Home.Title = 'Homepage - Aspher';
 
 export async function getStaticProps() {
   await dbConnect().catch((err) => {
     throw err;
   });
-  const R_randomFilm = await Film.aggregate([
+  let featuredFilm = await Film.aggregate([
     {
       $lookup: {
         from: 'episodes',
@@ -66,7 +70,7 @@ export async function getStaticProps() {
           {
             $project: {
               _id: 1,
-              tap: 1,
+              name: 1,
               createdAt: 1,
             },
           },
@@ -80,14 +84,12 @@ export async function getStaticProps() {
   ]).catch((err) => {
     throw err;
   });
-  const R_latestFilm = await Episode.aggregate([
+  let latestFilm = await Episode.aggregate([
     { $sort: { createdAt: -1 } },
-    { $limit: 20 },
     {
       $group: {
         _id: '$belongTo',
         createdAt: { $first: '$createdAt' },
-        // tap: { $first: '$tap' },
       },
     },
     {
@@ -98,15 +100,32 @@ export async function getStaticProps() {
         as: 'film',
       },
     },
+    { $limit: 20 },
   ]);
-  const randomFilm = JSON.stringify(R_randomFilm);
+  // Randomly sample 10 films and caculate ranking score
+  let popularFilms: _filmData[] = await Film.aggregate([
+    { $sample: { size: 10 } },
+  ]).catch((err) => {
+    throw err;
+  });
+  const caculateScore = (film: _filmData) => {
+    const highScore = film.adminRecommended ? 1.25 : 1;
+    const { like, dislike, followed } = film;
+    return (like.length - dislike.length + followed * 2) * highScore;
+  };
+  const serialize = (data: any) => JSON.parse(JSON.stringify(data));
 
-  const latestFilm = JSON.stringify(R_latestFilm.map((item) => item.film[0]));
+  popularFilms = serialize(
+    popularFilms.sort((a, b) => caculateScore(b) - caculateScore(a))
+  );
+  featuredFilm = serialize(featuredFilm);
+  latestFilm = serialize(latestFilm.map((item) => item.film[0]));
 
   return {
     props: {
-      randomFilm,
+      featuredFilm,
       latestFilm,
+      popularFilms,
     },
     revalidate: 600,
   };

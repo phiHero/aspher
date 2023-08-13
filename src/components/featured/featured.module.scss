@@ -8,7 +8,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    background: linear-gradient(60deg, black -10%, rgba(0, 0, 0, 0));
+    background: var(--hero-gradient);
     color: white;
     text-shadow: 5px 5px 10px black;
     .backgroundImg {
@@ -20,6 +20,7 @@
         black 160%
       );
       position: relative;
+      cursor: pointer;
       .img {
         visibility: hidden;
         pointer-events: none;
@@ -31,7 +32,7 @@
       display: flex;
       flex-direction: column;
       position: absolute;
-      top: 52.5%;
+      top: 54%;
       left: 7.5%;
       visibility: hidden;
       #infoType {
@@ -40,7 +41,7 @@
         margin-right: 2px;
       }
       .bannerName {
-        margin-bottom: 0.75%;
+        margin-bottom: 2%;
         h1 {
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -65,43 +66,42 @@
         margin-bottom: 1.25%;
         display: flex;
         align-items: center;
-        .liked,
-        .userRecommended,
-        .adminRecommended {
+        .badge {
           font-size: 0.71vmax;
           width: fit-content;
           padding: 2px 15px 3px;
           border-radius: 10px;
+
           #icon {
             font-size: 0.8vmax;
             margin-right: 4px;
           }
+          span {
+            display: flex;
+            align-items: center;
+          }
         }
-        .liked {
+        #liked {
           border-radius: 10px;
           background-color: var(--custom-client-color);
           margin-right: 1.75%;
           text-shadow: 0 0 10px #000000;
           span {
-            display: flex;
-            align-items: center;
             color: white;
           }
         }
-        .userRecommended {
+        #userRecommended {
           background-color: white;
           text-shadow: none;
           margin-right: 1.75%;
           span {
-            display: flex;
-            align-items: center;
             color: black;
             #icon {
               color: #ff4d4d;
             }
           }
         }
-        .adminRecommended {
+        #adminRecommended {
           background-color: #3e1897;
         }
       }

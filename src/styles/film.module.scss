@@ -17,20 +17,20 @@
     font-size: clamp(0.5em, 0.6vmax + 5px, 1em);
   }
   //
-  .background {
-    content: '';
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -10;
-    background-color: rgba(0, 0, 0, 0.5);
+  .gradient {
+    // content: '';
+    // position: fixed;
+    // top: 0;
+    // right: 0;
+    // bottom: 0;
+    // left: 0;
+    // z-index: -10;
+    // background-color: rgba(0, 0, 0, 1);
   }
   .detailHero {
     width: 100%;
-    height: 80vh;
-    background: linear-gradient(60deg, black 2%, rgba(0, 0, 0, 0));
+    height: calc(100vh - var(--header-height));
+    background: var(--hero-gradient);
     .detailBackground {
       width: 100%;
       height: 100%;
@@ -54,7 +54,7 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      top: -40%;
+      top: -46%;
       left: 4%;
       text-shadow: 5px 5px 10px black;
       color: white;
@@ -64,7 +64,7 @@
         color: rgb(236, 236, 236);
         font-size: clamp(1.1em, 1.7vmax + 0.2em, 2em);
         font-weight: 700;
-        margin-bottom: 0.25%;
+        margin-bottom: 0.5%;
       }
       .rating {
         display: flex;
@@ -193,12 +193,26 @@
         font-size: clamp(0.5em, 0.55vmax + 0.4em, 1em);
       }
       .desc {
-        width: max(45%, 350px);
         font-size: clamp(0.5em, 0.55vmax + 0.4em, 1em);
-        display: -webkit-box;
-        -webkit-line-clamp: 5;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        p {
+          width: max(45%, 350px);
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          &.show {
+            -webkit-line-clamp: unset;
+          }
+        }
+
+        button {
+          background-color: #fff0;
+          border: none;
+          color: var(--custom-client-color);
+          font-size: clamp(0.5em, 0.55vmax + 0.4em, 1em);
+          margin-top: 0.5rem;
+          border-bottom: 1px solid var(--custom-client-color);
+        }
       }
     }
     @include rs.breakpoint(medium) {
@@ -212,7 +226,7 @@
   }
   .detailBody {
     width: 100%;
-    margin-top: max(10vmax, 135px);
+    margin-top: max(14vmax, 175px);
     padding: 0 0 1em;
     .sectionTitle {
       margin-left: 2%;
@@ -252,6 +266,7 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      gap: 4rem;
       .container {
         .info {
           color: rgb(236, 236, 236);
@@ -306,30 +321,10 @@
             }
           }
         }
-        .episodeList {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          gap: max(0.5vmax, 7px);
-          .episodeLink {
-            width: clamp(20px, 1vmax + 2em, 40px);
-            height: calc(clamp(20px, 1vmax + 2em, 40px) / 1.3);
-            display: grid;
-            place-items: center;
-            color: var(--custom-client-color);
-            font-size: clamp(0.5em, 0.7vmax + 0.4em, 1.4em);
-            font-weight: 600;
-            border: 2px solid var(--custom-client-color);
-            border-radius: 5px;
-            background-color: transparent;
-            transition: background-color 0.5s ease, color 0.5s ease;
-            opacity: 0.75;
-            &:hover {
-              background-color: var(--custom-client-color);
-              color: white;
-            }
-          }
-        }
+      }
+      .episode_list_wrapper {
+        max-width: 600px;
+        margin-top: 3vmax;
       }
       .video {
         width: 40%;

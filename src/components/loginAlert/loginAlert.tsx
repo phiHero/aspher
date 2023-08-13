@@ -8,9 +8,7 @@ export default function LoginAlert({ height }: { height?: string }) {
     >
       <h1 className={styles.message}>
         <WarningRoundedIcon className={styles.icon} />
-        <span className={styles.text}>
-          Bạn cần đăng nhập để sử dụng tính năng này!
-        </span>
+        <span className={styles.text}>You have to login!</span>
       </h1>
     </div>
   );

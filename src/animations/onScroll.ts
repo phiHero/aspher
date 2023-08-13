@@ -56,7 +56,7 @@ export async function SrFeatured() {
   const sr = ScrollReveal({
     distance: '60px',
     duration: 2800,
-    reset: true,
+    reset: false,
     interval: 100,
     container: document.querySelector('[data-scroll-container]'),
   });
@@ -80,7 +80,6 @@ export async function SrFeatured() {
       scale: 1.3,
       easing: 'ease-out',
       duration: 1300,
-      reset: false,
       beforeReveal: () =>
         document.querySelector('[data-sr-img-hero]') &&
         (document.querySelector('[data-sr-img-hero]')!.style.visibility =
@@ -184,7 +183,7 @@ export async function SrSection() {
   const sr = ScrollReveal({
     distance: '60px',
     duration: 2800,
-    reset: true,
+    reset: false,
     container: document.querySelector('[data-scroll-container]'),
   });
   sr.reveal(
@@ -202,7 +201,7 @@ export async function SrHome() {
   const sr = ScrollReveal({
     distance: '60px',
     duration: 2800,
-    reset: true,
+    reset: false,
     container: document.querySelector('[data-scroll-container]'),
   });
 

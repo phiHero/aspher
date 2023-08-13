@@ -28,36 +28,6 @@
         color: white;
         margin-bottom: max(2%, 20px);
       }
-      .episodeList {
-        width: 65%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: max(0.5vmax, 7px);
-        .episodeLink {
-          visibility: visible !important;
-          width: clamp(20px, 1vmax + 2em, 40px);
-          height: calc(clamp(20px, 1vmax + 2em, 40px) / 1.3);
-          display: grid;
-          place-items: center;
-          color: var(--custom-client-color);
-          font-size: clamp(0.5em, 0.7vmax + 0.4em, 1.4em);
-          font-weight: 600;
-          border: 2px solid var(--custom-client-color);
-          border-radius: 5px;
-          background-color: transparent;
-          transition: background-color 0.5s ease, color 0.5s ease,
-            text-shadow 0.5s ease;
-          opacity: 0.75;
-          &.active,
-          &:hover {
-            opacity: 1;
-            background-color: var(--custom-client-color);
-            color: white;
-            text-shadow: 0 0 10px black;
-          }
-        }
-      }
     }
   }
 
@@ -85,7 +55,7 @@
         width: 48%;
         max-width: 200px;
         cursor: pointer;
-
+        position: relative;
         .paper {
           width: 100%;
           aspect-ratio: 16/9;
@@ -110,6 +80,21 @@
               pointer-events: none;
               z-index: -1;
             }
+          }
+        }
+        button {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 2rem;
+          height: 1.2rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: var(--custom-client-color);
+          border: none;
+          .icon {
+            fill: white;
           }
         }
       }

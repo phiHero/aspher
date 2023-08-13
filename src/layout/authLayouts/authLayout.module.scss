@@ -23,37 +23,13 @@
     cursor: pointer;
   }
   .imgContainer {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 135vh;
     position: relative;
     z-index: -2;
     background-color: black;
-    .bimg {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      z-index: -1;
-      display: none;
-    }
-    #bimg0 {
-      background: url('./img/eren_editeda.jpg') !important;
-      display: block;
-      background-size: cover !important;
-    }
-    #bimg1 {
-      background: url('./img/goblinslayer_edited.jpg') !important;
-    }
-    #bimg2 {
-      background: url('img/green4.webp') !important;
-    }
-    #bimg3 {
-      background: url(img/yellow.jpg);
-    }
-    .fade-in {
-      animation: fade-in 0.625s linear;
-    }
-    .fade-out {
-      animation: fade-out 0.625s linear;
+    img {
+      object-fit: cover;
     }
   }
   .link-tag,

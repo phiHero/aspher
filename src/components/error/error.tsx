@@ -15,7 +15,7 @@ export default function Error({
       <h1 className={styles.message}>
         <WarningRoundedIcon className={styles.icon} />{' '}
         <span className={styles.text}>
-          {message || 'Sorry, có lỗi xảy ra vui lòng tải lại trang!'}
+          {message || 'Sorry, there is an error, please refresh the page!'}
         </span>
       </h1>
     </div>
