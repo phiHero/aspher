@@ -81,19 +81,19 @@ export default function FilmDetail({ film }: { film: _filmData }) {
   return (
     <>
       <Head>
-        <title>{film.title} - Aspher</title>
+        <title>{film?.title} - Aspher</title>
         <meta
           name='description'
           content={`Latest episode: episode ${
-            film.episode[film.episode.length - 1]?.name || 'trailer'
-          } - ${film.desc}`}
+            film?.episode[film?.episode.length - 1]?.name || 'trailer'
+          } - ${film?.desc}`}
         />
       </Head>
       <div className={s.Detail} data-film-scroll-container>
         <div className={s.gradient}></div>
         <div className={s.detailHero}>
           <div ref={ref} className={s.detailBackground + ' unselectable'}>
-            {film.backgroundImg && (
+            {film?.backgroundImg && (
               <Image
                 className={s.img}
                 id='sr-right-img'
@@ -104,12 +104,12 @@ export default function FilmDetail({ film }: { film: _filmData }) {
             )}
           </div>
           <div ref={ref} className={s.detailHeader} id='sr-bottom-delay'>
-            <div className={s.title}>{film.title}</div>
+            <div className={s.title}>{film?.title}</div>
             <div className={s.episode}>
               <span className={s.infoType}>
-                {film.isMovie ? 'Movie:' : 'Latest episodes:'}
+                {film?.isMovie ? 'Movie:' : 'Latest episodes:'}
               </span>
-              {film.episode
+              {film?.episode
                 .filter((item: any, i: number) => {
                   return i >= film.episode.length - 3;
                 })
@@ -130,7 +130,7 @@ export default function FilmDetail({ film }: { film: _filmData }) {
             <div className={s.button}>
               <div className={s.playButton}>
                 <Link
-                  href={`/watch/${film._id}?episode=${film.episode[0]?._id}`}
+                  href={`/watch/${film?._id}?episode=${film?.episode[0]?._id}`}
                 >
                   <a>
                     <button>
@@ -181,12 +181,12 @@ export default function FilmDetail({ film }: { film: _filmData }) {
             </div>
             <div className={s.genre}>
               <span className={s.infoType}>Genres: </span>{' '}
-              {film.genre && film.genre.join(', ')}
+              {film?.genre && film.genre.join(', ')}
             </div>
             <div className={s.desc}>
               <p id='filmDesc' className={showDesc ? s.show : ''}>
                 <span className={s.infoType}>Description: </span>
-                {film.desc}
+                {film?.desc}
               </p>
               <button onClick={() => setShowDesc(!showDesc)}>
                 {showDesc ? 'Hide' : 'Show more'}
@@ -205,28 +205,28 @@ export default function FilmDetail({ film }: { film: _filmData }) {
               <div className={s.info}>
                 <div className={s.episodeCount}>
                   <span className={s.infoType}>Number of episodes: </span>
-                  {film.episode.length}
+                  {film?.episode.length}
                 </div>
                 <div className={s.year}>
                   <span className={s.infoType}> Release year: </span>
-                  {film.year}
+                  {film?.year}
                 </div>
                 <div className={s.likeCount}>
                   <span className={s.infoType}>Likes: </span>
-                  {film.like.length}
+                  {film?.like.length}
                 </div>
                 <div className={s.likeCount}>
                   <span className={s.infoType}>Dislikes: </span>
-                  {film.dislike.length}
+                  {film?.dislike.length}
                 </div>
                 <div className={s.followCount}>
                   <span className={s.infoType}>Follows: </span>
-                  {film.followed}
+                  {film?.followed}
                 </div>
                 <div className={s.rating} id='moreInfo'>
                   <div className={s.liked}>
-                    {(film.like.length /
-                      (film.like.length + film?.dislike.length)) *
+                    {(film?.like.length /
+                      (film?.like.length + film?.dislike.length)) *
                       100 >
                     90 ? (
                       <span>
@@ -235,14 +235,14 @@ export default function FilmDetail({ film }: { film: _filmData }) {
                     ) : null}
                   </div>
                   <div className={s.userRecommended} data-sr-bottom>
-                    {film.adminRecommended ? (
+                    {film?.adminRecommended ? (
                       <span>
                         <FavoriteSharpIcon id={s.icon} /> Most followed
                       </span>
                     ) : null}
                   </div>
                   <div className={s.adminRecommended} data-sr-bottom>
-                    {film.adminRecommended ? (
+                    {film?.adminRecommended ? (
                       <span>
                         <FavoriteSharpIcon id={s.icon} /> High scores
                       </span>
@@ -250,13 +250,13 @@ export default function FilmDetail({ film }: { film: _filmData }) {
                   </div>
                 </div>
               </div>
-              {!film.isMovie && (
+              {!film?.isMovie && (
                 <div className={s.episode_list_wrapper}>
-                  <EpisodeList filmId={film._id} episodes={film.episode} />
+                  <EpisodeList filmId={film?._id} episodes={film?.episode} />
                 </div>
               )}
             </div>
-            {data?.trailer && (
+            {film?.trailer && (
               <div className={s.video} id='sr-right-long'>
                 <ReactPlayer
                   width={'100%'}
