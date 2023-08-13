@@ -1,0 +1,28 @@
+.EpisodeList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: max(0.7vmax, 9px);
+  .episodeLink {
+    $wi: clamp(40px, 2vmax + 1.5rem, 70px);
+    width: $wi;
+    height: calc($wi / 1.3);
+    display: grid;
+    place-items: center;
+    color: var(--custom-client-color);
+    font-size: clamp(0.5em, 0.7vmax + 0.4em, 1.4em);
+    font-weight: 600;
+    border: 2px solid var(--custom-client-color);
+    border-radius: 5px;
+    background-color: transparent;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    opacity: 0.75;
+    &.active,
+    &:hover {
+      opacity: 1;
+      background-color: var(--custom-client-color);
+      color: white;
+      text-shadow: 0 0 10px black;
+    }
+  }
+}

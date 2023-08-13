@@ -1,0 +1,252 @@
+@use '../../styles/responsive.module' as rs;
+.Featured {
+  width: 100%;
+  height: calc(100vh - var(--header-height));
+  .banner {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--hero-gradient);
+    color: white;
+    text-shadow: 5px 5px 10px black;
+    .backgroundImg {
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(
+        190deg,
+        rgba(0, 0, 0, 0) 0%,
+        black 160%
+      );
+      position: relative;
+      cursor: pointer;
+      .img {
+        visibility: hidden;
+        pointer-events: none;
+        z-index: -1;
+      }
+    }
+    .bannerDetail {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 54%;
+      left: 7.5%;
+      visibility: hidden;
+      #infoType {
+        color: var(--medium-gray);
+        font-weight: bold;
+        margin-right: 2px;
+      }
+      .bannerName {
+        margin-bottom: 2%;
+        h1 {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          font-size: clamp(1.1em, 1.7vmax + 0.2em, 2em);
+        }
+      }
+      .espisode {
+        margin-bottom: 1.5%;
+        font-size: clamp(0.5em, 0.9vmax, 1em);
+        .link {
+          font-size: clamp(0.65em, 0.9vmax + 0.2em, 1.15em);
+          font-weight: 500;
+          color: var(--custom-client-color);
+          text-decoration: none;
+          margin-left: 1.3vmax;
+        }
+      }
+      //Rating
+      .bannerRating {
+        white-space: nowrap;
+        margin-bottom: 1.25%;
+        display: flex;
+        align-items: center;
+        .badge {
+          font-size: 0.71vmax;
+          width: fit-content;
+          padding: 2px 15px 3px;
+          border-radius: 10px;
+
+          #icon {
+            font-size: 0.8vmax;
+            margin-right: 4px;
+          }
+          span {
+            display: flex;
+            align-items: center;
+          }
+        }
+        #liked {
+          border-radius: 10px;
+          background-color: var(--custom-client-color);
+          margin-right: 1.75%;
+          text-shadow: 0 0 10px #000000;
+          span {
+            color: white;
+          }
+        }
+        #userRecommended {
+          background-color: white;
+          text-shadow: none;
+          margin-right: 1.75%;
+          span {
+            color: black;
+            #icon {
+              color: #ff4d4d;
+            }
+          }
+        }
+        #adminRecommended {
+          background-color: #3e1897;
+        }
+      }
+
+      .genre {
+        margin-bottom: 0.5%;
+        p {
+          color: rgb(230, 230, 230);
+          font-size: clamp(0.5em, 0.55vmax + 0.4em, 1em);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          font-weight: 500;
+        }
+      }
+
+      .bannerDescription {
+        margin-bottom: 1.5%;
+        width: max(85%, 350px);
+        p {
+          color: rgb(230, 230, 230);
+          display: -webkit-box;
+          -webkit-line-clamp: 7;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          font-size: clamp(0.5em, 0.55vmax + 0.4em, 1em);
+        }
+      }
+      // .moreInfoButton {
+      //   .link {
+      //     width: fit-content;
+      //     text-decoration: none;
+      //     font-size: 1.15em;
+      //     font-weight: lighter;
+      //     cursor: pointer;
+      //     display: flex;
+      //     align-items: center;
+      //     transition: padding-left 1s ease 0s;
+      //     span {
+      //       color: rgb(210, 210, 210);
+      //       padding-bottom: 3px;
+      //       background: linear-gradient(
+      //         var(--custom-client-color),
+      //         var(--custom-client-color)
+      //       );
+      //       font-weight: 600;
+      //       background-size: 100% 2px;
+      //       background-repeat: no-repeat;
+      //       background-position: bottom left;
+      //       transition: color 1s ease 0.25s;
+      //     }
+
+      //     #icon {
+      //       opacity: 0.8;
+      //       display: grid;
+      //       place-items: center;
+      //       font-size: 1.6em;
+      //       margin-right: 5px;
+      //       color: var(--custom-client-color);
+      //     }
+      //     &:hover {
+      //       padding-left: 1%;
+      //     }
+      //     &:hover > span {
+      //       color: white;
+      //       animation: a 1s ease 0s;
+      //     }
+      //     &:hover > #icon {
+      //       opacity: 1;
+      //     }
+      //   }
+      // }
+    }
+  }
+  @include rs.breakpoint(x-large) {
+    height: max(calc(85vh - var(--header-height)), 500px);
+  }
+  @include rs.breakpoint(large) {
+    height: max(calc(70vh - var(--header-height)), 400px);
+  }
+  @include rs.breakpoint(medium) {
+    height: max(calc(55vh - var(--header-height)), 225px);
+    .banner {
+      .bannerDetail {
+        width: 80%;
+        top: 52.5%;
+        left: 7.5%;
+        //Rating
+        .bannerRating {
+          margin-bottom: 1.75%;
+          .liked,
+          .userRecommended,
+          .adminRecommended {
+            width: fit-content;
+            padding: 0.15vmax 0.8vmax;
+            border-radius: 10px;
+            #icon {
+              margin-right: 2.5px;
+            }
+          }
+          .liked {
+            border-radius: 10px;
+            margin-right: 1.75%;
+          }
+          .userRecommended {
+            margin-right: 1.75%;
+            span {
+              display: flex;
+              align-items: center;
+              color: black;
+              #icon {
+                color: #ff4d4d;
+              }
+            }
+          }
+        }
+
+        .genre p {
+          font-size: 1.15vmax;
+        }
+
+        .bannerDescription {
+          margin-bottom: 1.5%;
+          width: 85%;
+          p {
+            -webkit-line-clamp: 3;
+            font-size: 1.15vmax;
+          }
+        }
+      }
+    }
+  }
+  @include rs.breakpoint(small) {
+    height: max(calc(38vh - var(--header-height)), 225px);
+  }
+}
+
+@keyframes a {
+  0% {
+    background-size: 100% 2px;
+  }
+  50% {
+    background-size: 25% 2px;
+  }
+  100% {
+    background-size: 100% 2px;
+  }
+}

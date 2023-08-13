@@ -1,0 +1,128 @@
+@use './responsive.module' as rs;
+.Watch {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  .videoVideoList {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    .videoContainer {
+      width: 100%;
+      aspect-ratio: 16/9;
+      margin-right: 2.5%;
+      position: relative;
+      overflow: hidden;
+      .video {
+        height: 100% !important;
+        object-fit: contain !important;
+        background: black;
+      }
+    }
+    .episodeData {
+      width: 97%;
+      margin: 1.5% auto;
+      h1 {
+        font-size: clamp(1.1em, 0.6vmax + 1em, 2em);
+        font-weight: 600;
+        color: white;
+        margin-bottom: max(2%, 20px);
+      }
+    }
+  }
+
+  .bookmarkWrapper {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: 0.8em;
+    margin-left: 1%;
+    p {
+      color: var(--medium-gray);
+      font-size: 1.25em;
+      margin-left: 1%;
+      margin-bottom: 2.5%;
+    }
+    .bookmark {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .bookmarkItem {
+        width: 48%;
+        max-width: 200px;
+        cursor: pointer;
+        position: relative;
+        .paper {
+          width: 100%;
+          aspect-ratio: 16/9;
+
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgb(15, 15, 15) 115%
+          );
+          overflow: hidden;
+          .bookmarkImg {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            text-align: left;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 0 0.4em 0.8em;
+            color: rgba(255, 255, 255, 0.8);
+            .img {
+              position: absolute;
+              pointer-events: none;
+              z-index: -1;
+            }
+          }
+        }
+        button {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 2rem;
+          height: 1.2rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: var(--custom-client-color);
+          border: none;
+          .icon {
+            fill: white;
+          }
+        }
+      }
+    }
+  }
+  @include rs.breakpoint(large) {
+    flex-direction: column;
+    .videoVideoList {
+      width: 100%;
+    }
+    .bookmarkWrapper {
+      width: 100%;
+      .bookmark {
+        justify-content: unset;
+        gap: 1%;
+        .bookmarkItem {
+          width: 32%;
+          max-width: unset;
+        }
+      }
+    }
+  }
+  @include rs.breakpoint(medium) {
+    .bookmark {
+      gap: 3% !important;
+      .bookmarkItem {
+        width: 47% !important;
+      }
+    }
+  }
+}

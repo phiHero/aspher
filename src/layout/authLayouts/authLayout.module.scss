@@ -1,0 +1,72 @@
+// :root {
+//   --custom_color: #1ba9c9;
+//   --custom_input_color: #0b0b0b6d;
+// }
+.AuthLayout {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgb(15, 15, 15) 100%
+  ) !important;
+  background-size: cover !important;
+  position: relative;
+  overflow: hidden;
+  .change {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    cursor: pointer;
+  }
+  .imgContainer {
+    width: 100vw;
+    height: 135vh;
+    position: relative;
+    z-index: -2;
+    background-color: black;
+    img {
+      object-fit: cover;
+    }
+  }
+  .link-tag,
+  i {
+    color: var(--custom-color-auth);
+    font-weight: bold;
+    transition: color 1.25s ease 0s;
+    text-decoration: none;
+  }
+}
+@keyframes slide {
+  from {
+    padding-left: 100px;
+    opacity: 0;
+  }
+  to {
+    padding-left: 0px;
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0.5;
+    transform: scale(1.15);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.25;
+    transform: scale(1.15);
+  }
+}
