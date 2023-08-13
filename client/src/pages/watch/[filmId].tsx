@@ -191,7 +191,7 @@ export default function Watch() {
         <div className={s.bookmarkWrapper}>
           <p>Bookmarks list:</p>
           <div className={s.bookmark}>
-            {bookmarks.map((bookmark, index) => (
+            {bookmarks?.map((bookmark, index) => (
               <div className={s.bookmarkItem} key={index}>
                 <div
                   className={s.paper}
