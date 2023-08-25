@@ -17,6 +17,7 @@ export default async function Verify(
     if (!verified.id || !verified.isAdmin) {
       return res.status(401).json({ success: false, message: 'Invalid Token' });
     }
+    // not refreshing token to force user relogin when it expired
     return res.status(200).json({ success: true, message: 'Access Granted' });
   } catch (err) {
     console.log(err);

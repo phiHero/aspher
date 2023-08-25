@@ -46,9 +46,11 @@ export default function AddEpisode() {
       if (data) {
         setResult('success');
       }
-    } catch (error) {
+    } catch (error: any) {
       if (typeof url === 'string') deleteStoredFile(url);
       if (typeof subtitle === 'string') deleteStoredFile(subtitle);
+      if (error.response.status === 401) alert('Unauthorized!');
+
       setResult('error');
     }
   };
@@ -83,6 +85,9 @@ export default function AddEpisode() {
       {!passingSearchData?._id ? (
         <div className={s.seachWrap}>
           <FuzzySearch setPassingSearchData={setPassingSearchData} />
+          <span className='search_hint'>
+            Try attack on titan, spirited away,...
+          </span>
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
@@ -149,4 +154,4 @@ export default function AddEpisode() {
   );
 }
 AddEpisode.PageLayout = MainLayout;
-// AddEpisode.Search = true;
+AddEpisode.Title = 'Add episode - Adspher';

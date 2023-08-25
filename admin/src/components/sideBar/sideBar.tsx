@@ -1,5 +1,5 @@
 import styles from './sideBar.module.scss';
-import { Navigation, Anime, User } from './sideBarData';
+import { Navigation, Film, User } from './sideBarData';
 import Link from 'next/link';
 import Image from 'next/image';
 import unknown from './unknown.png';
@@ -48,10 +48,17 @@ export default function SideBar({ isOpen }: { isOpen: boolean }) {
               </li>
             ))}
           </ul>
-          <ul className={styles.sidebar_anime}>
+          <ul className={styles.sidebar_Film}>
             <div className={styles.heading}>Films</div>
-            {Anime.map((item, index) => (
-              <li className={styles.sidebar_item} key={index}>
+            {Film.map((item, index) => (
+              <li
+                className={
+                  router.pathname === item.path
+                    ? `${styles.sidebar_item} ${styles.active}`
+                    : styles.sidebar_item
+                }
+                key={index}
+              >
                 <Link href={item.path}>
                   <a className={styles.sidebar_link}>
                     {item.icon}
@@ -64,7 +71,14 @@ export default function SideBar({ isOpen }: { isOpen: boolean }) {
           <ul className={styles.sidebar_user}>
             <div className={styles.heading}>User</div>
             {User.map((item, index) => (
-              <li className={styles.sidebar_item} key={index}>
+              <li
+                className={
+                  router.pathname === item.path
+                    ? `${styles.sidebar_item} ${styles.active}`
+                    : styles.sidebar_item
+                }
+                key={index}
+              >
                 <Link href={item.path}>
                   <a className={styles.sidebar_link}>
                     {item.icon}

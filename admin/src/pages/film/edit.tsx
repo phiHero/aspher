@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { _filmData } from '@/interface/_custom';
 import { handleInputOnChange } from '@/utils/InputHandler';
 import FuzzySearch from '@/components/FuzzySearch/FuzzySearch';
@@ -17,8 +17,9 @@ import useFileUpload from '@/hooks/useFileUpload';
 import { deleteStoredFile } from '@/utils/firebaseStorage';
 import FormBtn from '@/components/FormBtn/FormBtn';
 import { _result } from '@/interface/_cases';
+import { GENRES } from '@/utils/CONSTANT';
 
-export default function EditAnime() {
+export default function EditFilm() {
   const [passingSearchData, setPassingSearchData] = useState<_filmData | null>(
     null
   );
@@ -66,7 +67,8 @@ export default function EditAnime() {
         setPassingSearchData(data);
         setResult('success');
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response.status === 401) alert('Unauthorized!');
       setResult('error');
     }
   };
@@ -85,7 +87,7 @@ export default function EditAnime() {
   }, [passingSearchData]);
 
   return (
-    <div className={s.EditAnime}>
+    <div className={s.EditFilm}>
       <div className={s.heading}>
         <h1>Editing</h1>
       </div>
@@ -103,6 +105,7 @@ export default function EditAnime() {
       {!passingSearchData?._id ? (
         <div className={s.seachWrap}>
           <FuzzySearch setPassingSearchData={setPassingSearchData} />
+          <span className='search_hint'>Try death note, ponyo, akira...</span>
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
@@ -152,7 +155,7 @@ export default function EditAnime() {
                   onChange={handleGenreChange}
                   inputValue={''}
                   multiple
-                  options={genreOptions}
+                  options={GENRES}
                   disableCloseOnSelect
                   getOptionLabel={(option) => option}
                   renderOption={(props, option, { selected }) => (
@@ -264,17 +267,7 @@ export default function EditAnime() {
     </div>
   );
 }
-const genreOptions: string[] = [
-  'hành động',
-  'viễn tưởng',
-  'harem',
-  'ecchi',
-  'kinh dị',
-  'tình cảm',
-  'hài hước',
-  'học đường',
-  'máy móc',
-  'thể thao',
-];
-EditAnime.PageLayout = MainLayout;
-EditAnime.Search = true;
+
+EditFilm.PageLayout = MainLayout;
+EditFilm.Search = true;
+EditFilm.Title = 'Edit film - Adspher';

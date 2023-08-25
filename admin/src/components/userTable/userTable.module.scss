@@ -7,6 +7,9 @@
     background-color: var(--background-color-primary);
     border-color: rgba(158, 158, 158, 0.1);
     max-height: 50vh;
+    :global(.MuiTableCell-stickyHeader) {
+      background-color: white !important;
+    }
     .tableCell {
       color: var(--heading-color);
       border-color: rgba(158, 158, 158, 0.1);
