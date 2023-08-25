@@ -6,8 +6,6 @@ import { _filmData, _filmListItem } from '@/interface/_film';
 // Styles
 import s from './filmList.module.scss';
 import FilmListItems from './filmListItem/filmListItem';
-import { children } from 'cheerio/lib/api/traversing';
-import { style } from '@mui/system';
 
 let options = {
   rootMargin: '0px',
@@ -57,7 +55,7 @@ const FilmList = ({ data }: { data: _filmData[] }) => {
   }, [inView]);
 
   return (
-    <div className={s.FilmList} id='FilmList' ref={listRef}>
+    <div className={s.FilmList} ref={listRef}>
       {data?.map((item, index: number) => {
         return <FilmListItems key={index} item={item} />;
       })}

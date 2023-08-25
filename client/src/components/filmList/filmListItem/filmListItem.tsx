@@ -15,7 +15,6 @@ const AnimeListItems = ({ item }: { item: _filmData }) => {
     <Link scroll={true} href={`/film/${item._id}`}>
       <a
         className={styles.GridItem}
-        id='GridItem'
         onMouseEnter={() => setisHovered(true)}
         onMouseLeave={() => setisHovered(false)}
       >
