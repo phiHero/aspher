@@ -51,6 +51,7 @@ const HeaderBar = () => {
               .getElementsByClassName(sidebarStyles.Sidebar)[0]
               .classList.toggle(sidebarStyles.open)
           }
+          aria-label='Navigation'
         >
           <span className={styles.menu_bar}></span>
           <span className={styles.menu_bar} id={styles.bar}></span>
@@ -63,14 +64,22 @@ const HeaderBar = () => {
         </Link>
       </div>
       <div className={styles.rightCorner}>
-        <button className={styles.iconButton} onClick={searchBarVisible}>
+        <button
+          className={styles.iconButton}
+          onClick={searchBarVisible}
+          aria-label='Open search'
+        >
           <SearchRoundedIcon className={styles.icon} />
         </button>
       </div>
       <div className={styles.searchBar} ref={searchBarRef}>
         <div></div>
         <div className={styles.search}>
-          <button className={styles.iconButton} onClick={searchBarVisible}>
+          <button
+            className={styles.iconButton}
+            onClick={searchBarVisible}
+            aria-label='Search'
+          >
             <SearchRoundedIcon className={styles.icon} />
           </button>
           <input
@@ -117,7 +126,11 @@ const HeaderBar = () => {
             </div>
           )}
         </div>
-        <button className={styles.iconButton} onClick={searchBarVisible}>
+        <button
+          className={styles.iconButton}
+          onClick={searchBarVisible}
+          aria-label='Close search'
+        >
           <CloseIcon className={styles.icon} />
         </button>
       </div>

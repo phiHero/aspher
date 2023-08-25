@@ -12,7 +12,6 @@ import Featured from '../components/featured/featured';
 import FilmList from '../components/filmList/filmList';
 import { SrHome } from '../animations/onScroll';
 import { _filmData } from '@/interface/_film';
-import GridLoading from '@/animations/gridLoading';
 
 export default function Home({
   featuredFilm,
@@ -55,6 +54,8 @@ export default function Home({
 
 Home.PageLayout = MainLayout;
 Home.Title = 'Homepage - Aspher';
+Home.Description =
+  'Watch thousands of films on Aspher free of charge. High quality, low latency streaming for a seamless experience. Films are updated daily so you can have an endless option.';
 
 export async function getStaticProps() {
   await dbConnect().catch((err) => {

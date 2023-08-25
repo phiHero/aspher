@@ -35,6 +35,7 @@ const Featured = ({ data }: { data: _filmData }) => {
                 alt='Highest rating anime'
                 layout='fill'
                 objectFit='cover'
+                priority
               />
             )}
           </div>
