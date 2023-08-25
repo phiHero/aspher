@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { cloneElement } from 'react';
 import Loader from '../components/loader/loader';
 import axios from 'axios';
+import { getCookie } from '@/utils/cookie';
 
 const MainLayout = ({ children }: _children) => {
   const [passingSearchData, setPassingSearchData] = useState<{
@@ -28,6 +29,7 @@ const MainLayout = ({ children }: _children) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  // check user is admin
   useEffect(() => {
     const verify = async () => {
       try {
@@ -44,7 +46,11 @@ const MainLayout = ({ children }: _children) => {
         router.push('/login');
       }
     };
-    verify();
+    if (getCookie('atk') === 'guest') {
+      setIsLoading(false);
+    } else {
+      verify();
+    }
   }, [router]);
 
   if (isLoading) {

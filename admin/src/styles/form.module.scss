@@ -1,6 +1,6 @@
 .AddEpisode,
-.CreateAnime,
-.EditAnime {
+.AddFilm,
+.EditFilm {
   width: calc(100% - 2em);
   min-height: calc(100vh - var(--header-height) - 2em);
   display: flex;

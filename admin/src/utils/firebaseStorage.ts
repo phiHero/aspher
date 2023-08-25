@@ -8,6 +8,7 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { nanoid } from 'nanoid';
+import { getCookie } from './cookie';
 
 export async function uploadBase64Image(
   base64: string,
@@ -29,6 +30,8 @@ export async function uploadFile(
   setUploadProgress?: React.Dispatch<React.SetStateAction<number>>
 ) {
   if (!file) throw new Error('No file specified');
+  // http-only cookie cannot be accessed
+  if (!getCookie('atk')) return alert('Unauthorized');
 
   const fileRef = ref(storage, `${dir ?? 'videos'}/${nanoid(9)}-${file.name}`);
   if (!setUploadProgress) {

@@ -12,6 +12,8 @@ const Add = async (req: _verifiedApiUser, res: NextApiResponse) => {
       .status(405)
       .send({ message: `Only ${method} requests are allowed` });
   }
+  const token = req.cookies.atk;
+
   try {
     await dbConnect();
     const totalUser = await User.countDocuments({});
@@ -29,38 +31,37 @@ const Add = async (req: _verifiedApiUser, res: NextApiResponse) => {
         },
       },
     ]);
-    const newMember = await User.aggregate([
-      {
-        $project: {
-          username: 1,
-          email: 1,
-          profilePic: 1,
-          createdAt: 1,
+
+    let newMember = [];
+
+    if (token !== 'guest') {
+      newMember = await User.aggregate([
+        {
+          $project: {
+            username: 1,
+            email: 1,
+            profilePic: 1,
+            createdAt: 1,
+          },
         },
-      },
-      { $sort: { createdAt: -1 } },
-      { $limit: 20 },
-    ]);
-    // const newFilm = await Film.aggregate([
-    //   {
-    //     $project: {
-    //       title: 1,
-    //       like: 1,
-    //       dislike: 1,
-    //       isRecommended: 1,
-    //       genre: 1,
-    //       year: 1,
-    //       backgroundImg: 1,
-    //       espisode: { $size: '$espisode' },
-    //       createdAt: 1,
-    //     },
-    //   },
-    //   { $sort: { createdAt: -1 } },
-    //   { $limit: 10 },
-    // ]);
+        { $sort: { createdAt: -1 } },
+        { $limit: 20 },
+      ]);
+    } else {
+      for (let i = 0; i < 20; i++) {
+        newMember.push({
+          _id: 'loginToShow',
+          username: 'loginToShow',
+          email: 'login@to.show',
+          profilePic: '',
+          createdAt: 'login to show',
+        });
+      }
+    }
+
     res.status(200).json({ totalUser, totalFilm, chartData, newMember });
   } catch (err) {
     console.log(err);
   }
 };
-export default WithProtect(Add);
+export default Add;

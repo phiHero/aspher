@@ -22,7 +22,7 @@ export const Navigation: _SideBarData[] = [
     path: '/analytics',
   },
 ];
-export const Anime: _SideBarData[] = [
+export const Film: _SideBarData[] = [
   {
     title: 'Add new episode',
     icon: <AddOutlinedIcon className={styles.icon} />,
@@ -31,7 +31,7 @@ export const Anime: _SideBarData[] = [
   {
     title: 'Add a new film',
     icon: <AddCircleOutlineIcon className={styles.icon} />,
-    path: '/film/create',
+    path: '/film/add',
   },
   {
     title: 'Modify',

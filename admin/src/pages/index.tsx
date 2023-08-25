@@ -1,4 +1,3 @@
-import { style } from '@mui/system';
 import Head from 'next/head';
 import Chart from '../components/chart/chart';
 import MainLayout from '../layouts/mainLayout';
@@ -11,7 +10,7 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function Home() {
   const { data, error } = useSWR('/api/analytic/total', fetcher);
-
+  if (error) return <div>Error!</div>;
   return (
     <>
       <Head>
@@ -66,3 +65,4 @@ export default function Home() {
 }
 
 Home.PageLayout = MainLayout;
+Home.Title = 'Dashboard - Adspher';

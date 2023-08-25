@@ -1,3 +1,4 @@
+$accent: #02d7de;
 .Login {
   width: 100vw;
   height: 100vh;
@@ -11,40 +12,17 @@
   overflow: hidden;
   .link_tag,
   i {
-    color: var(--custom-color);
+    color: $accent;
     font-weight: bold;
     transition: color 1.25s ease 0s;
     text-decoration: none;
   }
-  .change {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    cursor: pointer;
-  }
+
   .img_con {
     width: 100%;
     height: 100%;
     position: relative;
     z-index: -2;
-    background: url('./img/Ghostblade_1.jpg') !important;
-    background-size: cover !important;
-    // .bimg {
-    //   width: 100%;
-    //   height: 100%;
-    //   position: relative;
-    //   z-index: -1;
-    //   // display: none;
-    // }
-    // .fade-in {
-    //   animation: fade-in 0.625s linear;
-    // }
-    // .fade-out {
-    //   animation: fade-out 0.625s linear;
-    // }
   }
 
   .wrapper {
@@ -99,7 +77,7 @@
             .underBar:after {
               content: '';
               width: 75px;
-              background-color: var(--custom-color);
+              background-color: $accent;
               height: 2.5px;
               position: relative;
               display: block;
@@ -130,10 +108,10 @@
           button {
             height: max(7.75%, 39.5px);
             border-radius: 5px;
-            color: var(--custom-color);
+            color: $accent;
             background-color: var(--custom_input_color);
             border: 2px solid !important;
-            border-color: var(--custom-color) !important;
+            border-color: $accent !important;
             font-size: 18px;
             font-weight: 500;
             margin-top: 2.5%;
@@ -142,8 +120,8 @@
           }
           button:hover {
             color: #ffffff !important;
-            background: var(--custom-color);
-            border-color: var(--custom-color) !important;
+            background: $accent;
+            border-color: $accent !important;
             transition: all 0.4s ease 0s;
           }
         }

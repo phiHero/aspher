@@ -13,7 +13,7 @@ import FormBtn from '@/components/FormBtn/FormBtn';
 import { _result } from '@/interface/_cases';
 import { GENRES } from '@/utils/CONSTANT';
 
-export default function CreateAnime() {
+export default function AddFilm() {
   const [formValue, setFormValue] = useState<{
     title: string;
     otherName: string;
@@ -69,13 +69,15 @@ export default function CreateAnime() {
       if (data) {
         setResult('success');
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response.status === 401) alert('Unauthorized!');
+
       setResult('error');
     }
   };
 
   return (
-    <div className={s.CreateAnime}>
+    <div className={s.AddFilm}>
       <form onSubmit={handleSubmit}>
         <div className={s.flexRow}>
           <div className={s.basicInfo}>
@@ -215,5 +217,5 @@ export default function CreateAnime() {
   );
 }
 
-CreateAnime.PageLayout = MainLayout;
-// CreateAnime.Search = true;
+AddFilm.PageLayout = MainLayout;
+AddFilm.Title = 'Add film - Adspher';

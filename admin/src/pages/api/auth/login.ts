@@ -50,6 +50,6 @@ export default async function handler(
   } catch (err) {
     console.log(err);
 
-    throw err;
+    res.status(500);
   }
 }
