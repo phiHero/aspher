@@ -101,7 +101,6 @@ export default function Watch() {
             data.episode[data.episode.length - 1]?.name || 'trailer'
           } - ${data.desc}`}
         />
-        <meta name='keywords' content='Watch, Films, Movies, Free' />
       </Head>
       <div className={s.Watch}>
         <div className={s.videoVideoList}>

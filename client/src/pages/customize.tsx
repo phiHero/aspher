@@ -255,3 +255,5 @@ export default function Customize() {
 }
 
 Customize.PageLayout = MainLayout;
+Customize.Title = 'Customization - Aspher';
+Customize.Description = 'User can customize their account';

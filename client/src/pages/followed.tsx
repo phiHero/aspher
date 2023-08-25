@@ -56,3 +56,5 @@ export default function Followed() {
 }
 
 Followed.PageLayout = MainLayout;
+Followed.Title = 'Followed films - Aspher';
+Followed.Description = 'See followed films on Aspher';

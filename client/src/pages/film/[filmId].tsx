@@ -84,6 +84,7 @@ export default function FilmDetail({ film }: { film: _filmData }) {
     <>
       <Head>
         <title>{film.title} - Aspher</title>
+
         <meta
           name='description'
           content={`Latest episode: episode ${
@@ -101,7 +102,8 @@ export default function FilmDetail({ film }: { film: _filmData }) {
                 id='sr-right-img'
                 src={film.backgroundImg}
                 layout='fill'
-                alt=''
+                alt={`Watch ${film.title}, ${film.otherName || ''}`}
+                priority
               />
             )}
           </div>

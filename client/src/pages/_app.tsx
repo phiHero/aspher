@@ -6,6 +6,7 @@ type ComponentWithPageLayout = AppProps & {
   Component: AppProps['Component'] & {
     PageLayout?: React.ComponentType;
     Title?: string;
+    Description?: string;
   };
 };
 
@@ -18,6 +19,10 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
           name='viewport'
           content='width=device-width, initial-scale=1, shrink-to-fit=no'
         />
+        <meta name='keywords' content='Watch, Films, Movies, Free' />
+        {Component?.Description && (
+          <meta name='description' content={Component.Description} />
+        )}
       </Head>
       {Component.PageLayout ? (
         <Component.PageLayout>
