@@ -29,7 +29,11 @@ export default function Followed() {
 
   // Exception handling
   if (!user) return <LoginAlert />;
-  if (error) return <Error />;
+  if (error) {
+    if (error.response.status === 401)
+      return <Error message='Session expired, please relogin!' />;
+    return <Error />;
+  }
   if (!data) return <Loader />;
 
   return (
