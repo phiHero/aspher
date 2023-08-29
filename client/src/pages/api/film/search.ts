@@ -9,7 +9,6 @@ export default async function handler(
     res.status(405).end();
     return;
   }
-  if (!req.query.q || req.query.q?.length <= 3) return;
   try {
     await dbConnect();
     const data = await Film.aggregate([
@@ -23,7 +22,7 @@ export default async function handler(
                   query: req.query.q,
                   path: ['title', 'otherName'],
                   fuzzy: {
-                    maxEdits: 2,
+                    maxEdits: 1,
                   },
                 },
               },
@@ -45,8 +44,7 @@ export default async function handler(
         },
       },
     ]);
-    if (data) return res.status(200).json(data);
-    res.status(200).json([]);
+    res.status(200).json(data);
   } catch (error) {
     console.log(error);
     res.status(500).json([]);

@@ -10,6 +10,7 @@ import {
   useState,
 } from 'react';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+//@ts-ignore
 import debounce from 'lodash.debounce';
 import CloseIcon from '@mui/icons-material/Close';
 import Loader from '../../loader/loader';
@@ -42,8 +43,10 @@ export default function FuzzySearch({
       setIsLoading(false);
     }
   };
-  const getSearchResult = useCallback(debounce(fetcher, 1000), []);
-
+  const getSearchResult = useCallback(
+    (query: string) => debounce(fetcher, 1000)(query),
+    []
+  );
   const getSearchResultOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let query: string = e.target.value.trim();
     if (query.length > 2) {
@@ -55,7 +58,7 @@ export default function FuzzySearch({
     }
   };
   return (
-    <div className={s.FuzzySearch} ref={searchBarRef}>
+    <div className={s.FuzzySearch} ref={searchBarRef} data-testid='FuzzySearch'>
       <div></div>
       <div className={s.search}>
         <button
