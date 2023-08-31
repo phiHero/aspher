@@ -292,6 +292,7 @@ export async function getStaticProps(context: { params: { filmId: string } }) {
     props: {
       film: JSON.parse(JSON.stringify(film)),
     },
+    revalidate: 10, // revalidate to refresh user's likes & follows
   };
 }
 
