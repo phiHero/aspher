@@ -2,8 +2,6 @@ import styles from './sideBar.module.scss';
 import { Navigation, Film, User } from './sideBarData';
 import Link from 'next/link';
 import Image from 'next/image';
-import unknown from './unknown.png';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import React from 'react';
 import cn from 'classnames';
 import logo from '../../../public/logo.png';

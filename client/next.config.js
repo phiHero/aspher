@@ -4,6 +4,11 @@ const nextConfig = {
   images: {
     domains: ['firebasestorage.googleapis.com'],
   },
+  pages: {
+    '*': {
+      maxChunkSize: 30000,
+    },
+  },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if

@@ -1,10 +1,10 @@
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
-import CommentRoundedIcon from '@mui/icons-material/CommentRounded';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
-import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import styles from './sideBar.module.scss';
+import {
+  AssignmentIcon,
+  CustomizeIcon,
+  DashboardIcon,
+  FavoriteRoundedIcon,
+} from '../icons';
 
 const SideBarData = [
   {
@@ -24,7 +24,7 @@ const SideBarData = [
   // },
   {
     title: 'Customize',
-    icon: <AutoFixHighIcon className={styles.sidebarIcon} />,
+    icon: <CustomizeIcon className={styles.sidebarIcon} />,
     path: '/customize',
   },
   // {

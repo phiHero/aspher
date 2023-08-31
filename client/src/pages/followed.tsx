@@ -1,5 +1,5 @@
 // Essenstials
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 // Styles
@@ -23,6 +23,7 @@ export default function Followed() {
     fetcher
   );
   useEffect(() => {
+    // animation sometime won't fire for unknown reason, if inView solved this
     if (inView && data) SrSection();
     setUser(JSON.parse(localStorage.getItem('user') || 'null'));
   }, [inView, data]);

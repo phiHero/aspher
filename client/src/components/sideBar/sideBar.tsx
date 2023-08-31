@@ -1,5 +1,5 @@
 // Essentials
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import SideBarData from './sideBarData';
 import { useRouter } from 'next/router';
 // Performance
