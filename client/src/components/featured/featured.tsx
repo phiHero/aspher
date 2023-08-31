@@ -32,7 +32,8 @@ const Featured = ({ data }: { data: _filmData }) => {
                 className={s.img}
                 unselectable='on'
                 src={data.backgroundImg}
-                alt='Highest rating anime'
+                alt='High rating featured film'
+                sizes='(max-width: 900px) 100vw, 97vw'
                 layout='fill'
                 objectFit='cover'
                 priority

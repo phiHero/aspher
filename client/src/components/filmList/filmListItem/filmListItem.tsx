@@ -24,7 +24,8 @@ const AnimeListItems = ({ item }: { item: _filmData }) => {
             src={item.backgroundImg}
             layout='fill'
             objectFit='cover'
-            alt={'wallpaper ' + item.title}
+            sizes='(max-width: 441px) 48vw, (max-width: 900px) 32vw, (max-width: 1440px) 23vw, 18vw'
+            alt={'Watch ' + item.title}
           />
         </div>
         <div className={styles.descContainer} data-hidden>
