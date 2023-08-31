@@ -43,10 +43,7 @@ export default function FuzzySearch({
       setIsLoading(false);
     }
   };
-  const getSearchResult = useCallback(
-    (query: string) => debounce(fetcher, 1000)(query),
-    []
-  );
+  const getSearchResult = useCallback(debounce(fetcher, 1000), []);
   const getSearchResultOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let query: string = e.target.value.trim();
     if (query.length > 2) {
@@ -84,7 +81,11 @@ export default function FuzzySearch({
             ) : (
               searchData?.map((item: any, index: number) => (
                 <Link href={`/film/${item._id}`} key={index}>
-                  <a className={s.searchItem} onClick={searchBarVisible}>
+                  <a
+                    className={s.searchItem}
+                    onClick={searchBarVisible}
+                    data-testid='searchItem'
+                  >
                     <div className={s.searchItemBgWrapper}>
                       <Image
                         className={s.searchItemImg}
