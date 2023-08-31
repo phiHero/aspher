@@ -10,6 +10,7 @@ import {
   useState,
 } from 'react';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+//@ts-ignore
 import debounce from 'lodash.debounce';
 import CloseIcon from '@mui/icons-material/Close';
 import Loader from '../../loader/loader';
@@ -43,7 +44,6 @@ export default function FuzzySearch({
     }
   };
   const getSearchResult = useCallback(debounce(fetcher, 1000), []);
-
   const getSearchResultOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let query: string = e.target.value.trim();
     if (query.length > 2) {
@@ -55,7 +55,7 @@ export default function FuzzySearch({
     }
   };
   return (
-    <div className={s.FuzzySearch} ref={searchBarRef}>
+    <div className={s.FuzzySearch} ref={searchBarRef} data-testid='FuzzySearch'>
       <div></div>
       <div className={s.search}>
         <button
@@ -81,7 +81,11 @@ export default function FuzzySearch({
             ) : (
               searchData?.map((item: any, index: number) => (
                 <Link href={`/film/${item._id}`} key={index}>
-                  <a className={s.searchItem} onClick={searchBarVisible}>
+                  <a
+                    className={s.searchItem}
+                    onClick={searchBarVisible}
+                    data-testid='searchItem'
+                  >
                     <div className={s.searchItemBgWrapper}>
                       <Image
                         className={s.searchItemImg}

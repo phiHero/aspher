@@ -19,6 +19,7 @@ export default function Loader({
         position: 'relative',
         zIndex: '500',
       }}
+      data-testid='loader'
     >
       <BallTriangle
         color={color || 'var(--custom-client-color)'}
