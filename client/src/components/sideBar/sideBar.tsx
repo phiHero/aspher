@@ -44,7 +44,7 @@ const SideBar = () => {
                 src={user?.profilePic || '/unknown.png'}
                 layout='fill'
                 objectFit='cover'
-                alt='Ảnh đại diện'
+                alt='Profile picture'
               />
             </div>
           </a>
@@ -58,7 +58,7 @@ const SideBar = () => {
         </div>
       </div>
       {/* Middle sidebar */}
-      <div className={styles.middleSidebar} unselectable='on'>
+      <div className={styles.middleSidebar}>
         <ul className={styles.sidebarList}>
           <li
             className={styles.sidebarListItem}
