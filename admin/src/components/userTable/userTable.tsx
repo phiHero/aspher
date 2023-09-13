@@ -29,8 +29,8 @@ export default function UserTable({ newMember }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {newMember?.map((item:_user) => (
-              <TableRow key={item._id}>
+            {newMember?.map((item: _user, i: number) => (
+              <TableRow key={item._id + i}>
                 <TableCell className={styles.tableCell}>
                   <Tooltip title='Copy'>
                     <IconButton

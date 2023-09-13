@@ -22,7 +22,7 @@ export default function Home() {
           <div className={styles.total}>
             <div className={styles.component}>
               <div className={styles.component_name}>Total active user</div>
-              <div className={styles.component_value}>1,000</div>
+              <div className={styles.component_value}>1,258</div>
             </div>
             <div className={styles.component}>
               <div className={styles.component_name}>Total user</div>
@@ -34,7 +34,7 @@ export default function Home() {
             </div>
             <div className={styles.component}>
               <div className={styles.component_name}>Total expense</div>
-              <div className={styles.component_value}>50,000</div>
+              <div className={styles.component_value}>12,482</div>
             </div>
           </div>
           <div className={styles.chart}>
@@ -42,9 +42,11 @@ export default function Home() {
             <div className={styles.component_value}></div>
             <div className={styles.component}>
               <Chart
-                data={data?.chartData.sort((a, b) => {
-                  return a._id - b._id;
-                })}
+                data={data?.chartData.sort(
+                  (a: { _id: number }, b: { _id: number }) => {
+                    return a._id - b._id;
+                  }
+                )}
               />
             </div>
           </div>
