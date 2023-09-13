@@ -1,4 +1,4 @@
-import { KeyboardEventHandler, RefObject, useEffect, useState } from 'react';
+import { RefObject, useState } from 'react';
 // Style
 import s from './videoControl.module.scss';
 import IconButton from '@mui/material/IconButton';
