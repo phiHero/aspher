@@ -1,3 +1,5 @@
+A movie web app
+
 ## Tech stack
 
 Front-end
