@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /customize
+Disallow: /followed
+
+User-agent: *
+Allow: /
