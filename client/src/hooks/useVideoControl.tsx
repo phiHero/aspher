@@ -183,7 +183,6 @@ export default function useVideoControl() {
     };
 
     handler[e.code]?.call();
-    console.log(e.code);
   };
 
   return {
