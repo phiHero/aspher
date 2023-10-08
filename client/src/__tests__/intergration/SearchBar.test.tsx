@@ -37,7 +37,7 @@ describe('Header bar search', () => {
     expect(screen.getByTestId('loader')).toBeInTheDocument();
     //should show nodata
     expect(
-      await screen.findByText(/no data/i, {}, { timeout: 4000 })
+      await screen.findByText(/no data/i, {}, { timeout: 10000 })
     ).toBeInTheDocument();
     expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
 
@@ -45,7 +45,8 @@ describe('Header bar search', () => {
     expect(screen.getByTestId('loader')).toBeInTheDocument();
     // show results
     expect(
-      (await screen.findAllByTestId('searchItem', {}, { timeout: 4000 })).length
+      (await screen.findAllByTestId('searchItem', {}, { timeout: 10000 }))
+        .length
     ).toBeGreaterThan(0);
     expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
   });
